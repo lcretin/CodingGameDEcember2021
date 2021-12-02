@@ -34,7 +34,6 @@ public class Strategy {
                 disMin = distance.getSmallerDistance(disMin);
                 disMinAvailable = distance.getSmallerAvailableDistance(disMinAvailable);
                 //System.err.println("Distance: ["+distance.getPlanet().getPlanetId()+"] ["+distance.getStation().getStationId()+"] dist= "+ distance.getValueStationPlanet());
-
             }
         }
         Distances distanceToPlay = disMin;
@@ -53,53 +52,58 @@ public class Strategy {
     }
 
     public String applyTechPreCommand(){
-        String preCommand = "";
+        String resultCommand = "";
         // Apply BONUS Pre Command: Apply Tech Reasearch on the first tech on the first station
         for(Bonus bonus: myBonus){
             System.err.println("Bonus -> "+ bonus.getBonus());
             int techREsearchBonusNum = -1;
+            String commandName = "";
             if(BonusType.NEW_TECH.equals(bonus.getBonus())) {
                 techREsearchBonusNum = 0;
                 System.err.println("Found Bonus NEW TECH");
+                commandName = "NEW_TECH ";
             }else if(BonusType.TECH_RESEARCH_2.equals(bonus.getBonus())) {
                 techREsearchBonusNum = 1;
                 System.err.println("Found Bonus TechREsearch 2");
+                commandName = "TECH_RESEARCH ";
             }else if(BonusType.TECH_RESEARCH_3.equals(bonus.getBonus())) {
                 System.err.println("Found Bonus TechREsearch 3");
                 techREsearchBonusNum = 2;
+                commandName = "TECH_RESEARCH ";
             }if(BonusType.TECH_RESEARCH_4.equals(bonus.getBonus())) {
                 System.err.println("Found Bonus TechREsearch 4");
                 techREsearchBonusNum = 3;
+                commandName = "TECH_RESEARCH ";
             }
             if (techREsearchBonusNum >= 0) {
                 for (int i = 0; i < myStations.length; i++) {
                     Station station = myStations[i];
 
                     if (station.getTerraformingSkill() == techREsearchBonusNum) {
-                        preCommand = "TECH_RESEARCH " + station.getStationId() + " " + TechEnum.getCode(TechEnum.TERRAFORMING);
+                        resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.TERRAFORMING);
                         station.terraformingSkill += techREsearchBonusNum;
                         break;
                     } else if (station.getAlienSkill() == techREsearchBonusNum) {
-                        preCommand = "TECH_RESEARCH " + station.getStationId() + " " + TechEnum.getCode(TechEnum.ALIEN);
+                        resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.ALIEN);
                         station.alienSkill += techREsearchBonusNum;
                         break;
                     } else if (station.getEngineeringSkill() == techREsearchBonusNum) {
-                        preCommand = "TECH_RESEARCH " + station.getStationId() + " " + TechEnum.getCode(TechEnum.ENGINEERING);
+                        resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.ENGINEERING);
                         station.engineeringSkill += techREsearchBonusNum;
                         break;
                     } else if (station.getAgricultureSkill() == techREsearchBonusNum) {
-                        preCommand = "TECH_RESEARCH " + station.getStationId() + " " + TechEnum.getCode(TechEnum.AGRICULTURE);
+                        resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.AGRICULTURE);
                         station.agricultureSkill += techREsearchBonusNum;
                         break;
                     }
                 }
             }
         }
-        if (!"".equals(preCommand)){
-            preCommand += " ";
+        if (!"".equals(resultCommand)){
+            resultCommand += " ";
         }
-        System.err.println("PreCommand-> ["+preCommand+"]");
-        return preCommand;
+        System.err.println("PreCommand-> ["+resultCommand+"]");
+        return resultCommand;
     }
 
     public  boolean isBonusAvailable(ArrayList<Bonus> myBonus, BonusType bonusType ){
