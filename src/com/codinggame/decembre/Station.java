@@ -81,4 +81,28 @@ public class Station {
         return myStationObj;
     }
 
+    public boolean isTerraformingObjectiveReached() {
+        if (this.terraformingSkill >= this.myStationObj.terraLevelObj)
+            return true;
+        return false;
+    }
+
+    public boolean isAlienObjectiveReached() {
+        if (this.alienSkill >= this.myStationObj.alienLevelObj)
+            return true;
+        return false;
+    }
+
+    public boolean isEngineeringObjectiveReached() {
+        if (this.engineeringSkill >= this.myStationObj.engineeringLevelObj)
+            return true;
+        return false;
+    }
+
+    public boolean isAgricultureObjectiveReached() {
+    if (this.agricultureSkill >= this.myStationObj.agricultureLevelObj)
+        return true;
+    return false;
+    }
+
 }
