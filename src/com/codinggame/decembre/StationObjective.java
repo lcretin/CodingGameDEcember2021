@@ -16,4 +16,15 @@ public class StationObjective {
         this.engineeringLevelObj=obj2;
         this.agricultureLevelObj=obj3;
     }
+
+    @Override
+    public String toString() {
+        return "StationObj{" +
+                "Score=" + scoreIfReached +
+                ", Level=[" + terraLevelObj +
+                ", " + alienLevelObj +
+                ", " + engineeringLevelObj +
+                ", " + agricultureLevelObj +
+                "]}";
+    }
 }

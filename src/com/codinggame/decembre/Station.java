@@ -11,7 +11,6 @@ public class Station {
     int engineeringSkill;
     int agricultureSkill;
 
-    //
     StationObjective myStationObj;
 
     //constructor
@@ -81,4 +80,17 @@ public class Station {
         return myStationObj;
     }
 
+    @Override
+    public String toString() {
+        return "Station{" +
+                "" + stationId +
+                ", mine=" + isMine +
+                ", avail=" + isAvailable +
+                ", skill=[" + terraformingSkill +
+                ", " + alienSkill +
+                ", " + engineeringSkill +
+                ", " + agricultureSkill +
+                "], " + myStationObj +
+                "}";
+    }
 }

@@ -1,5 +1,5 @@
 /*
-This file has been generated Thu Dec 02 17:57:35 CET 2021
+This file has been generated Thu Dec 02 21:26:32 CET 2021
 */
 
 import java.util.Scanner;import java.util.ArrayList;
@@ -129,27 +129,58 @@ class Distances {  // Distances.java, 5
     public Integer getUsableToken() {  // Distances.java, 152
         return usableToken;  // Distances.java, 153
     }  // Distances.java, 154
-}  // Distances.java, 155
+    @Override  // Distances.java, 156
+    public String toString() {  // Distances.java, 157
+        return "Distances{\n" +  // Distances.java, 158
+                "    station=" + station + "\n" +  // Distances.java, 159
+                "    planet=" + planet + "\n" +  // Distances.java, 160
+                "    distance Value=" + disValueStationPlanet +  // Distances.java, 161
+                ", [" + disValueTerraforming +  // Distances.java, 162
+                ", " + disValueAlien +  // Distances.java, 163
+                ", " + disValueEngineering +  // Distances.java, 164
+                ", " + disValueAgriculture + "]\n" +  // Distances.java, 165
+                "    usableToken=" + usableToken +  // Distances.java, 166
+                ", [" + usableTokenTerraforming +  // Distances.java, 167
+                ", " + usableTokenAlien +  // Distances.java, 168
+                ", " + usableTokenEngineering +  // Distances.java, 169
+                ", " + usableTokenAgriculture +  // Distances.java, 170
+                "]\n}";  // Distances.java, 171
+    }  // Distances.java, 172
+}  // Distances.java, 173
 
-enum BonusType  // BonusType.java, 3
-    {  // BonusType.java, 4
-        ENERGY_CORE("ENERGY_CORE"),  // BonusType.java, 5
-        TECH_RESEARCH_2("TECH_RESEARCH_2"),  // BonusType.java, 6
-        TECH_RESEARCH_3("TECH_RESEARCH_3"),  // BonusType.java, 7
-        TECH_RESEARCH_4("TECH_RESEARCH_4"),  // BonusType.java, 8
-        NEW_TECH("NEW_TECH"),  // BonusType.java, 9
-        POINTS_1("POINTS_1"),  // BonusType.java, 10
-        POINTS_2("POINTS_2"),  // BonusType.java, 11
-        POINTS_3("POINTS_3"),  // BonusType.java, 12
-        ALIEN_ARTIFACT("ALIEN_ARTIFACT");  // BonusType.java, 13
-        private String bonusValue;  // BonusType.java, 15
-        BonusType(String bonusValue) {  // BonusType.java, 17
-            this.bonusValue = bonusValue;  // BonusType.java, 18
-        }  // BonusType.java, 19
-        public String getBonusValue() {  // BonusType.java, 21
-            return bonusValue;  // BonusType.java, 22
-        }  // BonusType.java, 23
-    }  // BonusType.java, 24
+enum BonusType {  // BonusType.java, 5
+    ENERGY_CORE("ENERGY_CORE"),  // BonusType.java, 6
+    TECH_RESEARCH_2("TECH_RESEARCH_2"),  // BonusType.java, 7
+    TECH_RESEARCH_3("TECH_RESEARCH_3"),  // BonusType.java, 8
+    TECH_RESEARCH_4("TECH_RESEARCH_4"),  // BonusType.java, 9
+    NEW_TECH("NEW_TECH"),  // BonusType.java, 10
+    POINTS_1("POINTS_1"),  // BonusType.java, 11
+    POINTS_2("POINTS_2"),  // BonusType.java, 12
+    POINTS_3("POINTS_3"),  // BonusType.java, 13
+    ALIEN_ARTIFACT("ALIEN_ARTIFACT");  // BonusType.java, 14
+    private String bonusValue;  // BonusType.java, 16
+    BonusType(String bonusValue) {  // BonusType.java, 18
+        this.bonusValue = bonusValue;  // BonusType.java, 19
+    }  // BonusType.java, 20
+    @Override  // BonusType.java, 22
+    public String toString() {  // BonusType.java, 23
+        return  bonusValue ;  // BonusType.java, 24
+    }  // BonusType.java, 25
+    public String getBonusValue() {  // BonusType.java, 27
+        return bonusValue;  // BonusType.java, 28
+    }  // BonusType.java, 29
+    public boolean isBonusAvailableInList(ArrayList<Bonus> myBonus) {  // BonusType.java, 31
+        if (myBonus == null) {  // BonusType.java, 32
+            return false;  // BonusType.java, 33
+        }  // BonusType.java, 34
+        for (Bonus bonus : myBonus) {  // BonusType.java, 35
+            if (this.equals(bonus.getBonus())) {  // BonusType.java, 36
+                return true;  // BonusType.java, 37
+            }  // BonusType.java, 38
+        }  // BonusType.java, 39
+        return false;  // BonusType.java, 40
+    }  // BonusType.java, 41
+}  // BonusType.java, 42
 
 class StationObjective {  // StationObjective.java, 3
     int scoreIfReached;  // StationObjective.java, 4
@@ -165,7 +196,17 @@ class StationObjective {  // StationObjective.java, 3
         this.engineeringLevelObj=obj2;  // StationObjective.java, 16
         this.agricultureLevelObj=obj3;  // StationObjective.java, 17
     }  // StationObjective.java, 18
-}  // StationObjective.java, 19
+    @Override  // StationObjective.java, 20
+    public String toString() {  // StationObjective.java, 21
+        return "StationObj{" +  // StationObjective.java, 22
+                "Score=" + scoreIfReached +  // StationObjective.java, 23
+                ", Level=[" + terraLevelObj +  // StationObjective.java, 24
+                ", " + alienLevelObj +  // StationObjective.java, 25
+                ", " + engineeringLevelObj +  // StationObjective.java, 26
+                ", " + agricultureLevelObj +  // StationObjective.java, 27
+                "]}";  // StationObjective.java, 28
+    }  // StationObjective.java, 29
+}  // StationObjective.java, 30
 
 class Planet {  // Planet.java, 5
     int planetId;  // Planet.java, 6
@@ -237,9 +278,9 @@ class Planet {  // Planet.java, 5
         if (BonusType.POINTS_1.toString().equals(this.bonus1))  // Planet.java, 88
             return "1";  // Planet.java, 89
         //then the energy  // Planet.java, 91
-        if (BonusType.ENERGY_CORE.toString().equals(this.bonus0) && !isBonusAvailable(myBonus, BonusType.ENERGY_CORE))  // Planet.java, 92
+        if (BonusType.ENERGY_CORE.toString().equals(this.bonus0) && !BonusType.ENERGY_CORE.isBonusAvailableInList(myBonus))  // Planet.java, 92
             return "0";  // Planet.java, 93
-        if (BonusType.ENERGY_CORE.toString().equals(this.bonus1) && !isBonusAvailable(myBonus, BonusType.ENERGY_CORE))  // Planet.java, 94
+        if (BonusType.ENERGY_CORE.toString().equals(this.bonus1) && !BonusType.ENERGY_CORE.isBonusAvailableInList(myBonus))  // Planet.java, 94
             return "1";  // Planet.java, 95
         //then the TECH TODO to be customized with station obj  // Planet.java, 97
         if (BonusType.TECH_RESEARCH_2.toString().equals(this.bonus0))  // Planet.java, 98
@@ -260,19 +301,20 @@ class Planet {  // Planet.java, 5
             return "1";  // Planet.java, 114
         return "0";  // Planet.java, 116
     }  // Planet.java, 117
-    // TODO IT IS DUPPLICATED PAS BIEN  // Planet.java, 119
-    private boolean isBonusAvailable(ArrayList<Bonus> myBonus, BonusType bonusType ){  // Planet.java, 120
-        if(myBonus == null){  // Planet.java, 121
-            return false;  // Planet.java, 122
-        }  // Planet.java, 123
-        for(Bonus bonus: myBonus){  // Planet.java, 124
-            if(bonusType.equals(bonus.getBonus())){  // Planet.java, 125
-                return true;  // Planet.java, 126
-            }  // Planet.java, 127
-        }  // Planet.java, 128
-        return false;  // Planet.java, 129
-    }  // Planet.java, 130
-}  // Planet.java, 131
+    @Override  // Planet.java, 119
+    public String toString() {  // Planet.java, 120
+        return "Planet{" + planetId +  // Planet.java, 121
+                ", [" + terraformingTaskLeftValue +  // Planet.java, 122
+                ", " + alienTaskLeftValue +  // Planet.java, 123
+                ", " + engineeringTaskLeftValue +  // Planet.java, 124
+                ", " + agricultureTaskLeftValue +  // Planet.java, 125
+                "], myContributionTotalTaks=" + myContributionTotalTaks +  // Planet.java, 126
+                ", oppContributionTotalTasks=" + oppContributionTotalTasks +  // Planet.java, 127
+                ", colonizationScore=" + colonizationScore +  // Planet.java, 128
+                ", bonus=[" + bonus0 +  // Planet.java, 129
+                ", " + bonus1 + "]}";  // Planet.java, 130
+    }  // Planet.java, 131
+}  // Planet.java, 132
 
 class Station {  // Station.java, 3
     int stationId;  // Station.java, 4
@@ -283,75 +325,89 @@ class Station {  // Station.java, 3
     int alienSkill;  // Station.java, 10
     int engineeringSkill;  // Station.java, 11
     int agricultureSkill;  // Station.java, 12
-    //  // Station.java, 14
-    StationObjective myStationObj;  // Station.java, 15
-    //constructor  // Station.java, 17
-    public Station(int id,int isMine)  // Station.java, 18
-    {  // Station.java, 19
-        this.stationId=id;  // Station.java, 20
-        this.isMine=isMine;  // Station.java, 21
-    }  // Station.java, 23
-    public void setTechLevel(int tValue,int alValue,int eValue,int agValue)  // Station.java, 24
-    {  // Station.java, 25
-        this.terraformingSkill =tValue;  // Station.java, 26
-        this.alienSkill =alValue;  // Station.java, 27
-        this.engineeringSkill =eValue;  // Station.java, 28
-        this.agricultureSkill =agValue;  // Station.java, 29
-    }  // Station.java, 30
-    public void setAvailable(int available)  // Station.java, 32
-    {  // Station.java, 33
-        this.isAvailable=available;  // Station.java, 34
-    }  // Station.java, 35
-    public int isMine()  // Station.java, 37
-    {  // Station.java, 38
-        return isMine;  // Station.java, 39
-    }  // Station.java, 40
-    public boolean isAvailable()  // Station.java, 42
-    {  // Station.java, 43
-        return isAvailable==1;  // Station.java, 44
-    }  // Station.java, 45
-    public void setObjective(StationObjective stO)  // Station.java, 47
-    {  // Station.java, 48
-        this.myStationObj=stO;  // Station.java, 49
-    }  // Station.java, 50
-    public int getStationId() {  // Station.java, 52
-        return stationId;  // Station.java, 53
-    }  // Station.java, 54
-    public int getIsMine() {  // Station.java, 56
-        return isMine;  // Station.java, 57
-    }  // Station.java, 58
-    public int getIsAvailable() {  // Station.java, 60
-        return isAvailable;  // Station.java, 61
-    }  // Station.java, 62
-    public int getTerraformingSkill() {  // Station.java, 64
-        return terraformingSkill;  // Station.java, 65
-    }  // Station.java, 66
-    public int getAlienSkill() {  // Station.java, 68
-        return alienSkill;  // Station.java, 69
-    }  // Station.java, 70
-    public int getEngineeringSkill() {  // Station.java, 72
-        return engineeringSkill;  // Station.java, 73
-    }  // Station.java, 74
-    public int getAgricultureSkill() {  // Station.java, 76
-        return agricultureSkill;  // Station.java, 77
-    }  // Station.java, 78
-    public StationObjective getMyStationObj() {  // Station.java, 80
-        return myStationObj;  // Station.java, 81
-    }  // Station.java, 82
-}  // Station.java, 84
+    StationObjective myStationObj;  // Station.java, 14
+    //constructor  // Station.java, 16
+    public Station(int id,int isMine)  // Station.java, 17
+    {  // Station.java, 18
+        this.stationId=id;  // Station.java, 19
+        this.isMine=isMine;  // Station.java, 20
+    }  // Station.java, 22
+    public void setTechLevel(int tValue,int alValue,int eValue,int agValue)  // Station.java, 23
+    {  // Station.java, 24
+        this.terraformingSkill =tValue;  // Station.java, 25
+        this.alienSkill =alValue;  // Station.java, 26
+        this.engineeringSkill =eValue;  // Station.java, 27
+        this.agricultureSkill =agValue;  // Station.java, 28
+    }  // Station.java, 29
+    public void setAvailable(int available)  // Station.java, 31
+    {  // Station.java, 32
+        this.isAvailable=available;  // Station.java, 33
+    }  // Station.java, 34
+    public int isMine()  // Station.java, 36
+    {  // Station.java, 37
+        return isMine;  // Station.java, 38
+    }  // Station.java, 39
+    public boolean isAvailable()  // Station.java, 41
+    {  // Station.java, 42
+        return isAvailable==1;  // Station.java, 43
+    }  // Station.java, 44
+    public void setObjective(StationObjective stO)  // Station.java, 46
+    {  // Station.java, 47
+        this.myStationObj=stO;  // Station.java, 48
+    }  // Station.java, 49
+    public int getStationId() {  // Station.java, 51
+        return stationId;  // Station.java, 52
+    }  // Station.java, 53
+    public int getIsMine() {  // Station.java, 55
+        return isMine;  // Station.java, 56
+    }  // Station.java, 57
+    public int getIsAvailable() {  // Station.java, 59
+        return isAvailable;  // Station.java, 60
+    }  // Station.java, 61
+    public int getTerraformingSkill() {  // Station.java, 63
+        return terraformingSkill;  // Station.java, 64
+    }  // Station.java, 65
+    public int getAlienSkill() {  // Station.java, 67
+        return alienSkill;  // Station.java, 68
+    }  // Station.java, 69
+    public int getEngineeringSkill() {  // Station.java, 71
+        return engineeringSkill;  // Station.java, 72
+    }  // Station.java, 73
+    public int getAgricultureSkill() {  // Station.java, 75
+        return agricultureSkill;  // Station.java, 76
+    }  // Station.java, 77
+    public StationObjective getMyStationObj() {  // Station.java, 79
+        return myStationObj;  // Station.java, 80
+    }  // Station.java, 81
+    @Override  // Station.java, 83
+    public String toString() {  // Station.java, 84
+        return "Station{" +  // Station.java, 85
+                "" + stationId +  // Station.java, 86
+                ", mine=" + isMine +  // Station.java, 87
+                ", avail=" + isAvailable +  // Station.java, 88
+                ", skill=[" + terraformingSkill +  // Station.java, 89
+                ", " + alienSkill +  // Station.java, 90
+                ", " + engineeringSkill +  // Station.java, 91
+                ", " + agricultureSkill +  // Station.java, 92
+                "], " + myStationObj +  // Station.java, 93
+                "}";  // Station.java, 94
+    }  // Station.java, 95
+}  // Station.java, 96
 
-class Bonus {  // Bonus.java, 5
-    private BonusType bonus;  // Bonus.java, 7
-    public Bonus(String bonus){  // Bonus.java, 9
-        this.bonus = BonusType.valueOf(bonus);  // Bonus.java, 10
-    }  // Bonus.java, 11
-    public BonusType getBonus() {  // Bonus.java, 13
-        return bonus;  // Bonus.java, 14
-    }  // Bonus.java, 15
-    /*public static void main(String[] args) {  // Bonus.java, 17
-        Bonus bonus = new Bonus("ENERGY_CORE");  // Bonus.java, 18
-    }*/  // Bonus.java, 20
-}  // Bonus.java, 21
+class Bonus {  // Bonus.java, 3
+    private BonusType bonus;  // Bonus.java, 5
+    public Bonus(String bonus) {  // Bonus.java, 7
+        this.bonus = BonusType.valueOf(bonus);  // Bonus.java, 8
+    }  // Bonus.java, 9
+    public BonusType getBonus() {  // Bonus.java, 11
+        return bonus;  // Bonus.java, 12
+    }  // Bonus.java, 13
+    @Override  // Bonus.java, 15
+    public String toString() {  // Bonus.java, 16
+        return "Bonus{" + bonus +  // Bonus.java, 17
+                '}';  // Bonus.java, 18
+    }  // Bonus.java, 19
+}  // Bonus.java, 20
 
 class Strategy {  // Strategy.java, 5
     private Station[] myStations = new Station[4];  // Strategy.java, 8
@@ -394,165 +450,157 @@ class Strategy {  // Strategy.java, 5
             }  // Strategy.java, 48
         }  // Strategy.java, 49
         Distances distanceToPlay = getBestTokenUsableFromList(distancesArrayList) ;  // Strategy.java, 52
-        if(distanceToPlay.getStation().isAvailable()) {  // Strategy.java, 53
-                return preCommand+applyColonizeWithAllienAttempt(myBonus,distanceToPlay);  // Strategy.java, 54
-        }else{  // Strategy.java, 55
-            //do we have an avaialble station with the same distance ? if yes, let's colonize with it ....  // Strategy.java, 56
-            disMinAvailable = getBestTokenUsableFromList(geAvailablesFromList(distancesArrayList));  // Strategy.java, 57
-            if(disMinAvailable != null && disMinAvailable.getDisValueStationPlanet() <= distanceToPlay.getDisValueStationPlanet()){  // Strategy.java, 58
-                return preCommand+applyColonizeWithAllienAttempt(myBonus,disMinAvailable) ;  // Strategy.java, 59
-            }  // Strategy.java, 60
-            //... else let's try to apply a bonus to the non available better one  // Strategy.java, 61
-            //do dwe have a ENERGY BONUS to allow resupply and colonize in one shot  // Strategy.java, 62
-            return preCommand+applyEnergyAndColonize_Or_Resupply(myBonus, applyColonizeWithAllienAttempt(myBonus,distanceToPlay));  // Strategy.java, 63
-        }  // Strategy.java, 65
-    }  // Strategy.java, 66
-    public ArrayList<Distances> geAvailablesFromList(ArrayList<Distances> distancesArrayList){  // Strategy.java, 68
-        ArrayList<Distances> list = new ArrayList<>();  // Strategy.java, 69
-        if (distancesArrayList != null){  // Strategy.java, 70
-            for(Distances distances: distancesArrayList){  // Strategy.java, 71
-                if(distances.getStation().isAvailable()){  // Strategy.java, 72
-                    list.add(distances);  // Strategy.java, 73
-                }  // Strategy.java, 74
-            }  // Strategy.java, 75
-        }  // Strategy.java, 76
-        return list;  // Strategy.java, 77
-    }  // Strategy.java, 78
-    public Distances getBestTokenUsableFromList(ArrayList<Distances> distancesArrayList){  // Strategy.java, 79
-        if (distancesArrayList == null){  // Strategy.java, 80
-            return null;  // Strategy.java, 81
-        }  // Strategy.java, 82
-        Distances prev = null;  // Strategy.java, 83
-        Distances cur = null;  // Strategy.java, 84
-        for(Distances distances: distancesArrayList){  // Strategy.java, 85
-            if(prev == null){  // Strategy.java, 86
-                prev = distances;  // Strategy.java, 87
-                cur = distances;  // Strategy.java, 88
-            }else{  // Strategy.java, 89
-                if(cur.getUsableToken() > prev.getUsableToken()){  // Strategy.java, 90
-                    prev = cur;  // Strategy.java, 91
-                }  // Strategy.java, 92
-            }  // Strategy.java, 93
-        }  // Strategy.java, 94
-        return prev;  // Strategy.java, 95
-    }  // Strategy.java, 96
-    public String applyTechPreCommand(){  // Strategy.java, 98
-        String resultCommand = "";  // Strategy.java, 99
-        // Apply BONUS Pre Command: Apply Tech Reasearch on the first tech on the first station  // Strategy.java, 100
-        for(Bonus bonus: myBonus){  // Strategy.java, 101
-            System.err.println("Bonus -> "+ bonus.getBonus());  // Strategy.java, 102
-            int techREsearchBonusNum = -1;  // Strategy.java, 103
-            String commandName = "";  // Strategy.java, 104
-            if(BonusType.NEW_TECH.equals(bonus.getBonus())) {  // Strategy.java, 105
-                techREsearchBonusNum = 0;  // Strategy.java, 106
-                System.err.println("Found Bonus NEW TECH");  // Strategy.java, 107
-                commandName = "NEW_TECH ";  // Strategy.java, 108
-            }else if(BonusType.TECH_RESEARCH_2.equals(bonus.getBonus())) {  // Strategy.java, 109
-                techREsearchBonusNum = 1;  // Strategy.java, 110
-                System.err.println("Found Bonus TechREsearch 2");  // Strategy.java, 111
-                commandName = "TECH_RESEARCH ";  // Strategy.java, 112
-            }else if(BonusType.TECH_RESEARCH_3.equals(bonus.getBonus())) {  // Strategy.java, 113
-                System.err.println("Found Bonus TechREsearch 3");  // Strategy.java, 114
-                techREsearchBonusNum = 2;  // Strategy.java, 115
+        System.err.println("Number of min Dist="+distancesArrayList.size());  // Strategy.java, 53
+        System.err.println("Distrance To play:"+distanceToPlay.toString());  // Strategy.java, 54
+        if(distanceToPlay.getStation().isAvailable()) {  // Strategy.java, 56
+                return preCommand+applyColonizeWithAllienAttempt(myBonus,distanceToPlay);  // Strategy.java, 57
+        }else{  // Strategy.java, 58
+            //do we have an avaialble station with the same distance ? if yes, let's colonize with it ....  // Strategy.java, 59
+            disMinAvailable = getBestTokenUsableFromList(geAvailablesFromList(distancesArrayList));  // Strategy.java, 60
+            if(disMinAvailable != null && disMinAvailable.getDisValueStationPlanet() <= distanceToPlay.getDisValueStationPlanet()){  // Strategy.java, 61
+                System.err.println("Distrance To play (Min Available):"+disMinAvailable.toString());  // Strategy.java, 62
+                return preCommand+applyColonizeWithAllienAttempt(myBonus,disMinAvailable) ;  // Strategy.java, 64
+            }  // Strategy.java, 65
+            //... else let's try to apply a bonus to the non available better one  // Strategy.java, 66
+            //do dwe have a ENERGY BONUS to allow resupply and colonize in one shot  // Strategy.java, 67
+            return preCommand+applyEnergyAndColonize_Or_Resupply(myBonus, applyColonizeWithAllienAttempt(myBonus,distanceToPlay));  // Strategy.java, 68
+        }  // Strategy.java, 70
+    }  // Strategy.java, 71
+    public ArrayList<Distances> geAvailablesFromList(ArrayList<Distances> distancesArrayList){  // Strategy.java, 73
+        ArrayList<Distances> list = new ArrayList<>();  // Strategy.java, 74
+        if (distancesArrayList != null){  // Strategy.java, 75
+            for(Distances distances: distancesArrayList){  // Strategy.java, 76
+                if(distances.getStation().isAvailable()){  // Strategy.java, 77
+                    list.add(distances);  // Strategy.java, 78
+                }  // Strategy.java, 79
+            }  // Strategy.java, 80
+        }  // Strategy.java, 81
+        return list;  // Strategy.java, 82
+    }  // Strategy.java, 83
+    public Distances getBestTokenUsableFromList(ArrayList<Distances> distancesArrayList){  // Strategy.java, 85
+        if (distancesArrayList == null){  // Strategy.java, 86
+            return null;  // Strategy.java, 87
+        }  // Strategy.java, 88
+        Distances prev = null;  // Strategy.java, 89
+        Distances cur = null;  // Strategy.java, 90
+        for(Distances distances: distancesArrayList){  // Strategy.java, 91
+            if(prev == null){  // Strategy.java, 92
+                prev = distances;  // Strategy.java, 93
+                cur = distances;  // Strategy.java, 94
+            }else{  // Strategy.java, 95
+                if(cur.getUsableToken() > prev.getUsableToken()){  // Strategy.java, 96
+                    prev = cur;  // Strategy.java, 97
+                }  // Strategy.java, 98
+            }  // Strategy.java, 99
+        }  // Strategy.java, 100
+        return prev;  // Strategy.java, 101
+    }  // Strategy.java, 102
+    public String applyTechPreCommand(){  // Strategy.java, 104
+        String resultCommand = "";  // Strategy.java, 105
+        // Apply BONUS Pre Command: Apply Tech Reasearch on the first tech on the first station  // Strategy.java, 106
+        for(Bonus bonus: myBonus){  // Strategy.java, 107
+            System.err.println(bonus.toString());  // Strategy.java, 108
+            int techREsearchBonusNum = -1;  // Strategy.java, 109
+            String commandName = "";  // Strategy.java, 110
+            if(BonusType.NEW_TECH.equals(bonus.getBonus())) {  // Strategy.java, 111
+                techREsearchBonusNum = 0;  // Strategy.java, 112
+                commandName = "NEW_TECH ";  // Strategy.java, 113
+            }else if(BonusType.TECH_RESEARCH_2.equals(bonus.getBonus())) {  // Strategy.java, 114
+                techREsearchBonusNum = 1;  // Strategy.java, 115
                 commandName = "TECH_RESEARCH ";  // Strategy.java, 116
-            }if(BonusType.TECH_RESEARCH_4.equals(bonus.getBonus())) {  // Strategy.java, 117
-                System.err.println("Found Bonus TechREsearch 4");  // Strategy.java, 118
-                techREsearchBonusNum = 3;  // Strategy.java, 119
-                commandName = "TECH_RESEARCH ";  // Strategy.java, 120
-            }  // Strategy.java, 121
-            if (techREsearchBonusNum >= 0) {  // Strategy.java, 122
-                for (int i = 0; i < myStations.length; i++) {  // Strategy.java, 123
-                    Station station = myStations[i];  // Strategy.java, 124
-                    if (station.getTerraformingSkill() == techREsearchBonusNum) {  // Strategy.java, 126
-                        resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.TERRAFORMING);  // Strategy.java, 127
-                        station.terraformingSkill += 1;  // Strategy.java, 128
-                        break;  // Strategy.java, 129
-                    } else if (station.getAlienSkill() == techREsearchBonusNum) {  // Strategy.java, 130
-                        resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.ALIEN);  // Strategy.java, 131
-                        station.alienSkill += 1;  // Strategy.java, 132
-                        break;  // Strategy.java, 133
-                    } else if (station.getEngineeringSkill() == techREsearchBonusNum) {  // Strategy.java, 134
-                        resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.ENGINEERING);  // Strategy.java, 135
-                        station.engineeringSkill += 1;  // Strategy.java, 136
+            }else if(BonusType.TECH_RESEARCH_3.equals(bonus.getBonus())) {  // Strategy.java, 117
+                techREsearchBonusNum = 2;  // Strategy.java, 118
+                commandName = "TECH_RESEARCH ";  // Strategy.java, 119
+            }if(BonusType.TECH_RESEARCH_4.equals(bonus.getBonus())) {  // Strategy.java, 120
+                techREsearchBonusNum = 3;  // Strategy.java, 121
+                commandName = "TECH_RESEARCH ";  // Strategy.java, 122
+            }  // Strategy.java, 123
+            if (techREsearchBonusNum >= 0) {  // Strategy.java, 124
+                for (int i = 0; i < myStations.length; i++) {  // Strategy.java, 125
+                    Station station = myStations[i];  // Strategy.java, 126
+                    if (station.getTerraformingSkill() == techREsearchBonusNum) {  // Strategy.java, 128
+                        resultCommand += commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.TERRAFORMING);  // Strategy.java, 129
+                        station.terraformingSkill += 1;  // Strategy.java, 130
+                        System.err.println("Station impacted: "+station.toString());  // Strategy.java, 131
+                        break;  // Strategy.java, 132
+                    } else if (station.getAlienSkill() == techREsearchBonusNum) {  // Strategy.java, 133
+                        resultCommand += commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.ALIEN);  // Strategy.java, 134
+                        station.alienSkill += 1;  // Strategy.java, 135
+                        System.err.println("Station impacted: "+station.toString());  // Strategy.java, 136
                         break;  // Strategy.java, 137
-                    } else if (station.getAgricultureSkill() == techREsearchBonusNum) {  // Strategy.java, 138
-                        resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.AGRICULTURE);  // Strategy.java, 139
-                        station.agricultureSkill += 1;  // Strategy.java, 140
-                        break;  // Strategy.java, 141
-                    }  // Strategy.java, 142
-                }  // Strategy.java, 143
-            }  // Strategy.java, 144
-        }  // Strategy.java, 145
-        if (!"".equals(resultCommand)){  // Strategy.java, 146
-            resultCommand += " ";  // Strategy.java, 147
-        }  // Strategy.java, 148
-        System.err.println("PreCommand-> ["+resultCommand+"]");  // Strategy.java, 149
-        return resultCommand;  // Strategy.java, 150
-    }  // Strategy.java, 151
-    public  boolean isBonusAvailable(ArrayList<Bonus> myBonus, BonusType bonusType ){  // Strategy.java, 153
-        if(myBonus == null){  // Strategy.java, 154
-            return false;  // Strategy.java, 155
-        }  // Strategy.java, 156
-        for(Bonus bonus: myBonus){  // Strategy.java, 157
-            if(bonusType.equals(bonus.getBonus())){  // Strategy.java, 158
-                return true;  // Strategy.java, 159
-            }  // Strategy.java, 160
-        }  // Strategy.java, 161
-        return false;  // Strategy.java, 162
-    }  // Strategy.java, 163
-    public String applyEnergyAndColonize_Or_Resupply (ArrayList<Bonus> myBonus, String colonizeAction)  // Strategy.java, 165
-    {  // Strategy.java, 166
-        if(isBonusAvailable(myBonus, BonusType.ENERGY_CORE)){  // Strategy.java, 167
-            return BonusType.ENERGY_CORE+" "+ colonizeAction;  // Strategy.java, 168
-        }  // Strategy.java, 169
-        else{  // Strategy.java, 170
-            //no choice  // Strategy.java, 171
-            return "RESUPPLY";  // Strategy.java, 172
-        }  // Strategy.java, 173
-    }  // Strategy.java, 174
-    public String applyColonizeWithAllienAttempt(ArrayList<Bonus> myBonus, Distances distanceToPlay)  // Strategy.java, 176
-    {  // Strategy.java, 177
-        String prefixAllien = "";  // Strategy.java, 178
-        if (distanceToPlay.getDisValueStationPlanet()>=2 && isBonusAvailable(myBonus, BonusType.ALIEN_ARTIFACT))  // Strategy.java, 179
-        {  // Strategy.java, 180
-            int allien0;  // Strategy.java, 181
-            int allien1;  // Strategy.java, 182
-            int bonusCounter = 2;  // Strategy.java, 183
-            int[] tasks = new int[2];  // Strategy.java, 184
-            int currentTerraValue = distanceToPlay.getValueTerraformingStationPlanet();  // Strategy.java, 185
-            int currentAllienValue = distanceToPlay.getValueAlienStationPlanet();  // Strategy.java, 186
-            int currentEngValue = distanceToPlay.getValueEngineeringStationPlanet();  // Strategy.java, 187
-            int currentAgriValue = distanceToPlay.getValueAgricultureStationPlanet();  // Strategy.java, 188
-            while (currentTerraValue>=1 && bonusCounter>0)  // Strategy.java, 190
+                    } else if (station.getEngineeringSkill() == techREsearchBonusNum) {  // Strategy.java, 138
+                        resultCommand += commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.ENGINEERING);  // Strategy.java, 139
+                        station.engineeringSkill += 1;  // Strategy.java, 140
+                        System.err.println("Station impacted: "+station.toString());  // Strategy.java, 141
+                        break;  // Strategy.java, 142
+                    } else if (station.getAgricultureSkill() == techREsearchBonusNum) {  // Strategy.java, 143
+                        resultCommand += commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.AGRICULTURE);  // Strategy.java, 144
+                        station.agricultureSkill += 1;  // Strategy.java, 145
+                        System.err.println("Station impacted: "+station.toString());  // Strategy.java, 146
+                        break;  // Strategy.java, 147
+                    }  // Strategy.java, 148
+                }  // Strategy.java, 149
+            }  // Strategy.java, 150
+        }  // Strategy.java, 151
+        if (!"".equals(resultCommand)){  // Strategy.java, 152
+            resultCommand += " ";  // Strategy.java, 153
+        }  // Strategy.java, 154
+        System.err.println("PreCommand = "+resultCommand);  // Strategy.java, 155
+        return resultCommand;  // Strategy.java, 156
+    }  // Strategy.java, 157
+    public String applyEnergyAndColonize_Or_Resupply (ArrayList<Bonus> myBonus, String colonizeAction)  // Strategy.java, 159
+    {  // Strategy.java, 160
+        if(BonusType.ENERGY_CORE.isBonusAvailableInList(myBonus)){  // Strategy.java, 161
+            return BonusType.ENERGY_CORE+" "+ colonizeAction;  // Strategy.java, 162
+        }  // Strategy.java, 163
+        else{  // Strategy.java, 164
+            //no choice  // Strategy.java, 165
+            return "RESUPPLY";  // Strategy.java, 166
+        }  // Strategy.java, 167
+    }  // Strategy.java, 168
+    public String applyColonizeWithAllienAttempt(ArrayList<Bonus> myBonus, Distances distanceToPlay)  // Strategy.java, 170
+    {  // Strategy.java, 171
+        String prefixAllien = "";  // Strategy.java, 172
+        if (distanceToPlay.getDisValueStationPlanet()>=2 && BonusType.ALIEN_ARTIFACT.isBonusAvailableInList(myBonus))  // Strategy.java, 173
+        {  // Strategy.java, 174
+            int allien0;  // Strategy.java, 175
+            int allien1;  // Strategy.java, 176
+            int bonusCounter = 2;  // Strategy.java, 177
+            int[] tasks = new int[2];  // Strategy.java, 178
+            int currentTerraValue = distanceToPlay.getValueTerraformingStationPlanet();  // Strategy.java, 179
+            int currentAllienValue = distanceToPlay.getValueAlienStationPlanet();  // Strategy.java, 180
+            int currentEngValue = distanceToPlay.getValueEngineeringStationPlanet();  // Strategy.java, 181
+            int currentAgriValue = distanceToPlay.getValueAgricultureStationPlanet();  // Strategy.java, 182
+            while (currentTerraValue>=1 && bonusCounter>0)  // Strategy.java, 184
+             {     // Strategy.java, 185
+                tasks[tasks.length-bonusCounter] = 0; //0 for terra  // Strategy.java, 186
+                bonusCounter--;  // Strategy.java, 187
+                currentTerraValue--;  // Strategy.java, 188
+             }  // Strategy.java, 189
+             while (currentAllienValue>=1 && bonusCounter>0)  // Strategy.java, 190
              {     // Strategy.java, 191
-                tasks[tasks.length-bonusCounter] = 0; //0 for terra  // Strategy.java, 192
+                tasks[tasks.length-bonusCounter] = 1; //0 for allien  // Strategy.java, 192
                 bonusCounter--;  // Strategy.java, 193
-                currentTerraValue--;  // Strategy.java, 194
+                currentAllienValue--;  // Strategy.java, 194
              }  // Strategy.java, 195
-             while (currentAllienValue>=1 && bonusCounter>0)  // Strategy.java, 196
+             while (currentEngValue>=1 && bonusCounter>0)  // Strategy.java, 196
              {     // Strategy.java, 197
-                tasks[tasks.length-bonusCounter] = 1; //0 for allien  // Strategy.java, 198
+                tasks[tasks.length-bonusCounter] = 2; //0 for eng  // Strategy.java, 198
                 bonusCounter--;  // Strategy.java, 199
-                currentAllienValue--;  // Strategy.java, 200
+                currentEngValue--;  // Strategy.java, 200
              }  // Strategy.java, 201
-             while (currentEngValue>=1 && bonusCounter>0)  // Strategy.java, 202
+             while (currentAgriValue>=1 && bonusCounter>0)  // Strategy.java, 202
              {     // Strategy.java, 203
-                tasks[tasks.length-bonusCounter] = 2; //0 for eng  // Strategy.java, 204
+                tasks[tasks.length-bonusCounter] = 3; //0 for agri  // Strategy.java, 204
                 bonusCounter--;  // Strategy.java, 205
-                currentEngValue--;  // Strategy.java, 206
+                currentAgriValue--;  // Strategy.java, 206
              }  // Strategy.java, 207
-             while (currentAgriValue>=1 && bonusCounter>0)  // Strategy.java, 208
-             {     // Strategy.java, 209
-                tasks[tasks.length-bonusCounter] = 3; //0 for agri  // Strategy.java, 210
-                bonusCounter--;  // Strategy.java, 211
-                currentAgriValue--;  // Strategy.java, 212
-             }  // Strategy.java, 213
-            prefixAllien+= "ALLIEN_ARTIFACT " + tasks[0] + " "+ tasks[1] + " ";  // Strategy.java, 216
-        }  // Strategy.java, 217
-        String colonizeAction="COLONIZE " + distanceToPlay.getStation().getStationId() + " " + distanceToPlay.getPlanet().getPlanetId() + " " + distanceToPlay.getPlanet().getBestBonus(myBonus);  // Strategy.java, 219
-        return prefixAllien + colonizeAction;  // Strategy.java, 220
-    }  // Strategy.java, 221
-}  // Strategy.java, 222
+            prefixAllien+= "ALLIEN_ARTIFACT " + tasks[0] + " "+ tasks[1] + " ";  // Strategy.java, 210
+        }  // Strategy.java, 211
+        String colonizeAction="COLONIZE " + distanceToPlay.getStation().getStationId() + " " + distanceToPlay.getPlanet().getPlanetId() + " " + distanceToPlay.getPlanet().getBestBonus(myBonus);  // Strategy.java, 213
+        return prefixAllien + colonizeAction;  // Strategy.java, 214
+    }  // Strategy.java, 215
+}  // Strategy.java, 216
 
 enum TechEnum {  // TechEnum.java, 3
     TERRAFORMING,  // TechEnum.java, 4
