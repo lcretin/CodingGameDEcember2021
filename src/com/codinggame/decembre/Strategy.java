@@ -36,22 +36,16 @@ public class Strategy {
         }
         //System.err.println("Distance: ["+distance.getPlanet().getPlanetId()+"] ["+distance.getStation().getStationId()+"] dist= "+ distance.getValueStationPlanet());
         Distances distanceToPlay = disMin;
-
-        String colonizeAction="COLONIZE " + distanceToPlay.getStation().getStationId() + " " + distanceToPlay.getPlanet().getPlanetId() + " " + distanceToPlay.getPlanet().getBestBonus();
         if(distanceToPlay.getStation().isAvailable()) {
-                return colonizeAction;
+                return applyColonizeWithAllienAttempt(myBonus,distanceToPlay);
         }else{
-            //do dwe have a ENERGY BONUS to allow resupply and colonize in one shot
+            //do we have an avaialble station with the same distance ? if yes, let's colonize with it ....
             if(disMinAvailable != null && disMinAvailable.getValueStationPlanet() <= disMin.getValueStationPlanet()){
-                return "COLONIZE " + disMinAvailable.getStation().getStationId() + " " + disMinAvailable.getPlanet().getPlanetId() + " " + disMinAvailable.getPlanet().getBestBonus();
+                return applyColonizeWithAllienAttempt(myBonus,disMinAvailable) ;
             }
-            if(isBonusAvailable(myBonus, BonusType.ENERGY_CORE)){
-                return BonusType.ENERGY_CORE+" "+colonizeAction;
-            }
-            else{
-                //no choice
-                return "RESUPPLY";
-            }
+            //... else let's try to apply a bonus to the non available better one
+            //do dwe have a ENERGY BONUS to allow resupply and colonize in one shot
+            return applyEnergyAndColonize_Or_Resupply(myBonus, applyColonizeWithAllienAttempt(myBonus,distanceToPlay));
             
         }
     }
@@ -66,5 +60,28 @@ public class Strategy {
             }
         }
         return false;
+    }
+
+    public String applyEnergyAndColonize_Or_Resupply (ArrayList<Bonus> myBonus, String colonizeAction)
+    {
+        if(isBonusAvailable(myBonus, BonusType.ENERGY_CORE)){
+            return BonusType.ENERGY_CORE+" "+ colonizeAction;
+        }
+        else{
+            //no choice
+            return "RESUPPLY";
+        }
+    }
+
+    public String applyColonizeWithAllienAttempt(ArrayList<Bonus> myBonus, Distances distanceToPlay)
+    {
+        String prefixAllien = "";
+        if (distanceToPlay.getValueStationPlanet()>=2 && isBonusAvailable(myBonus, BonusType.ALIEN_ARTIFACT))
+        {
+            prefixAllien+= "ALLIEN_ARTIFACT 0 1 ";
+        }
+        
+        String colonizeAction="COLONIZE " + distanceToPlay.getStation().getStationId() + " " + distanceToPlay.getPlanet().getPlanetId() + " " + distanceToPlay.getPlanet().getBestBonus();
+        return prefixAllien + colonizeAction;
     }
 }
