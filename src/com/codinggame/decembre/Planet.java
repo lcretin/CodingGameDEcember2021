@@ -71,7 +71,46 @@ public class Planet {
         return bonus1;
     }
 
-    public String getBestBonus(){
+    public String getBestBonus(ArrayList<Bonus> myBonus){
+        //let's take the points first
+        if (BonusType.POINTS_3.toString().equals(this.bonus0))
+            return "0";
+        if (BonusType.POINTS_3.toString().equals(this.bonus1))
+            return "1";
+        if (BonusType.POINTS_2.toString().equals(this.bonus0))
+            return "0";
+        if (BonusType.POINTS_2.toString().equals(this.bonus1))
+            return "1";
+        if (BonusType.POINTS_1.toString().equals(this.bonus0))
+            return "0";
+        if (BonusType.POINTS_1.toString().equals(this.bonus1))
+            return "1";
+        
+        //then the energy
+        if (BonusType.ENERGY_CORE.toString().equals(this.bonus0) && !isBonusAvailable(myBonus, BonusType.ENERGY_CORE))
+            return "0";
+        if (BonusType.ENERGY_CORE.toString().equals(this.bonus1) && !isBonusAvailable(myBonus, BonusType.ENERGY_CORE))
+            return "1";
+
+        //then the TECH TODO to be customized with station obj
+        if (BonusType.TECH_RESEARCH_2.toString().equals(this.bonus0))
+            return "0";
+        if (BonusType.TECH_RESEARCH_2.toString().equals(this.bonus1))
+            return "1";
+        if (BonusType.TECH_RESEARCH_3.toString().equals(this.bonus0))
+            return "0";
+        if (BonusType.TECH_RESEARCH_3.toString().equals(this.bonus1))
+            return "1";
+            if (BonusType.TECH_RESEARCH_4.toString().equals(this.bonus0))
+            return "0";
+        if (BonusType.TECH_RESEARCH_4.toString().equals(this.bonus1))
+            return "1";
+        
+        if (BonusType.ALIEN_ARTIFACT.toString().equals(this.bonus0))
+            return "0";
+        if (BonusType.ALIEN_ARTIFACT.toString().equals(this.bonus1))
+            return "1";
+
         return "0";
     }
 }
