@@ -99,8 +99,9 @@ public class Main {
             //printMyStations(myStations);
             //printOppStations(oppStations);
             //printPlanets(planets);
-
-            System.out.println(strategy.execute());
+            String execute =  strategy.execute();
+            System.err.println("Command = "+ execute);
+            System.out.println(execute);
         }
     }
 
