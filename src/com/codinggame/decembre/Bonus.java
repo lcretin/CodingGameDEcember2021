@@ -13,4 +13,9 @@ public class Bonus {
     public BonusType getBonus() {
         return bonus;
     }
+
+    /*public static void main(String[] args) {
+        Bonus bonus = new Bonus("ENERGY_CORE");
+
+    }*/
 }

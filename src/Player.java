@@ -1,5 +1,5 @@
 /*
-This file has been generated Thu Dec 02 15:23:22 CET 2021
+This file has been generated Thu Dec 02 15:29:15 CET 2021
 */
 
 import java.util.Scanner;import java.util.ArrayList;
@@ -18,94 +18,90 @@ class Distances {  // Distances.java, 3
         // If no task remaining and no skill on station, not considered in distance  // Distances.java, 17
         if(this.planet.getTerraformingTaskLeftValue() != 0 ) {  // Distances.java, 18
             int disTerra = this.planet.getTerraformingTaskLeftValue() - this.station.getTerraformingSkill();  // Distances.java, 19
-            System.err.println("terra = "+disTerra);  // Distances.java, 20
-            if(disTerra < 0){  // Distances.java, 21
-                if(result == null){  // Distances.java, 22
-                    result = 0;  // Distances.java, 23
-                }  // Distances.java, 24
-            }else{  // Distances.java, 25
-                if(result == null){  // Distances.java, 26
-                    result = disTerra;  // Distances.java, 27
-                }else{  // Distances.java, 28
-                    result += disTerra;  // Distances.java, 29
-                }  // Distances.java, 30
-            }  // Distances.java, 31
-        }  // Distances.java, 32
-        // If no task remaining and no skill on station, not considered in distance  // Distances.java, 35
-        if(this.planet.getAlienTaskLeftValue() != 0 ) {  // Distances.java, 36
-            int disAlien = this.planet.getAlienTaskLeftValue() - this.station.getAlienSkill();  // Distances.java, 37
-            System.err.println("alien = "+disAlien);  // Distances.java, 38
-            if(disAlien < 0){  // Distances.java, 39
-                if(result == null){  // Distances.java, 40
-                    result = 0;  // Distances.java, 41
-                }  // Distances.java, 42
-            }else{  // Distances.java, 43
-                if(result == null){  // Distances.java, 44
-                    result = disAlien;  // Distances.java, 45
-                }else{  // Distances.java, 46
-                    result += disAlien;  // Distances.java, 47
-                }  // Distances.java, 48
-            }  // Distances.java, 49
-        }  // Distances.java, 50
-        // If no task remaining and no skill on station, not considered in distance  // Distances.java, 54
-        if(this.planet.getEngineeringTaskLeftValue() != 0 ) {  // Distances.java, 55
-            int disEng = this.planet.getEngineeringTaskLeftValue() - this.station.getEngineeringSkill();  // Distances.java, 56
-            System.err.println("eng = "+disEng);  // Distances.java, 57
-            if(disEng < 0){  // Distances.java, 58
-                if(result == null){  // Distances.java, 59
-                    result = 0;  // Distances.java, 60
-                }  // Distances.java, 61
-            }else{  // Distances.java, 62
-                if(result == null){  // Distances.java, 63
-                    result = disEng;  // Distances.java, 64
-                }else{  // Distances.java, 65
-                    result += disEng;  // Distances.java, 66
-                }  // Distances.java, 67
-            }  // Distances.java, 68
-        }  // Distances.java, 69
-        // If no task remaining and no skill on station, not considered in distance  // Distances.java, 72
-        if(this.planet.getAgricultureTaskLeftValue() != 0 ) {  // Distances.java, 73
-            int disAgri = this.planet.getAgricultureTaskLeftValue() - this.station.getAgricultureSkill();  // Distances.java, 74
-            System.err.println("agri = "+disAgri);  // Distances.java, 75
-            if(disAgri < 0){  // Distances.java, 76
+            if(disTerra < 0){  // Distances.java, 20
+                if(result == null){  // Distances.java, 21
+                    result = 0;  // Distances.java, 22
+                }  // Distances.java, 23
+            }else{  // Distances.java, 24
+                if(result == null){  // Distances.java, 25
+                    result = disTerra;  // Distances.java, 26
+                }else{  // Distances.java, 27
+                    result += disTerra;  // Distances.java, 28
+                }  // Distances.java, 29
+            }  // Distances.java, 30
+        }  // Distances.java, 31
+        // If no task remaining and no skill on station, not considered in distance  // Distances.java, 34
+        if(this.planet.getAlienTaskLeftValue() != 0 ) {  // Distances.java, 35
+            int disAlien = this.planet.getAlienTaskLeftValue() - this.station.getAlienSkill();  // Distances.java, 36
+            if(disAlien < 0){  // Distances.java, 37
+                if(result == null){  // Distances.java, 38
+                    result = 0;  // Distances.java, 39
+                }  // Distances.java, 40
+            }else{  // Distances.java, 41
+                if(result == null){  // Distances.java, 42
+                    result = disAlien;  // Distances.java, 43
+                }else{  // Distances.java, 44
+                    result += disAlien;  // Distances.java, 45
+                }  // Distances.java, 46
+            }  // Distances.java, 47
+        }  // Distances.java, 48
+        // If no task remaining and no skill on station, not considered in distance  // Distances.java, 52
+        if(this.planet.getEngineeringTaskLeftValue() != 0 ) {  // Distances.java, 53
+            int disEng = this.planet.getEngineeringTaskLeftValue() - this.station.getEngineeringSkill();  // Distances.java, 54
+            if(disEng < 0){  // Distances.java, 55
+                if(result == null){  // Distances.java, 56
+                    result = 0;  // Distances.java, 57
+                }  // Distances.java, 58
+            }else{  // Distances.java, 59
+                if(result == null){  // Distances.java, 60
+                    result = disEng;  // Distances.java, 61
+                }else{  // Distances.java, 62
+                    result += disEng;  // Distances.java, 63
+                }  // Distances.java, 64
+            }  // Distances.java, 65
+        }  // Distances.java, 66
+        // If no task remaining and no skill on station, not considered in distance  // Distances.java, 69
+        if(this.planet.getAgricultureTaskLeftValue() != 0 ) {  // Distances.java, 70
+            int disAgri = this.planet.getAgricultureTaskLeftValue() - this.station.getAgricultureSkill();  // Distances.java, 71
+            if(disAgri < 0){  // Distances.java, 72
+                if(result == null){  // Distances.java, 73
+                    result = 0;  // Distances.java, 74
+                }  // Distances.java, 75
+            }else{  // Distances.java, 76
                 if(result == null){  // Distances.java, 77
-                    result = 0;  // Distances.java, 78
-                }  // Distances.java, 79
-            }else{  // Distances.java, 80
-                if(result == null){  // Distances.java, 81
-                    result = disAgri;  // Distances.java, 82
-                }else{  // Distances.java, 83
-                    result += disAgri;  // Distances.java, 84
-                }  // Distances.java, 85
-            }  // Distances.java, 86
-        }  // Distances.java, 87
-       this.valueStationPlanet = result;  // Distances.java, 89
+                    result = disAgri;  // Distances.java, 78
+                }else{  // Distances.java, 79
+                    result += disAgri;  // Distances.java, 80
+                }  // Distances.java, 81
+            }  // Distances.java, 82
+        }  // Distances.java, 83
+       this.valueStationPlanet = result;  // Distances.java, 85
+    }  // Distances.java, 86
+    public boolean isSmallerThan(Distances distances){  // Distances.java, 88
+        return distances == null || (distances.valueStationPlanet != null && this.valueStationPlanet < distances.valueStationPlanet);  // Distances.java, 89
     }  // Distances.java, 90
-    public boolean isSmallerThan(Distances distances){  // Distances.java, 92
-        return distances == null || (distances.valueStationPlanet != null && this.valueStationPlanet < distances.valueStationPlanet);  // Distances.java, 93
-    }  // Distances.java, 94
-    public Distances getSmallerDistance(Distances distances){  // Distances.java, 96
-           if(this.isSmallerThan(distances)){  // Distances.java, 97
-               return this;  // Distances.java, 98
-           }else{  // Distances.java, 99
-               return distances;  // Distances.java, 100
-           }  // Distances.java, 101
+    public Distances getSmallerDistance(Distances distances){  // Distances.java, 92
+           if(this.isSmallerThan(distances)){  // Distances.java, 93
+               return this;  // Distances.java, 94
+           }else{  // Distances.java, 95
+               return distances;  // Distances.java, 96
+           }  // Distances.java, 97
+    }  // Distances.java, 98
+    public Station getStation() {  // Distances.java, 100
+        return station;  // Distances.java, 101
     }  // Distances.java, 102
-    public Station getStation() {  // Distances.java, 104
-        return station;  // Distances.java, 105
+    public Planet getPlanet() {  // Distances.java, 104
+        return planet;  // Distances.java, 105
     }  // Distances.java, 106
-    public Planet getPlanet() {  // Distances.java, 108
-        return planet;  // Distances.java, 109
+    public int getValueStationPlanet() {  // Distances.java, 108
+        return valueStationPlanet;  // Distances.java, 109
     }  // Distances.java, 110
-    public int getValueStationPlanet() {  // Distances.java, 112
-        return valueStationPlanet;  // Distances.java, 113
-    }  // Distances.java, 114
-}  // Distances.java, 115
+}  // Distances.java, 111
 
 enum BonusType  // BonusType.java, 3
     {  // BonusType.java, 4
         ENERGY_CORE("ENERGY_CORE"),  // BonusType.java, 5
-        TECH_RESEARCH_2SIT("TECH_RESEARCH_2"),  // BonusType.java, 6
+        TECH_RESEARCH_2("TECH_RESEARCH_2"),  // BonusType.java, 6
         TECH_RESEARCH_3("TECH_RESEARCH_3"),  // BonusType.java, 7
         TECH_RESEARCH_4("TECH_RESEARCH_4"),  // BonusType.java, 8
         POINTS_1("POINTS_1"),  // BonusType.java, 9
@@ -271,7 +267,10 @@ class Bonus {  // Bonus.java, 5
     public BonusType getBonus() {  // Bonus.java, 13
         return bonus;  // Bonus.java, 14
     }  // Bonus.java, 15
-}  // Bonus.java, 16
+    /*public static void main(String[] args) {  // Bonus.java, 17
+        Bonus bonus = new Bonus("ENERGY_CORE");  // Bonus.java, 18
+    }*/  // Bonus.java, 20
+}  // Bonus.java, 21
 
 class Strategy {  // Strategy.java, 5
     private Station[] myStations = new Station[4];  // Strategy.java, 8
@@ -390,60 +389,62 @@ class Main {  // Main.java, 6
             for (int i = 0; i < bonusCount; i++) {  // Main.java, 78
                 int mine = in.nextInt();  // Main.java, 79
                 String bonus = in.next();  // Main.java, 80
-                if(mine == 1){  // Main.java, 81
-                    myBonus.add(new Bonus(bonus));  // Main.java, 82
-                }else{  // Main.java, 83
-                    oppBonus.add(new Bonus(bonus));  // Main.java, 84
-                }  // Main.java, 85
-            }  // Main.java, 86
-            int myColonizationScore = in.nextInt(); // points from planet colonization, does not include bonus points  // Main.java, 87
-            int oppColonizationScore = in.nextInt();  // Main.java, 88
-            // Write an action using System.out.println()  // Main.java, 90
-            // To debug: System.err.println("Debug messages...");  // Main.java, 91
-            //printMyStations(myStations);  // Main.java, 93
-            //printOppStations(oppStations);  // Main.java, 94
-            //printPlanets(planets);  // Main.java, 95
-            System.out.println(strategy.execute());  // Main.java, 97
-        }  // Main.java, 98
-    }  // Main.java, 99
-    public Station getStationById(Station[] myStations, Station[] oppStations, int id)  // Main.java, 101
-    {  // Main.java, 102
-        for (int i=0;i<=3;i++)  // Main.java, 103
-        {  // Main.java, 104
-            if (id==myStations[i].stationId)  // Main.java, 105
-                return myStations[i];  // Main.java, 106
-        }  // Main.java, 107
-        for (int i=0;i<=3;i++)  // Main.java, 108
-        {  // Main.java, 109
-            if (id==oppStations[i].stationId)  // Main.java, 110
-                return oppStations[i];  // Main.java, 111
-        }  // Main.java, 112
-        return null;  // Main.java, 114
-    }  // Main.java, 115
-    public void printMyStations(Station[] myStations)  // Main.java, 117
-    {  // Main.java, 118
-        for (int i=0;i<4;i++)  // Main.java, 119
-        {  // Main.java, 120
-            System.err.println("my Station " + myStations[i].stationId + " available=" + myStations[i].isAvailable + " tech1" + myStations[i].terraformingSkill + " tech2" + myStations[i].alienSkill + " tech3" + myStations[i].engineeringSkill + " tech4" + myStations[i].agricultureSkill);  // Main.java, 121
-            System.err.println("  obj score = " + myStations[i].myStationObj.scoreIfReached + " obj terra=" + myStations[i].myStationObj.terraLevelObj +   " obj alien=" + myStations[i].myStationObj.alienLevelObj);  // Main.java, 122
-        }  // Main.java, 123
-    }  // Main.java, 124
-    public void printOppStations(Station[] oppStations)  // Main.java, 126
-    {  // Main.java, 127
-        for (int i=0;i<4;i++)  // Main.java, 128
-        {  // Main.java, 129
-            System.err.println("opp Station " + oppStations[i].stationId + " available=" + oppStations[i].isAvailable + " tech1" + oppStations[i].terraformingSkill + " tech2" + oppStations[i].alienSkill + " tech3" + oppStations[i].engineeringSkill + " tech4" + oppStations[i].agricultureSkill);  // Main.java, 130
-        }  // Main.java, 131
-    }  // Main.java, 132
-    public void printPlanets(Planet[] planets)  // Main.java, 134
-    {  // Main.java, 135
-        for (int i=0;i<5;i++)  // Main.java, 136
-        {  // Main.java, 137
-            System.err.println("Planet "  + planets[i].planetId + " task1" + planets[i].terraformingTaskLeftValue + " task2" + planets[i].alienTaskLeftValue + " task3" + planets[i].engineeringTaskLeftValue + " task4" + planets[i].agricultureTaskLeftValue);  // Main.java, 138
-            System.err.println("     myContribution=" + planets[i].myContributionTotalTaks + " oppContribution=" + planets[i].oppContributionTotalTasks + " score=" + planets[i].colonizationScore + " bonus0="+ planets[i].bonus0 + " bonus1=" + planets[i].bonus1);  // Main.java, 139
-        }  // Main.java, 140
-    }  // Main.java, 141
-}  // Main.java, 142
+                Bonus bon = new Bonus(bonus);  // Main.java, 81
+                System.err.println("mine=" + mine+ ", Bonus="+bonus);  // Main.java, 82
+                if(mine == 1){  // Main.java, 83
+                    myBonus.add(bon);  // Main.java, 84
+                }else{  // Main.java, 85
+                    oppBonus.add(bon);  // Main.java, 86
+                }  // Main.java, 87
+            }  // Main.java, 88
+            int myColonizationScore = in.nextInt(); // points from planet colonization, does not include bonus points  // Main.java, 89
+            int oppColonizationScore = in.nextInt();  // Main.java, 90
+            // Write an action using System.out.println()  // Main.java, 92
+            // To debug: System.err.println("Debug messages...");  // Main.java, 93
+            //printMyStations(myStations);  // Main.java, 95
+            //printOppStations(oppStations);  // Main.java, 96
+            //printPlanets(planets);  // Main.java, 97
+            System.out.println(strategy.execute());  // Main.java, 99
+        }  // Main.java, 100
+    }  // Main.java, 101
+    public Station getStationById(Station[] myStations, Station[] oppStations, int id)  // Main.java, 103
+    {  // Main.java, 104
+        for (int i=0;i<=3;i++)  // Main.java, 105
+        {  // Main.java, 106
+            if (id==myStations[i].stationId)  // Main.java, 107
+                return myStations[i];  // Main.java, 108
+        }  // Main.java, 109
+        for (int i=0;i<=3;i++)  // Main.java, 110
+        {  // Main.java, 111
+            if (id==oppStations[i].stationId)  // Main.java, 112
+                return oppStations[i];  // Main.java, 113
+        }  // Main.java, 114
+        return null;  // Main.java, 116
+    }  // Main.java, 117
+    public void printMyStations(Station[] myStations)  // Main.java, 119
+    {  // Main.java, 120
+        for (int i=0;i<4;i++)  // Main.java, 121
+        {  // Main.java, 122
+            System.err.println("my Station " + myStations[i].stationId + " available=" + myStations[i].isAvailable + " tech1" + myStations[i].terraformingSkill + " tech2" + myStations[i].alienSkill + " tech3" + myStations[i].engineeringSkill + " tech4" + myStations[i].agricultureSkill);  // Main.java, 123
+            System.err.println("  obj score = " + myStations[i].myStationObj.scoreIfReached + " obj terra=" + myStations[i].myStationObj.terraLevelObj +   " obj alien=" + myStations[i].myStationObj.alienLevelObj);  // Main.java, 124
+        }  // Main.java, 125
+    }  // Main.java, 126
+    public void printOppStations(Station[] oppStations)  // Main.java, 128
+    {  // Main.java, 129
+        for (int i=0;i<4;i++)  // Main.java, 130
+        {  // Main.java, 131
+            System.err.println("opp Station " + oppStations[i].stationId + " available=" + oppStations[i].isAvailable + " tech1" + oppStations[i].terraformingSkill + " tech2" + oppStations[i].alienSkill + " tech3" + oppStations[i].engineeringSkill + " tech4" + oppStations[i].agricultureSkill);  // Main.java, 132
+        }  // Main.java, 133
+    }  // Main.java, 134
+    public void printPlanets(Planet[] planets)  // Main.java, 136
+    {  // Main.java, 137
+        for (int i=0;i<5;i++)  // Main.java, 138
+        {  // Main.java, 139
+            System.err.println("Planet "  + planets[i].planetId + " task1" + planets[i].terraformingTaskLeftValue + " task2" + planets[i].alienTaskLeftValue + " task3" + planets[i].engineeringTaskLeftValue + " task4" + planets[i].agricultureTaskLeftValue);  // Main.java, 140
+            System.err.println("     myContribution=" + planets[i].myContributionTotalTaks + " oppContribution=" + planets[i].oppContributionTotalTasks + " score=" + planets[i].colonizationScore + " bonus0="+ planets[i].bonus0 + " bonus1=" + planets[i].bonus1);  // Main.java, 141
+        }  // Main.java, 142
+    }  // Main.java, 143
+}  // Main.java, 144
 
 public static void main(String[] args) { (new Player()).new Main(args); }
 }

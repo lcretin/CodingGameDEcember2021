@@ -17,7 +17,6 @@ public class Distances {
         // If no task remaining and no skill on station, not considered in distance
         if(this.planet.getTerraformingTaskLeftValue() != 0 ) {
             int disTerra = this.planet.getTerraformingTaskLeftValue() - this.station.getTerraformingSkill();
-            System.err.println("terra = "+disTerra);
             if(disTerra < 0){
                 if(result == null){
                     result = 0;
@@ -35,7 +34,6 @@ public class Distances {
         // If no task remaining and no skill on station, not considered in distance
         if(this.planet.getAlienTaskLeftValue() != 0 ) {
             int disAlien = this.planet.getAlienTaskLeftValue() - this.station.getAlienSkill();
-            System.err.println("alien = "+disAlien);
             if(disAlien < 0){
                 if(result == null){
                     result = 0;
@@ -54,7 +52,6 @@ public class Distances {
         // If no task remaining and no skill on station, not considered in distance
         if(this.planet.getEngineeringTaskLeftValue() != 0 ) {
             int disEng = this.planet.getEngineeringTaskLeftValue() - this.station.getEngineeringSkill();
-            System.err.println("eng = "+disEng);
             if(disEng < 0){
                 if(result == null){
                     result = 0;
@@ -72,7 +69,6 @@ public class Distances {
         // If no task remaining and no skill on station, not considered in distance
         if(this.planet.getAgricultureTaskLeftValue() != 0 ) {
             int disAgri = this.planet.getAgricultureTaskLeftValue() - this.station.getAgricultureSkill();
-            System.err.println("agri = "+disAgri);
             if(disAgri < 0){
                 if(result == null){
                     result = 0;

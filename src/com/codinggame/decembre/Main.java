@@ -78,10 +78,12 @@ public class Main {
             for (int i = 0; i < bonusCount; i++) {
                 int mine = in.nextInt();
                 String bonus = in.next();
+                Bonus bon = new Bonus(bonus);
+                System.err.println("mine=" + mine+ ", Bonus="+bonus);
                 if(mine == 1){
-                    myBonus.add(new Bonus(bonus));
+                    myBonus.add(bon);
                 }else{
-                    oppBonus.add(new Bonus(bonus));
+                    oppBonus.add(bon);
                 }
             }
             int myColonizationScore = in.nextInt(); // points from planet colonization, does not include bonus points
