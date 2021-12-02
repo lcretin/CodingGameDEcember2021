@@ -23,7 +23,9 @@ public class Strategy {
     public String execute(){
         String preCommand = "";
         // Apply BONUS Pre Command: Apply Tech Reasearch on the first tech on the first station
+        System.err.println("Start looking at bonus: "+ myBonus.size());
         for(Bonus bonus: myBonus){
+            System.err.println("Bonus -> "+ bonus.toString());
             int techREsearchBonusNum = 0;
             if(BonusType.TECH_RESEARCH_2.equals(bonus)) {
                 techREsearchBonusNum = 1;
