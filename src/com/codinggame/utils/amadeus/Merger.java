@@ -47,7 +47,7 @@ public class Merger {
 
             writer.write("/*");
             writer.newLine();
-            writer.write("This file has been generated");
+            writer.write("This file has been generated "+ new Date());
             writer.newLine();
             writer.write("*/");
             writer.newLine();
