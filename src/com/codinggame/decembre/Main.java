@@ -7,7 +7,7 @@ public class Main {
 
     Station[] myStations = new Station[4];
     Station[] oppStations = new Station[4];
-    Planet[] planets = new Planet[5];
+    ArrayList<Planet> planets = new ArrayList<Planet>();
     ArrayList<Bonus> myBonus = new ArrayList<Bonus>();
     ArrayList<Bonus> oppBonus = new ArrayList<Bonus>();
 
@@ -57,6 +57,10 @@ public class Main {
                 currentSt.setTechLevel(tech0, tech1, tech2, tech3);
                 currentSt.setAvailable(available);
             }
+
+            // re-init planet
+            planets.clear();
+
             int planetCount = in.nextInt();
             for (int i = 0; i < planetCount; i++) {
                 int planetId = in.nextInt();
@@ -71,7 +75,7 @@ public class Main {
                 String bonus1 = in.next();
 
                 Planet p = new Planet(planetId, tasks0, tasks1, tasks2, tasks3, myContribution, oppContribution, colonizationScore, bonus0, bonus1);
-                planets[i] = p;
+                planets.add(p);
 
             }
 

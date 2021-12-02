@@ -8,11 +8,11 @@ public class Strategy {
     private Station[] myStations = new Station[4];
 
     private Station[] oppStations = new Station[4];
-    private Planet[] planets = new Planet[5];
+    private ArrayList<Planet>  planets = new ArrayList<Planet> ();
     private ArrayList<Bonus> myBonus = new ArrayList<Bonus>();
     private ArrayList<Bonus> oppBonus = new ArrayList<Bonus>();
 
-    public Strategy(Station[] myStations , Station[] oppStations, Planet[] planets, ArrayList<Bonus> myBonus, ArrayList<Bonus> oppBonus){
+    public Strategy(Station[] myStations , Station[] oppStations, ArrayList<Planet>  planets, ArrayList<Bonus> myBonus, ArrayList<Bonus> oppBonus){
         this.myStations = myStations;
         this.oppStations = oppStations;
         this.planets = planets;
@@ -28,8 +28,8 @@ public class Strategy {
         Distances disMin = null;
         Distances disMinAvailable = null;
         for(int i=0; i<myStations.length; i++){
-            for (int p = 0; p < planets.length; p++){
-                distance = new Distances(myStations[i], planets[p]);
+            for (Planet planet: planets){
+                distance = new Distances(myStations[i], planet);
                 disMin = distance.getSmallerDistance(disMin);
                 disMinAvailable = distance.getSmallerAvailableDistance(disMinAvailable);
             }
