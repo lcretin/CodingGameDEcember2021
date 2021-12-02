@@ -21,7 +21,7 @@ public class Strategy {
     }
 
     public String execute(){
-        String preCommand = applyTechPreCommand() + " ";
+        String preCommand = applyTechPreCommand();
         // main actions: COLONIZE | RESUPPLY
         // bonus actions: ENERGY_CORE | ALIEN_ARTIFACT | TECH_RESEARCH | NEW_TECH
         // Append text after any command and that text will appear on screen.
@@ -92,6 +92,9 @@ public class Strategy {
                     }
                 }
             }
+        }
+        if (!"".equals(preCommand)){
+            preCommand += " ";
         }
         System.err.println("PreCommand-> ["+preCommand+"]");
         return preCommand;
