@@ -1,5 +1,5 @@
 /*
-This file has been generated Thu Dec 02 17:08:39 CET 2021
+This file has been generated Thu Dec 02 17:10:14 CET 2021
 */
 
 import java.util.Scanner;import java.util.ArrayList;
@@ -405,12 +405,44 @@ class Strategy {  // Strategy.java, 5
         String prefixAllien = "";  // Strategy.java, 134
         if (distanceToPlay.getValueStationPlanet()>=2 && isBonusAvailable(myBonus, BonusType.ALIEN_ARTIFACT))  // Strategy.java, 135
         {  // Strategy.java, 136
-            prefixAllien+= "ALLIEN_ARTIFACT 0 1 ";  // Strategy.java, 137
-        }  // Strategy.java, 138
-        String colonizeAction="COLONIZE " + distanceToPlay.getStation().getStationId() + " " + distanceToPlay.getPlanet().getPlanetId() + " " + distanceToPlay.getPlanet().getBestBonus();  // Strategy.java, 140
-        return prefixAllien + colonizeAction;  // Strategy.java, 141
-    }  // Strategy.java, 142
-}  // Strategy.java, 143
+            int allien0;  // Strategy.java, 137
+            int allien1;  // Strategy.java, 138
+            int bonusCounter = 2;  // Strategy.java, 139
+            int[] tasks = new int[2];  // Strategy.java, 140
+            int currentTerraValue = distanceToPlay.getValueTerraformingStationPlanet();  // Strategy.java, 141
+            int currentAllienValue = distanceToPlay.getValueAlienStationPlanet();  // Strategy.java, 142
+            int currentEngValue = distanceToPlay.getValueEngineeringStationPlanet();  // Strategy.java, 143
+            int currentAgriValue = distanceToPlay.getValueAgricultureStationPlanet();  // Strategy.java, 144
+            while (currentTerraValue>=1 && bonusCounter>0)  // Strategy.java, 146
+             {     // Strategy.java, 147
+                tasks[tasks.length-bonusCounter] = 0; //0 for terra  // Strategy.java, 148
+                bonusCounter--;  // Strategy.java, 149
+                currentTerraValue--;  // Strategy.java, 150
+             }  // Strategy.java, 151
+             while (currentAllienValue>=1 && bonusCounter>0)  // Strategy.java, 152
+             {     // Strategy.java, 153
+                tasks[tasks.length-bonusCounter] = 1; //0 for allien  // Strategy.java, 154
+                bonusCounter--;  // Strategy.java, 155
+                currentAllienValue--;  // Strategy.java, 156
+             }  // Strategy.java, 157
+             while (currentEngValue>=1 && bonusCounter>0)  // Strategy.java, 158
+             {     // Strategy.java, 159
+                tasks[tasks.length-bonusCounter] = 2; //0 for eng  // Strategy.java, 160
+                bonusCounter--;  // Strategy.java, 161
+                currentEngValue--;  // Strategy.java, 162
+             }  // Strategy.java, 163
+             while (currentAgriValue>=1 && bonusCounter>0)  // Strategy.java, 164
+             {     // Strategy.java, 165
+                tasks[tasks.length-bonusCounter] = 3; //0 for agri  // Strategy.java, 166
+                bonusCounter--;  // Strategy.java, 167
+                currentAgriValue--;  // Strategy.java, 168
+             }  // Strategy.java, 169
+            prefixAllien+= "ALLIEN_ARTIFACT " + tasks[0] + " "+ tasks[1] + " ";  // Strategy.java, 172
+        }  // Strategy.java, 173
+        String colonizeAction="COLONIZE " + distanceToPlay.getStation().getStationId() + " " + distanceToPlay.getPlanet().getPlanetId() + " " + distanceToPlay.getPlanet().getBestBonus();  // Strategy.java, 175
+        return prefixAllien + colonizeAction;  // Strategy.java, 176
+    }  // Strategy.java, 177
+}  // Strategy.java, 178
 
 enum TechEnum {  // TechEnum.java, 3
     TERRAFORMING,  // TechEnum.java, 4
