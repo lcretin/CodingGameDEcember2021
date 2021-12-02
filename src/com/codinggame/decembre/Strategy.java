@@ -68,9 +68,10 @@ public class Strategy {
                 distance = new Distances(myStations[i], planet);
                 disMin = distance.getSmallerDistance(disMin);
                 disMinAvailable = distance.getSmallerAvailableDistance(disMinAvailable);
+                System.err.println("Distance: ["+distance.getPlanet().getPlanetId()+"] ["+distance.getStation().getStationId()+"] dist= "+ distance.getValueStationPlanet());
+
             }
         }
-        //System.err.println("Distance: ["+distance.getPlanet().getPlanetId()+"] ["+distance.getStation().getStationId()+"] dist= "+ distance.getValueStationPlanet());
         Distances distanceToPlay = disMin;
         if(distanceToPlay.getStation().isAvailable()) {
                 return applyColonizeWithAllienAttempt(myBonus,distanceToPlay);

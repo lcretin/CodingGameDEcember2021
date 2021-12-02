@@ -6,6 +6,12 @@ public class Distances {
     private Planet planet;
     private Integer valueStationPlanet = null;
 
+
+    private Integer disValueTerraforming = null;
+    private Integer disValueAlien = null;
+    private Integer disValueEngineering = null;
+    private Integer disValueAgriculture = null;
+
     public Distances(Station station, Planet planet){
         this.station = station;
         this.planet = planet; 
@@ -16,34 +22,28 @@ public class Distances {
         Integer result = null;
         // If no task remaining and no skill on station, not considered in distance
         if(this.planet.getTerraformingTaskLeftValue() != 0 ) {
-            int disTerra = this.planet.getTerraformingTaskLeftValue() - this.station.getTerraformingSkill();
-            if(disTerra < 0){
-                if(result == null){
-                    result = 0;
-                }
+            disValueTerraforming = this.planet.getTerraformingTaskLeftValue() - this.station.getTerraformingSkill();
+            if(disValueTerraforming < 0){
+                disValueTerraforming = 0;
+            }
+            if(result == null){
+                result = disValueTerraforming;
             }else{
-                if(result == null){
-                    result = disTerra;
-                }else{
-                    result += disTerra;
-                }
+                result += disValueTerraforming;
             }
         }
 
 
         // If no task remaining and no skill on station, not considered in distance
         if(this.planet.getAlienTaskLeftValue() != 0 ) {
-            int disAlien = this.planet.getAlienTaskLeftValue() - this.station.getAlienSkill();
-            if(disAlien < 0){
-                if(result == null){
-                    result = 0;
-                }
+            disValueAlien = this.planet.getAlienTaskLeftValue() - this.station.getAlienSkill();
+            if(disValueAlien < 0){
+                disValueAlien = 0;
+            }
+            if(result == null){
+                result = disValueAlien;
             }else{
-                if(result == null){
-                    result = disAlien;
-                }else{
-                    result += disAlien;
-                }
+                result += disValueAlien;
             }
         }
 
@@ -51,34 +51,28 @@ public class Distances {
 
         // If no task remaining and no skill on station, not considered in distance
         if(this.planet.getEngineeringTaskLeftValue() != 0 ) {
-            int disEng = this.planet.getEngineeringTaskLeftValue() - this.station.getEngineeringSkill();
-            if(disEng < 0){
-                if(result == null){
-                    result = 0;
-                }
+            disValueEngineering = this.planet.getEngineeringTaskLeftValue() - this.station.getEngineeringSkill();
+            if(disValueEngineering < 0){
+                disValueEngineering = 0;
+            }
+            if(result == null){
+                result = disValueEngineering;
             }else{
-                if(result == null){
-                    result = disEng;
-                }else{
-                    result += disEng;
-                }
+                result += disValueEngineering;
             }
         }
 
 
         // If no task remaining and no skill on station, not considered in distance
         if(this.planet.getAgricultureTaskLeftValue() != 0 ) {
-            int disAgri = this.planet.getAgricultureTaskLeftValue() - this.station.getAgricultureSkill();
-            if(disAgri < 0){
-                if(result == null){
-                    result = 0;
-                }
+            disValueAgriculture= this.planet.getAgricultureTaskLeftValue() - this.station.getAgricultureSkill();
+            if(disValueAgriculture < 0){
+                disValueAgriculture = 0;
+            }
+            if(result == null){
+                result = disValueAgriculture;
             }else{
-                if(result == null){
-                    result = disAgri;
-                }else{
-                    result += disAgri;
-                }
+                result += disValueAgriculture;
             }
         }
 
@@ -115,5 +109,21 @@ public class Distances {
 
     public int getValueStationPlanet() {
         return valueStationPlanet;
+    }
+
+    public Integer getValueTerraformingStationPlanet(){
+        return disValueTerraforming;
+    }
+
+    public Integer getValueAlienStationPlanet(){
+        return disValueAlien;
+    }
+
+    public Integer getValueEngineeringStationPlanet(){
+        return disValueEngineering;
+    }
+
+    public Integer getValueAgricultureStationPlanet(){
+        return disValueAgriculture;
     }
 }
