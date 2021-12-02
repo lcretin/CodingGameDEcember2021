@@ -97,6 +97,14 @@ public class Distances {
            }
     }
 
+    public Distances getSmallerAvailableDistance(Distances distances){
+        if(this.isSmallerThan(distances) && this.getStation().isAvailable()){
+            return this;
+        }else{
+            return distances;
+        }
+    }
+
     public Station getStation() {
         return station;
     }

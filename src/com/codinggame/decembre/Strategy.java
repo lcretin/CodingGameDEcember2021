@@ -26,19 +26,25 @@ public class Strategy {
         // Append text after any command and that text will appear on screen.
         Distances distance;
         Distances disMin = null;
+        Distances disMinAvailable = null;
         for(int i=0; i<myStations.length; i++){
             for (int p = 0; p < planets.length; p++){
                 distance = new Distances(myStations[i], planets[p]);
                 disMin = distance.getSmallerDistance(disMin);
-                //System.err.println("Distance: ["+distance.getPlanet().getPlanetId()+"] ["+distance.getStation().getStationId()+"] dist= "+ distance.getValueStationPlanet());
+                disMinAvailable = distance.getSmallerAvailableDistance(disMinAvailable);
             }
         }
+        //System.err.println("Distance: ["+distance.getPlanet().getPlanetId()+"] ["+distance.getStation().getStationId()+"] dist= "+ distance.getValueStationPlanet());
+        Distances distanceToPlay = disMin;
 
-        String colonizeAction="COLONIZE " + disMin.getStation().getStationId() + " " + disMin.getPlanet().getPlanetId() + " " + disMin.getPlanet().getBestBonus();
-        if(disMin.getStation().isAvailable()) {
+        String colonizeAction="COLONIZE " + distanceToPlay.getStation().getStationId() + " " + distanceToPlay.getPlanet().getPlanetId() + " " + distanceToPlay.getPlanet().getBestBonus();
+        if(distanceToPlay.getStation().isAvailable()) {
                 return colonizeAction;
         }else{
             //do dwe have a ENERGY BONUS to allow resupply and colonize in one shot
+            if(disMinAvailable != null && disMinAvailable.getValueStationPlanet() <= disMin.getValueStationPlanet()){
+                return "COLONIZE " + disMinAvailable.getStation().getStationId() + " " + disMinAvailable.getPlanet().getPlanetId() + " " + disMinAvailable.getPlanet().getBestBonus();
+            }
             if(isBonusAvailable(myBonus, BonusType.ENERGY_CORE)){
                 return BonusType.ENERGY_CORE+" "+colonizeAction;
             }

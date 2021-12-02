@@ -1,5 +1,5 @@
 /*
-This file has been generated Thu Dec 02 15:36:06 CET 2021
+This file has been generated Thu Dec 02 15:45:47 CET 2021
 */
 
 import java.util.Scanner;import java.util.ArrayList;
@@ -87,16 +87,23 @@ class Distances {  // Distances.java, 3
                return distances;  // Distances.java, 96
            }  // Distances.java, 97
     }  // Distances.java, 98
-    public Station getStation() {  // Distances.java, 100
-        return station;  // Distances.java, 101
-    }  // Distances.java, 102
-    public Planet getPlanet() {  // Distances.java, 104
-        return planet;  // Distances.java, 105
+    public Distances getSmallerAvailableDistance(Distances distances){  // Distances.java, 100
+        if(this.isSmallerThan(distances) && this.getStation().isAvailable()){  // Distances.java, 101
+            return this;  // Distances.java, 102
+        }else{  // Distances.java, 103
+            return distances;  // Distances.java, 104
+        }  // Distances.java, 105
     }  // Distances.java, 106
-    public int getValueStationPlanet() {  // Distances.java, 108
-        return valueStationPlanet;  // Distances.java, 109
+    public Station getStation() {  // Distances.java, 108
+        return station;  // Distances.java, 109
     }  // Distances.java, 110
-}  // Distances.java, 111
+    public Planet getPlanet() {  // Distances.java, 112
+        return planet;  // Distances.java, 113
+    }  // Distances.java, 114
+    public int getValueStationPlanet() {  // Distances.java, 116
+        return valueStationPlanet;  // Distances.java, 117
+    }  // Distances.java, 118
+}  // Distances.java, 119
 
 enum BonusType  // BonusType.java, 3
     {  // BonusType.java, 4
@@ -291,39 +298,45 @@ class Strategy {  // Strategy.java, 5
         // Append text after any command and that text will appear on screen.  // Strategy.java, 26
         Distances distance;  // Strategy.java, 27
         Distances disMin = null;  // Strategy.java, 28
-        for(int i=0; i<myStations.length; i++){  // Strategy.java, 29
-            for (int p = 0; p < planets.length; p++){  // Strategy.java, 30
-                distance = new Distances(myStations[i], planets[p]);  // Strategy.java, 31
-                disMin = distance.getSmallerDistance(disMin);  // Strategy.java, 32
-                //System.err.println("Distance: ["+distance.getPlanet().getPlanetId()+"] ["+distance.getStation().getStationId()+"] dist= "+ distance.getValueStationPlanet());  // Strategy.java, 33
-            }  // Strategy.java, 34
-        }  // Strategy.java, 35
-        String colonizeAction="COLONIZE " + disMin.getStation().getStationId() + " " + disMin.getPlanet().getPlanetId() + " " + disMin.getPlanet().getBestBonus();  // Strategy.java, 37
-        if(disMin.getStation().isAvailable()) {  // Strategy.java, 38
-                return colonizeAction;  // Strategy.java, 39
-        }else{  // Strategy.java, 40
-            //do dwe have a ENERGY BONUS to allow resupply and colonize in one shot  // Strategy.java, 41
-            if(isBonusAvailable(myBonus, BonusType.ENERGY_CORE)){  // Strategy.java, 42
-                return BonusType.ENERGY_CORE+" "+colonizeAction;  // Strategy.java, 43
-            }  // Strategy.java, 44
-            else{  // Strategy.java, 45
-                //no choice  // Strategy.java, 46
-                return "RESUPPLY";  // Strategy.java, 47
-            }  // Strategy.java, 48
-        }  // Strategy.java, 50
-    }  // Strategy.java, 51
-    public  boolean isBonusAvailable(ArrayList<Bonus> myBonus, BonusType bonusType ){  // Strategy.java, 53
-        if(myBonus == null){  // Strategy.java, 54
-            return false;  // Strategy.java, 55
+        Distances disMinAvailable = null;  // Strategy.java, 29
+        for(int i=0; i<myStations.length; i++){  // Strategy.java, 30
+            for (int p = 0; p < planets.length; p++){  // Strategy.java, 31
+                distance = new Distances(myStations[i], planets[p]);  // Strategy.java, 32
+                disMin = distance.getSmallerDistance(disMin);  // Strategy.java, 33
+                disMinAvailable = distance.getSmallerAvailableDistance(disMinAvailable);  // Strategy.java, 34
+            }  // Strategy.java, 35
+        }  // Strategy.java, 36
+        //System.err.println("Distance: ["+distance.getPlanet().getPlanetId()+"] ["+distance.getStation().getStationId()+"] dist= "+ distance.getValueStationPlanet());  // Strategy.java, 37
+        Distances distanceToPlay = disMin;  // Strategy.java, 38
+        String colonizeAction="COLONIZE " + distanceToPlay.getStation().getStationId() + " " + distanceToPlay.getPlanet().getPlanetId() + " " + distanceToPlay.getPlanet().getBestBonus();  // Strategy.java, 40
+        if(distanceToPlay.getStation().isAvailable()) {  // Strategy.java, 41
+                return colonizeAction;  // Strategy.java, 42
+        }else{  // Strategy.java, 43
+            //do dwe have a ENERGY BONUS to allow resupply and colonize in one shot  // Strategy.java, 44
+            if(disMinAvailable != null && disMinAvailable.getValueStationPlanet() <= disMin.getValueStationPlanet()){  // Strategy.java, 45
+                return "COLONIZE " + disMinAvailable.getStation().getStationId() + " " + disMinAvailable.getPlanet().getPlanetId() + " " + disMinAvailable.getPlanet().getBestBonus();  // Strategy.java, 46
+            }  // Strategy.java, 47
+            if(isBonusAvailable(myBonus, BonusType.ENERGY_CORE)){  // Strategy.java, 48
+                return BonusType.ENERGY_CORE+" "+colonizeAction;  // Strategy.java, 49
+            }  // Strategy.java, 50
+            else{  // Strategy.java, 51
+                //no choice  // Strategy.java, 52
+                return "RESUPPLY";  // Strategy.java, 53
+            }  // Strategy.java, 54
         }  // Strategy.java, 56
-        for(Bonus bonus: myBonus){  // Strategy.java, 57
-            if(bonusType.equals(bonus.getBonus())){  // Strategy.java, 58
-                return true;  // Strategy.java, 59
-            }  // Strategy.java, 60
-        }  // Strategy.java, 61
-        return false;  // Strategy.java, 62
-    }  // Strategy.java, 63
-}  // Strategy.java, 64
+    }  // Strategy.java, 57
+    public  boolean isBonusAvailable(ArrayList<Bonus> myBonus, BonusType bonusType ){  // Strategy.java, 59
+        if(myBonus == null){  // Strategy.java, 60
+            return false;  // Strategy.java, 61
+        }  // Strategy.java, 62
+        for(Bonus bonus: myBonus){  // Strategy.java, 63
+            if(bonusType.equals(bonus.getBonus())){  // Strategy.java, 64
+                return true;  // Strategy.java, 65
+            }  // Strategy.java, 66
+        }  // Strategy.java, 67
+        return false;  // Strategy.java, 68
+    }  // Strategy.java, 69
+}  // Strategy.java, 70
 
 class Main {  // Main.java, 6
     Station[] myStations = new Station[4];  // Main.java, 8
