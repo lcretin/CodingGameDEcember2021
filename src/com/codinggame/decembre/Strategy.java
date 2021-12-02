@@ -34,17 +34,13 @@ public class Strategy {
             }
         }
 
+        String colonizeAction="COLONIZE " + disMin.getStation().getStationId() + " " + disMin.getPlanet().getPlanetId() + " " + disMin.getPlanet().getBestBonus();
         if(disMin.getStation().isAvailable()) {
-
-            
-            String colonizeAction="COLONIZE " + disMin.getStation().getStationId() + " " + disMin.getPlanet().getPlanetId() + " " + disMin.getPlanet().getBestBonus();
-            
                 return colonizeAction;
-            }   
         }else{
             //do dwe have a ENERGY BONUS to allow resupply and colonize in one shot
-            if (Bonus.isBonusAvailable(Bonus.bonusType.ENERGY)){ //TODO check enum anf statis method
-                return Bonus.bonusType.ENERGY+" "+colonizeAction;
+            if(Bonus.isBonusAvailable(myBonus, Bonus.BonusType.ENERGY_CORE)){
+                return Bonus.BonusType.ENERGY_CORE+" "+colonizeAction;
             }
             else{
                 //no choice

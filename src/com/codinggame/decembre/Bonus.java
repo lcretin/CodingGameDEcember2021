@@ -1,5 +1,7 @@
 package com.codinggame.decembre;
 
+import java.util.ArrayList;
+
 public class Bonus {
 
     public enum BonusType
@@ -28,6 +30,18 @@ public class Bonus {
 
     public Bonus(String bonus){
         this.bonus = BonusType.valueOf(bonus);
+    }
+
+    public static boolean isBonusAvailable(ArrayList<Bonus> myBonus, BonusType bonusType ){
+        if(myBonus == null){
+            return false;
+        }
+        for(Bonus bonus: myBonus){
+            if(bonusType.equals(bonus.bonus)){
+                return true;
+            }
+        }
+        return false;
     }
 
 }

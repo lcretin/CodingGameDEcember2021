@@ -1,8 +1,8 @@
 /*
-This file has been generated Thu Dec 02 14:46:50 CET 2021
+This file has been generated Thu Dec 02 15:19:56 CET 2021
 */
 
-import java.util.Scanner;
+import java.util.Scanner;import java.util.ArrayList;
 class Player {
 class Distances {  // Distances.java, 3
     private Station station;  // Distances.java, 5
@@ -10,7 +10,7 @@ class Distances {  // Distances.java, 3
     private Integer valueStationPlanet = null;  // Distances.java, 7
     public Distances(Station station, Planet planet){  // Distances.java, 9
         this.station = station;  // Distances.java, 10
-        this.planet = planet;  // Distances.java, 11
+        this.planet = planet;   // Distances.java, 11
         this.compute();  // Distances.java, 12
     }  // Distances.java, 13
     public void compute(){  // Distances.java, 15
@@ -244,147 +244,202 @@ class Station {  // Station.java, 3
     }  // Station.java, 82
 }  // Station.java, 83
 
-class Strategy {  // Strategy.java, 3
-    private Station[] myStations = new Station[4];  // Strategy.java, 6
-    private Station[] oppStations = new Station[4];  // Strategy.java, 8
-    private Planet[] planets = new Planet[5];  // Strategy.java, 9
-    public Strategy(Station[] myStations , Station[] oppStations, Planet[] planets){  // Strategy.java, 11
-        this.myStations = myStations;  // Strategy.java, 12
-        this.oppStations = oppStations;  // Strategy.java, 13
-        this.planets = planets;  // Strategy.java, 14
-    }  // Strategy.java, 15
-    public String execute(){  // Strategy.java, 17
-        // main actions: COLONIZE | RESUPPLY  // Strategy.java, 18
-        // bonus actions: ENERGY_CORE | ALIEN_ARTIFACT | TECH_RESEARCH | NEW_TECH  // Strategy.java, 19
-        // Append text after any command and that text will appear on screen.  // Strategy.java, 20
-        Distances distance;  // Strategy.java, 21
-        Distances disMin = null;  // Strategy.java, 22
-        for(int i=0; i<myStations.length; i++){  // Strategy.java, 23
-            for (int p = 0; p < planets.length; p++){  // Strategy.java, 24
-                distance = new Distances(myStations[i], planets[p]);  // Strategy.java, 25
-                disMin = distance.getSmallerDistance(disMin);  // Strategy.java, 26
-                System.err.println("Distance: ["+distance.getPlanet().getPlanetId()+"] ["+distance.getStation().getStationId()+"] dist= "+ distance.getValueStationPlanet());  // Strategy.java, 27
-            }  // Strategy.java, 28
-        }  // Strategy.java, 29
-        if(disMin.getStation().isAvailable()) {  // Strategy.java, 31
-            return "COLONIZE " + disMin.getStation().getStationId() + " " + disMin.getPlanet().getPlanetId() + " " + disMin.getPlanet().getBestBonus();  // Strategy.java, 32
-        }else{  // Strategy.java, 33
-            return "RESUPPLY";  // Strategy.java, 34
-        }  // Strategy.java, 35
-    }  // Strategy.java, 36
-}  // Strategy.java, 38
+class Bonus {  // Bonus.java, 5
+    public enum BonusType  // Bonus.java, 7
+    {  // Bonus.java, 8
+        ENERGY_CORE("ENERGY_CORE"),  // Bonus.java, 9
+        TECH_RESEARCH_2SIT("TECH_RESEARCH_2"),  // Bonus.java, 10
+        TECH_RESEARCH_3("TECH_RESEARCH_3"),  // Bonus.java, 11
+        TECH_RESEARCH_4("TECH_RESEARCH_4"),  // Bonus.java, 12
+        POINTS_1("POINTS_1"),  // Bonus.java, 13
+        POINTS_2("POINTS_2"),  // Bonus.java, 14
+        POINTS_3("POINTS_3"),  // Bonus.java, 15
+        ALIEN_ARTIFACT("ALIEN_ARTIFACT");  // Bonus.java, 16
+        private String bonusValue;  // Bonus.java, 18
+        BonusType(String bonusValue) {  // Bonus.java, 20
+            this.bonusValue = bonusValue;  // Bonus.java, 21
+        }  // Bonus.java, 22
+        public String getBonusValue() {  // Bonus.java, 24
+            return bonusValue;  // Bonus.java, 25
+        }  // Bonus.java, 26
+    }  // Bonus.java, 27
+    private BonusType bonus;  // Bonus.java, 29
+    public Bonus(String bonus){  // Bonus.java, 31
+        this.bonus = BonusType.valueOf(bonus);  // Bonus.java, 32
+    }  // Bonus.java, 33
+    public static boolean isBonusAvailable(ArrayList<Bonus> myBonus, BonusType bonusType ){  // Bonus.java, 35
+        if(myBonus == null){  // Bonus.java, 36
+            return false;  // Bonus.java, 37
+        }  // Bonus.java, 38
+        for(Bonus bonus: myBonus){  // Bonus.java, 39
+            if(bonusType.equals(bonus.bonus)){  // Bonus.java, 40
+                return true;  // Bonus.java, 41
+            }  // Bonus.java, 42
+        }  // Bonus.java, 43
+        return false;  // Bonus.java, 44
+    }  // Bonus.java, 45
+}  // Bonus.java, 47
 
-class Main {  // Main.java, 5
-    Station[] myStations = new Station[4];  // Main.java, 7
-    Station[] oppStations = new Station[4];  // Main.java, 8
-    Planet[] planets = new Planet[5];  // Main.java, 9
-    Strategy strategy = new Strategy(myStations,oppStations,planets);  // Main.java, 11
-    public Main(String[] args) {  // Main.java, 13
-        Scanner in = new Scanner(System.in);  // Main.java, 14
-        int myCounter = 0;  // Main.java, 16
-        int oppCounter = 0;  // Main.java, 17
-        for (int i = 0; i < 8; i++) {  // Main.java, 18
-            int stationId = in.nextInt();  // Main.java, 19
-            int mine = in.nextInt();  // Main.java, 20
-            int objectiveScore = in.nextInt(); // receive these points if tech level objectives are met  // Main.java, 21
-            int obj0 = in.nextInt();  // Main.java, 22
-            int obj1 = in.nextInt();  // Main.java, 23
-            int obj2 = in.nextInt();  // Main.java, 24
-            int obj3 = in.nextInt();  // Main.java, 25
-            StationObjective sto = new StationObjective(objectiveScore, obj0, obj1, obj2, obj3);  // Main.java, 27
-            Station st = new Station(stationId, mine);  // Main.java, 28
-            st.myStationObj = sto;  // Main.java, 29
-            if (st.isMine() == 1) {  // Main.java, 31
-                myStations[myCounter] = st;  // Main.java, 32
-                myCounter++;  // Main.java, 33
-            } else {  // Main.java, 34
-                oppStations[oppCounter] = st;  // Main.java, 35
-                oppCounter++;  // Main.java, 36
-            }  // Main.java, 37
-        }  // Main.java, 39
-        // game loop  // Main.java, 41
-        while (true) {  // Main.java, 42
-            int sectorIndex = in.nextInt();  // Main.java, 43
-            for (int i = 0; i < 8; i++) {  // Main.java, 44
-                int stationId = in.nextInt();  // Main.java, 45
-                int mine = in.nextInt();  // Main.java, 46
-                int available = in.nextInt();  // Main.java, 47
-                int tech0 = in.nextInt();  // Main.java, 48
-                int tech1 = in.nextInt();  // Main.java, 49
-                int tech2 = in.nextInt();  // Main.java, 50
-                int tech3 = in.nextInt();  // Main.java, 51
-                Station currentSt = getStationById(myStations,oppStations, stationId);  // Main.java, 53
-                currentSt.setTechLevel(tech0, tech1, tech2, tech3);  // Main.java, 54
-                currentSt.setAvailable(available);  // Main.java, 55
-            }  // Main.java, 56
-            int planetCount = in.nextInt();  // Main.java, 57
-            for (int i = 0; i < planetCount; i++) {  // Main.java, 58
-                int planetId = in.nextInt();  // Main.java, 59
-                int tasks0 = in.nextInt();  // Main.java, 60
-                int tasks1 = in.nextInt();  // Main.java, 61
-                int tasks2 = in.nextInt();  // Main.java, 62
-                int tasks3 = in.nextInt();  // Main.java, 63
-                int myContribution = in.nextInt(); // the amount of tasks you have already completed  // Main.java, 64
-                int oppContribution = in.nextInt();  // Main.java, 65
-                int colonizationScore = in.nextInt(); // points awarded to the colonizer having completed the most tasks  // Main.java, 66
-                String bonus0 = in.next();  // Main.java, 67
-                String bonus1 = in.next();  // Main.java, 68
-                Planet p = new Planet(planetId, tasks0, tasks1, tasks2, tasks3, myContribution, oppContribution, colonizationScore, bonus0, bonus1);  // Main.java, 70
-                planets[i] = p;  // Main.java, 71
-            }  // Main.java, 73
-            int bonusCount = in.nextInt(); // bonuses in both you and your opponent's inventories  // Main.java, 74
-            for (int i = 0; i < bonusCount; i++) {  // Main.java, 75
-                int mine = in.nextInt();  // Main.java, 76
-                String bonus = in.next();  // Main.java, 77
-            }  // Main.java, 78
-            int myColonizationScore = in.nextInt(); // points from planet colonization, does not include bonus points  // Main.java, 79
-            int oppColonizationScore = in.nextInt();  // Main.java, 80
-            // Write an action using System.out.println()  // Main.java, 82
-            // To debug: System.err.println("Debug messages...");  // Main.java, 83
-            //printMyStations(myStations);  // Main.java, 85
-            //printOppStations(oppStations);  // Main.java, 86
-            //printPlanets(planets);  // Main.java, 87
-            System.out.println(strategy.execute());  // Main.java, 89
-        }  // Main.java, 90
-    }  // Main.java, 91
-    public Station getStationById(Station[] myStations, Station[] oppStations, int id)  // Main.java, 93
-    {  // Main.java, 94
-        for (int i=0;i<=3;i++)  // Main.java, 95
-        {  // Main.java, 96
-            if (id==myStations[i].stationId)  // Main.java, 97
-                return myStations[i];  // Main.java, 98
-        }  // Main.java, 99
-        for (int i=0;i<=3;i++)  // Main.java, 100
-        {  // Main.java, 101
-            if (id==oppStations[i].stationId)  // Main.java, 102
-                return oppStations[i];  // Main.java, 103
-        }  // Main.java, 104
-        return null;  // Main.java, 106
-    }  // Main.java, 107
-    public void printMyStations(Station[] myStations)  // Main.java, 109
-    {  // Main.java, 110
-        for (int i=0;i<4;i++)  // Main.java, 111
-        {  // Main.java, 112
-            System.err.println("my Station " + myStations[i].stationId + " available=" + myStations[i].isAvailable + " tech1" + myStations[i].terraformingSkill + " tech2" + myStations[i].alienSkill + " tech3" + myStations[i].engineeringSkill + " tech4" + myStations[i].agricultureSkill);  // Main.java, 113
-            System.err.println("  obj score = " + myStations[i].myStationObj.scoreIfReached + " obj terra=" + myStations[i].myStationObj.terraLevelObj +   " obj alien=" + myStations[i].myStationObj.alienLevelObj);  // Main.java, 114
-        }  // Main.java, 115
-    }  // Main.java, 116
-    public void printOppStations(Station[] oppStations)  // Main.java, 118
-    {  // Main.java, 119
-        for (int i=0;i<4;i++)  // Main.java, 120
-        {  // Main.java, 121
-            System.err.println("opp Station " + oppStations[i].stationId + " available=" + oppStations[i].isAvailable + " tech1" + oppStations[i].terraformingSkill + " tech2" + oppStations[i].alienSkill + " tech3" + oppStations[i].engineeringSkill + " tech4" + oppStations[i].agricultureSkill);  // Main.java, 122
+class Strategy {  // Strategy.java, 5
+    private Station[] myStations = new Station[4];  // Strategy.java, 8
+    private Station[] oppStations = new Station[4];  // Strategy.java, 10
+    private Planet[] planets = new Planet[5];  // Strategy.java, 11
+    private ArrayList<Bonus> myBonus = new ArrayList<Bonus>();  // Strategy.java, 12
+    private ArrayList<Bonus> oppBonus = new ArrayList<Bonus>();  // Strategy.java, 13
+    public Strategy(Station[] myStations , Station[] oppStations, Planet[] planets, ArrayList<Bonus> myBonus, ArrayList<Bonus> oppBonus){  // Strategy.java, 15
+        this.myStations = myStations;  // Strategy.java, 16
+        this.oppStations = oppStations;  // Strategy.java, 17
+        this.planets = planets;  // Strategy.java, 18
+        this.myBonus = myBonus;  // Strategy.java, 19
+        this.oppBonus = oppBonus;  // Strategy.java, 20
+    }  // Strategy.java, 21
+    public String execute(){  // Strategy.java, 23
+        // main actions: COLONIZE | RESUPPLY  // Strategy.java, 24
+        // bonus actions: ENERGY_CORE | ALIEN_ARTIFACT | TECH_RESEARCH | NEW_TECH  // Strategy.java, 25
+        // Append text after any command and that text will appear on screen.  // Strategy.java, 26
+        Distances distance;  // Strategy.java, 27
+        Distances disMin = null;  // Strategy.java, 28
+        for(int i=0; i<myStations.length; i++){  // Strategy.java, 29
+            for (int p = 0; p < planets.length; p++){  // Strategy.java, 30
+                distance = new Distances(myStations[i], planets[p]);  // Strategy.java, 31
+                disMin = distance.getSmallerDistance(disMin);  // Strategy.java, 32
+                System.err.println("Distance: ["+distance.getPlanet().getPlanetId()+"] ["+distance.getStation().getStationId()+"] dist= "+ distance.getValueStationPlanet());  // Strategy.java, 33
+            }  // Strategy.java, 34
+        }  // Strategy.java, 35
+        String colonizeAction="COLONIZE " + disMin.getStation().getStationId() + " " + disMin.getPlanet().getPlanetId() + " " + disMin.getPlanet().getBestBonus();  // Strategy.java, 37
+        if(disMin.getStation().isAvailable()) {  // Strategy.java, 38
+                return colonizeAction;  // Strategy.java, 39
+        }else{  // Strategy.java, 40
+            //do dwe have a ENERGY BONUS to allow resupply and colonize in one shot  // Strategy.java, 41
+            if(Bonus.isBonusAvailable(myBonus, Bonus.BonusType.ENERGY_CORE)){  // Strategy.java, 42
+                return Bonus.BonusType.ENERGY_CORE+" "+colonizeAction;  // Strategy.java, 43
+            }  // Strategy.java, 44
+            else{  // Strategy.java, 45
+                //no choice  // Strategy.java, 46
+                return "RESUPPLY";  // Strategy.java, 47
+            }  // Strategy.java, 48
+        }  // Strategy.java, 50
+    }  // Strategy.java, 51
+}  // Strategy.java, 53
+
+class Main {  // Main.java, 6
+    Station[] myStations = new Station[4];  // Main.java, 8
+    Station[] oppStations = new Station[4];  // Main.java, 9
+    Planet[] planets = new Planet[5];  // Main.java, 10
+    ArrayList<Bonus> myBonus = new ArrayList<Bonus>();  // Main.java, 11
+    ArrayList<Bonus> oppBonus = new ArrayList<Bonus>();  // Main.java, 12
+    Strategy strategy = new Strategy(myStations,oppStations,planets, myBonus, oppBonus);  // Main.java, 14
+    public Main(String[] args) {  // Main.java, 16
+        Scanner in = new Scanner(System.in);  // Main.java, 17
+        int myCounter = 0;  // Main.java, 19
+        int oppCounter = 0;  // Main.java, 20
+        for (int i = 0; i < 8; i++) {  // Main.java, 21
+            int stationId = in.nextInt();  // Main.java, 22
+            int mine = in.nextInt();  // Main.java, 23
+            int objectiveScore = in.nextInt(); // receive these points if tech level objectives are met  // Main.java, 24
+            int obj0 = in.nextInt();  // Main.java, 25
+            int obj1 = in.nextInt();  // Main.java, 26
+            int obj2 = in.nextInt();  // Main.java, 27
+            int obj3 = in.nextInt();  // Main.java, 28
+            StationObjective sto = new StationObjective(objectiveScore, obj0, obj1, obj2, obj3);  // Main.java, 30
+            Station st = new Station(stationId, mine);  // Main.java, 31
+            st.myStationObj = sto;  // Main.java, 32
+            if (st.isMine() == 1) {  // Main.java, 34
+                myStations[myCounter] = st;  // Main.java, 35
+                myCounter++;  // Main.java, 36
+            } else {  // Main.java, 37
+                oppStations[oppCounter] = st;  // Main.java, 38
+                oppCounter++;  // Main.java, 39
+            }  // Main.java, 40
+        }  // Main.java, 42
+        // game loop  // Main.java, 44
+        while (true) {  // Main.java, 45
+            int sectorIndex = in.nextInt();  // Main.java, 46
+            for (int i = 0; i < 8; i++) {  // Main.java, 47
+                int stationId = in.nextInt();  // Main.java, 48
+                int mine = in.nextInt();  // Main.java, 49
+                int available = in.nextInt();  // Main.java, 50
+                int tech0 = in.nextInt();  // Main.java, 51
+                int tech1 = in.nextInt();  // Main.java, 52
+                int tech2 = in.nextInt();  // Main.java, 53
+                int tech3 = in.nextInt();  // Main.java, 54
+                Station currentSt = getStationById(myStations,oppStations, stationId);  // Main.java, 56
+                currentSt.setTechLevel(tech0, tech1, tech2, tech3);  // Main.java, 57
+                currentSt.setAvailable(available);  // Main.java, 58
+            }  // Main.java, 59
+            int planetCount = in.nextInt();  // Main.java, 60
+            for (int i = 0; i < planetCount; i++) {  // Main.java, 61
+                int planetId = in.nextInt();  // Main.java, 62
+                int tasks0 = in.nextInt();  // Main.java, 63
+                int tasks1 = in.nextInt();  // Main.java, 64
+                int tasks2 = in.nextInt();  // Main.java, 65
+                int tasks3 = in.nextInt();  // Main.java, 66
+                int myContribution = in.nextInt(); // the amount of tasks you have already completed  // Main.java, 67
+                int oppContribution = in.nextInt();  // Main.java, 68
+                int colonizationScore = in.nextInt(); // points awarded to the colonizer having completed the most tasks  // Main.java, 69
+                String bonus0 = in.next();  // Main.java, 70
+                String bonus1 = in.next();  // Main.java, 71
+                Planet p = new Planet(planetId, tasks0, tasks1, tasks2, tasks3, myContribution, oppContribution, colonizationScore, bonus0, bonus1);  // Main.java, 73
+                planets[i] = p;  // Main.java, 74
+            }  // Main.java, 76
+            int bonusCount = in.nextInt(); // bonuses in both you and your opponent's inventories  // Main.java, 77
+            for (int i = 0; i < bonusCount; i++) {  // Main.java, 78
+                int mine = in.nextInt();  // Main.java, 79
+                String bonus = in.next();  // Main.java, 80
+                if(mine == 1){  // Main.java, 81
+                    myBonus.add(new Bonus(bonus));  // Main.java, 82
+                }else{  // Main.java, 83
+                    oppBonus.add(new Bonus(bonus));  // Main.java, 84
+                }  // Main.java, 85
+            }  // Main.java, 86
+            int myColonizationScore = in.nextInt(); // points from planet colonization, does not include bonus points  // Main.java, 87
+            int oppColonizationScore = in.nextInt();  // Main.java, 88
+            // Write an action using System.out.println()  // Main.java, 90
+            // To debug: System.err.println("Debug messages...");  // Main.java, 91
+            //printMyStations(myStations);  // Main.java, 93
+            //printOppStations(oppStations);  // Main.java, 94
+            //printPlanets(planets);  // Main.java, 95
+            System.out.println(strategy.execute());  // Main.java, 97
+        }  // Main.java, 98
+    }  // Main.java, 99
+    public Station getStationById(Station[] myStations, Station[] oppStations, int id)  // Main.java, 101
+    {  // Main.java, 102
+        for (int i=0;i<=3;i++)  // Main.java, 103
+        {  // Main.java, 104
+            if (id==myStations[i].stationId)  // Main.java, 105
+                return myStations[i];  // Main.java, 106
+        }  // Main.java, 107
+        for (int i=0;i<=3;i++)  // Main.java, 108
+        {  // Main.java, 109
+            if (id==oppStations[i].stationId)  // Main.java, 110
+                return oppStations[i];  // Main.java, 111
+        }  // Main.java, 112
+        return null;  // Main.java, 114
+    }  // Main.java, 115
+    public void printMyStations(Station[] myStations)  // Main.java, 117
+    {  // Main.java, 118
+        for (int i=0;i<4;i++)  // Main.java, 119
+        {  // Main.java, 120
+            System.err.println("my Station " + myStations[i].stationId + " available=" + myStations[i].isAvailable + " tech1" + myStations[i].terraformingSkill + " tech2" + myStations[i].alienSkill + " tech3" + myStations[i].engineeringSkill + " tech4" + myStations[i].agricultureSkill);  // Main.java, 121
+            System.err.println("  obj score = " + myStations[i].myStationObj.scoreIfReached + " obj terra=" + myStations[i].myStationObj.terraLevelObj +   " obj alien=" + myStations[i].myStationObj.alienLevelObj);  // Main.java, 122
         }  // Main.java, 123
     }  // Main.java, 124
-    public void printPlanets(Planet[] planets)  // Main.java, 126
+    public void printOppStations(Station[] oppStations)  // Main.java, 126
     {  // Main.java, 127
-        for (int i=0;i<5;i++)  // Main.java, 128
+        for (int i=0;i<4;i++)  // Main.java, 128
         {  // Main.java, 129
-            System.err.println("Planet "  + planets[i].planetId + " task1" + planets[i].terraformingTaskLeftValue + " task2" + planets[i].alienTaskLeftValue + " task3" + planets[i].engineeringTaskLeftValue + " task4" + planets[i].agricultureTaskLeftValue);  // Main.java, 130
-            System.err.println("     myContribution=" + planets[i].myContributionTotalTaks + " oppContribution=" + planets[i].oppContributionTotalTasks + " score=" + planets[i].colonizationScore + " bonus0="+ planets[i].bonus0 + " bonus1=" + planets[i].bonus1);  // Main.java, 131
-        }  // Main.java, 132
-    }  // Main.java, 133
-}  // Main.java, 134
+            System.err.println("opp Station " + oppStations[i].stationId + " available=" + oppStations[i].isAvailable + " tech1" + oppStations[i].terraformingSkill + " tech2" + oppStations[i].alienSkill + " tech3" + oppStations[i].engineeringSkill + " tech4" + oppStations[i].agricultureSkill);  // Main.java, 130
+        }  // Main.java, 131
+    }  // Main.java, 132
+    public void printPlanets(Planet[] planets)  // Main.java, 134
+    {  // Main.java, 135
+        for (int i=0;i<5;i++)  // Main.java, 136
+        {  // Main.java, 137
+            System.err.println("Planet "  + planets[i].planetId + " task1" + planets[i].terraformingTaskLeftValue + " task2" + planets[i].alienTaskLeftValue + " task3" + planets[i].engineeringTaskLeftValue + " task4" + planets[i].agricultureTaskLeftValue);  // Main.java, 138
+            System.err.println("     myContribution=" + planets[i].myContributionTotalTaks + " oppContribution=" + planets[i].oppContributionTotalTasks + " score=" + planets[i].colonizationScore + " bonus0="+ planets[i].bonus0 + " bonus1=" + planets[i].bonus1);  // Main.java, 139
+        }  // Main.java, 140
+    }  // Main.java, 141
+}  // Main.java, 142
 
 public static void main(String[] args) { (new Player()).new Main(args); }
 }
