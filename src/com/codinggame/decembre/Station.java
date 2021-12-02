@@ -80,7 +80,32 @@ public class Station {
         return myStationObj;
     }
 
-    @Override
+
+    public boolean isTerraformingObjectiveReached() {
+        if (terraformingSkill >= myStationObj.terraLevelObj)
+            return true;
+        return false;
+    }
+
+    public boolean isAlienObjectiveReached() {
+        if (alienSkill >= myStationObj.alienLevelObj)
+            return true;
+        return false;
+    }
+
+    public boolean isEngineeringObjectiveReached() {
+        if (engineeringSkill >= myStationObj.engineeringLevelObj)
+            return true;
+        return false;
+    }
+
+    public boolean isAgricultureObjectiveReached() {
+    if (agricultureSkill >= myStationObj.agricultureLevelObj)
+        return true;
+    return false;
+    }
+
+
     public String toString() {
         return "Station{" +
                 "" + stationId +
@@ -93,4 +118,5 @@ public class Station {
                 "], " + myStationObj +
                 "}";
     }
+
 }

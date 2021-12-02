@@ -95,6 +95,10 @@ public class Planet {
             return "1";
 
         //then the TECH TODO to be customized with station obj
+        if (BonusType.NEW_TECH.toString().equals(this.bonus0))
+            return "0";
+        if (BonusType.NEW_TECH.toString().equals(this.bonus1))
+            return "1";
         if (BonusType.TECH_RESEARCH_2.toString().equals(this.bonus0))
             return "0";
         if (BonusType.TECH_RESEARCH_2.toString().equals(this.bonus1))

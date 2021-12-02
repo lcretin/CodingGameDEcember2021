@@ -122,9 +122,38 @@ public class Strategy {
                 commandName = "TECH_RESEARCH ";
             }
             if (techREsearchBonusNum >= 0) {
+                boolean isBonusUsed=false;
                 for (int i = 0; i < myStations.length; i++) {
                     Station station = myStations[i];
 
+                    if (station.getTerraformingSkill() == techREsearchBonusNum && station.isTerraformingObjectiveReached()) {
+                        resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.TERRAFORMING);
+                        station.terraformingSkill += 1;
+                        isBonusUsed=true;
+                        System.err.println("Station impacted: "+station.toString());
+                        break;
+                    } else if (station.getAlienSkill() == techREsearchBonusNum && station.isAlienObjectiveReached()) {
+                        resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.ALIEN);
+                        station.alienSkill += 1;
+                        isBonusUsed=true;
+                        System.err.println("Station impacted: "+station.toString());
+                        break;
+                    } else if (station.getEngineeringSkill() == techREsearchBonusNum && station.isEngineeringObjectiveReached()) {
+                        resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.ENGINEERING);
+                        station.engineeringSkill += 1;
+                        isBonusUsed=true;
+                        System.err.println("Station impacted: "+station.toString());
+                        break;
+                    } else if (station.getAgricultureSkill() == techREsearchBonusNum && station.isAgricultureObjectiveReached()) {
+                        resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.AGRICULTURE);
+                        station.agricultureSkill += 1;
+                        isBonusUsed=true;
+                        System.err.println("Station impacted: "+station.toString());
+                        break;
+                    }
+                }
+                if (!isBonusUsed) //bonus not used to fill station objective, let's fill the first available task-station
+                {
                     if (station.getTerraformingSkill() == techREsearchBonusNum) {
                         resultCommand += commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.TERRAFORMING);
                         station.terraformingSkill += 1;
