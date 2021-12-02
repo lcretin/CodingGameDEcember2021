@@ -1,5 +1,5 @@
 /*
-This file has been generated Thu Dec 02 16:46:54 CET 2021
+This file has been generated Thu Dec 02 16:50:09 CET 2021
 */
 
 import java.util.Scanner;import java.util.ArrayList;
@@ -297,7 +297,7 @@ class Strategy {  // Strategy.java, 5
         this.oppBonus = oppBonus;  // Strategy.java, 20
     }  // Strategy.java, 21
     public String execute(){  // Strategy.java, 23
-        String preCommand = applyTechPreCommand();  // Strategy.java, 24
+        String preCommand = applyTechPreCommand() + " ";  // Strategy.java, 24
         // main actions: COLONIZE | RESUPPLY  // Strategy.java, 25
         // bonus actions: ENERGY_CORE | ALIEN_ARTIFACT | TECH_RESEARCH | NEW_TECH  // Strategy.java, 26
         // Append text after any command and that text will appear on screen.  // Strategy.java, 27
@@ -314,15 +314,15 @@ class Strategy {  // Strategy.java, 5
         }  // Strategy.java, 39
         Distances distanceToPlay = disMin;  // Strategy.java, 40
         if(distanceToPlay.getStation().isAvailable()) {  // Strategy.java, 41
-                return applyColonizeWithAllienAttempt(myBonus,distanceToPlay);  // Strategy.java, 42
+                return preCommand+applyColonizeWithAllienAttempt(myBonus,distanceToPlay);  // Strategy.java, 42
         }else{  // Strategy.java, 43
             //do we have an avaialble station with the same distance ? if yes, let's colonize with it ....  // Strategy.java, 44
             if(disMinAvailable != null && disMinAvailable.getValueStationPlanet() <= disMin.getValueStationPlanet()){  // Strategy.java, 45
-                return applyColonizeWithAllienAttempt(myBonus,disMinAvailable) ;  // Strategy.java, 46
+                return preCommand+applyColonizeWithAllienAttempt(myBonus,disMinAvailable) ;  // Strategy.java, 46
             }  // Strategy.java, 47
             //... else let's try to apply a bonus to the non available better one  // Strategy.java, 48
             //do dwe have a ENERGY BONUS to allow resupply and colonize in one shot  // Strategy.java, 49
-            return applyEnergyAndColonize_Or_Resupply(myBonus, applyColonizeWithAllienAttempt(myBonus,distanceToPlay));  // Strategy.java, 50
+            return preCommand+applyEnergyAndColonize_Or_Resupply(myBonus, applyColonizeWithAllienAttempt(myBonus,distanceToPlay));  // Strategy.java, 50
         }  // Strategy.java, 52
     }  // Strategy.java, 53
     public String applyTechPreCommand(){  // Strategy.java, 55
