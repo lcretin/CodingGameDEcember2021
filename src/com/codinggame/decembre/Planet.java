@@ -1,5 +1,7 @@
 package com.codinggame.decembre;
 
+import java.util.ArrayList;
+
 public class Planet {
     int planetId;
     //left to complete
@@ -112,5 +114,18 @@ public class Planet {
             return "1";
 
         return "0";
+    }
+
+    // TODO IT IS DUPPLICATED PAS BIEN
+    private boolean isBonusAvailable(ArrayList<Bonus> myBonus, BonusType bonusType ){
+        if(myBonus == null){
+            return false;
+        }
+        for(Bonus bonus: myBonus){
+            if(bonusType.equals(bonus.getBonus())){
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -1,5 +1,5 @@
 /*
-This file has been generated Thu Dec 02 17:52:18 CET 2021
+This file has been generated Thu Dec 02 17:57:35 CET 2021
 */
 
 import java.util.Scanner;import java.util.ArrayList;
@@ -167,65 +167,112 @@ class StationObjective {  // StationObjective.java, 3
     }  // StationObjective.java, 18
 }  // StationObjective.java, 19
 
-class Planet {  // Planet.java, 3
-    int planetId;  // Planet.java, 4
-    //left to complete  // Planet.java, 5
-    int terraformingTaskLeftValue;  // Planet.java, 6
-    int alienTaskLeftValue;  // Planet.java, 7
-    int engineeringTaskLeftValue;  // Planet.java, 8
-    int agricultureTaskLeftValue;  // Planet.java, 9
-    int myContributionTotalTaks;  // Planet.java, 11
-    int oppContributionTotalTasks;  // Planet.java, 12
-    int colonizationScore;  // Planet.java, 14
-    String bonus0;  // Planet.java, 16
-    String bonus1;  // Planet.java, 17
-    public Planet(int id, int tValue, int alValue, int eValue, int agValue, int myC, int oppC, int coloScore,String bonus0, String bonus1)  // Planet.java, 20
-    {  // Planet.java, 21
-        this.planetId=id;  // Planet.java, 22
-        this.terraformingTaskLeftValue =tValue;  // Planet.java, 23
-        this.alienTaskLeftValue =alValue;  // Planet.java, 24
-        this.engineeringTaskLeftValue =eValue;  // Planet.java, 25
-        this.agricultureTaskLeftValue =agValue;  // Planet.java, 26
-        this.myContributionTotalTaks = myC;  // Planet.java, 27
-        this.oppContributionTotalTasks=oppC;  // Planet.java, 28
-        this.colonizationScore=coloScore;  // Planet.java, 29
-        this.bonus0=bonus0;  // Planet.java, 30
-        this.bonus1=bonus1;  // Planet.java, 31
-    }  // Planet.java, 32
-    public int getPlanetId() {  // Planet.java, 34
-        return planetId;  // Planet.java, 35
-    }  // Planet.java, 36
-    public int getTerraformingTaskLeftValue() {  // Planet.java, 38
-        return terraformingTaskLeftValue;  // Planet.java, 39
-    }  // Planet.java, 40
-    public int getAlienTaskLeftValue() {  // Planet.java, 42
-        return alienTaskLeftValue;  // Planet.java, 43
-    }  // Planet.java, 44
-    public int getEngineeringTaskLeftValue() {  // Planet.java, 46
-        return engineeringTaskLeftValue;  // Planet.java, 47
-    }  // Planet.java, 48
-    public int getAgricultureTaskLeftValue() {  // Planet.java, 50
-        return agricultureTaskLeftValue;  // Planet.java, 51
-    }  // Planet.java, 52
-    public int getMyContributionTotalTaks() {  // Planet.java, 54
-        return myContributionTotalTaks;  // Planet.java, 55
-    }  // Planet.java, 56
-    public int getOppContributionTotalTasks() {  // Planet.java, 58
-        return oppContributionTotalTasks;  // Planet.java, 59
-    }  // Planet.java, 60
-    public int getColonizationScore() {  // Planet.java, 62
-        return colonizationScore;  // Planet.java, 63
-    }  // Planet.java, 64
-    public String getBonus0() {  // Planet.java, 66
-        return bonus0;  // Planet.java, 67
-    }  // Planet.java, 68
-    public String getBonus1() {  // Planet.java, 70
-        return bonus1;  // Planet.java, 71
-    }  // Planet.java, 72
-    public String getBestBonus(){  // Planet.java, 74
-        return "0";  // Planet.java, 75
-    }  // Planet.java, 76
-}  // Planet.java, 77
+class Planet {  // Planet.java, 5
+    int planetId;  // Planet.java, 6
+    //left to complete  // Planet.java, 7
+    int terraformingTaskLeftValue;  // Planet.java, 8
+    int alienTaskLeftValue;  // Planet.java, 9
+    int engineeringTaskLeftValue;  // Planet.java, 10
+    int agricultureTaskLeftValue;  // Planet.java, 11
+    int myContributionTotalTaks;  // Planet.java, 13
+    int oppContributionTotalTasks;  // Planet.java, 14
+    int colonizationScore;  // Planet.java, 16
+    String bonus0;  // Planet.java, 18
+    String bonus1;  // Planet.java, 19
+    public Planet(int id, int tValue, int alValue, int eValue, int agValue, int myC, int oppC, int coloScore,String bonus0, String bonus1)  // Planet.java, 22
+    {  // Planet.java, 23
+        this.planetId=id;  // Planet.java, 24
+        this.terraformingTaskLeftValue =tValue;  // Planet.java, 25
+        this.alienTaskLeftValue =alValue;  // Planet.java, 26
+        this.engineeringTaskLeftValue =eValue;  // Planet.java, 27
+        this.agricultureTaskLeftValue =agValue;  // Planet.java, 28
+        this.myContributionTotalTaks = myC;  // Planet.java, 29
+        this.oppContributionTotalTasks=oppC;  // Planet.java, 30
+        this.colonizationScore=coloScore;  // Planet.java, 31
+        this.bonus0=bonus0;  // Planet.java, 32
+        this.bonus1=bonus1;  // Planet.java, 33
+    }  // Planet.java, 34
+    public int getPlanetId() {  // Planet.java, 36
+        return planetId;  // Planet.java, 37
+    }  // Planet.java, 38
+    public int getTerraformingTaskLeftValue() {  // Planet.java, 40
+        return terraformingTaskLeftValue;  // Planet.java, 41
+    }  // Planet.java, 42
+    public int getAlienTaskLeftValue() {  // Planet.java, 44
+        return alienTaskLeftValue;  // Planet.java, 45
+    }  // Planet.java, 46
+    public int getEngineeringTaskLeftValue() {  // Planet.java, 48
+        return engineeringTaskLeftValue;  // Planet.java, 49
+    }  // Planet.java, 50
+    public int getAgricultureTaskLeftValue() {  // Planet.java, 52
+        return agricultureTaskLeftValue;  // Planet.java, 53
+    }  // Planet.java, 54
+    public int getMyContributionTotalTaks() {  // Planet.java, 56
+        return myContributionTotalTaks;  // Planet.java, 57
+    }  // Planet.java, 58
+    public int getOppContributionTotalTasks() {  // Planet.java, 60
+        return oppContributionTotalTasks;  // Planet.java, 61
+    }  // Planet.java, 62
+    public int getColonizationScore() {  // Planet.java, 64
+        return colonizationScore;  // Planet.java, 65
+    }  // Planet.java, 66
+    public String getBonus0() {  // Planet.java, 68
+        return bonus0;  // Planet.java, 69
+    }  // Planet.java, 70
+    public String getBonus1() {  // Planet.java, 72
+        return bonus1;  // Planet.java, 73
+    }  // Planet.java, 74
+    public String getBestBonus(ArrayList<Bonus> myBonus){  // Planet.java, 76
+        //let's take the points first  // Planet.java, 77
+        if (BonusType.POINTS_3.toString().equals(this.bonus0))  // Planet.java, 78
+            return "0";  // Planet.java, 79
+        if (BonusType.POINTS_3.toString().equals(this.bonus1))  // Planet.java, 80
+            return "1";  // Planet.java, 81
+        if (BonusType.POINTS_2.toString().equals(this.bonus0))  // Planet.java, 82
+            return "0";  // Planet.java, 83
+        if (BonusType.POINTS_2.toString().equals(this.bonus1))  // Planet.java, 84
+            return "1";  // Planet.java, 85
+        if (BonusType.POINTS_1.toString().equals(this.bonus0))  // Planet.java, 86
+            return "0";  // Planet.java, 87
+        if (BonusType.POINTS_1.toString().equals(this.bonus1))  // Planet.java, 88
+            return "1";  // Planet.java, 89
+        //then the energy  // Planet.java, 91
+        if (BonusType.ENERGY_CORE.toString().equals(this.bonus0) && !isBonusAvailable(myBonus, BonusType.ENERGY_CORE))  // Planet.java, 92
+            return "0";  // Planet.java, 93
+        if (BonusType.ENERGY_CORE.toString().equals(this.bonus1) && !isBonusAvailable(myBonus, BonusType.ENERGY_CORE))  // Planet.java, 94
+            return "1";  // Planet.java, 95
+        //then the TECH TODO to be customized with station obj  // Planet.java, 97
+        if (BonusType.TECH_RESEARCH_2.toString().equals(this.bonus0))  // Planet.java, 98
+            return "0";  // Planet.java, 99
+        if (BonusType.TECH_RESEARCH_2.toString().equals(this.bonus1))  // Planet.java, 100
+            return "1";  // Planet.java, 101
+        if (BonusType.TECH_RESEARCH_3.toString().equals(this.bonus0))  // Planet.java, 102
+            return "0";  // Planet.java, 103
+        if (BonusType.TECH_RESEARCH_3.toString().equals(this.bonus1))  // Planet.java, 104
+            return "1";  // Planet.java, 105
+            if (BonusType.TECH_RESEARCH_4.toString().equals(this.bonus0))  // Planet.java, 106
+            return "0";  // Planet.java, 107
+        if (BonusType.TECH_RESEARCH_4.toString().equals(this.bonus1))  // Planet.java, 108
+            return "1";  // Planet.java, 109
+        if (BonusType.ALIEN_ARTIFACT.toString().equals(this.bonus0))  // Planet.java, 111
+            return "0";  // Planet.java, 112
+        if (BonusType.ALIEN_ARTIFACT.toString().equals(this.bonus1))  // Planet.java, 113
+            return "1";  // Planet.java, 114
+        return "0";  // Planet.java, 116
+    }  // Planet.java, 117
+    // TODO IT IS DUPPLICATED PAS BIEN  // Planet.java, 119
+    private boolean isBonusAvailable(ArrayList<Bonus> myBonus, BonusType bonusType ){  // Planet.java, 120
+        if(myBonus == null){  // Planet.java, 121
+            return false;  // Planet.java, 122
+        }  // Planet.java, 123
+        for(Bonus bonus: myBonus){  // Planet.java, 124
+            if(bonusType.equals(bonus.getBonus())){  // Planet.java, 125
+                return true;  // Planet.java, 126
+            }  // Planet.java, 127
+        }  // Planet.java, 128
+        return false;  // Planet.java, 129
+    }  // Planet.java, 130
+}  // Planet.java, 131
 
 class Station {  // Station.java, 3
     int stationId;  // Station.java, 4
@@ -502,7 +549,7 @@ class Strategy {  // Strategy.java, 5
              }  // Strategy.java, 213
             prefixAllien+= "ALLIEN_ARTIFACT " + tasks[0] + " "+ tasks[1] + " ";  // Strategy.java, 216
         }  // Strategy.java, 217
-        String colonizeAction="COLONIZE " + distanceToPlay.getStation().getStationId() + " " + distanceToPlay.getPlanet().getPlanetId() + " " + distanceToPlay.getPlanet().getBestBonus();  // Strategy.java, 219
+        String colonizeAction="COLONIZE " + distanceToPlay.getStation().getStationId() + " " + distanceToPlay.getPlanet().getPlanetId() + " " + distanceToPlay.getPlanet().getBestBonus(myBonus);  // Strategy.java, 219
         return prefixAllien + colonizeAction;  // Strategy.java, 220
     }  // Strategy.java, 221
 }  // Strategy.java, 222
