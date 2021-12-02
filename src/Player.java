@@ -1,5 +1,5 @@
 /*
-This file has been generated Thu Dec 02 14:44:42 CET 2021
+This file has been generated Thu Dec 02 14:46:50 CET 2021
 */
 
 import java.util.Scanner;
@@ -48,8 +48,8 @@ class Distances {  // Distances.java, 3
             }  // Distances.java, 49
         }  // Distances.java, 50
         // If no task remaining and no skill on station, not considered in distance  // Distances.java, 54
-        if(this.planet.getAlienTaskLeftValue() != 0 ) {  // Distances.java, 55
-            int disEng = this.planet.getAlienTaskLeftValue() - this.station.getAlienSkill();  // Distances.java, 56
+        if(this.planet.getEngineeringTaskLeftValue() != 0 ) {  // Distances.java, 55
+            int disEng = this.planet.getEngineeringTaskLeftValue() - this.station.getEngineeringSkill();  // Distances.java, 56
             System.err.println("eng = "+disEng);  // Distances.java, 57
             if(disEng < 0){  // Distances.java, 58
                 if(result == null){  // Distances.java, 59

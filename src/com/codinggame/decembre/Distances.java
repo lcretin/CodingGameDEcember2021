@@ -52,8 +52,8 @@ public class Distances {
 
 
         // If no task remaining and no skill on station, not considered in distance
-        if(this.planet.getAlienTaskLeftValue() != 0 ) {
-            int disEng = this.planet.getAlienTaskLeftValue() - this.station.getAlienSkill();
+        if(this.planet.getEngineeringTaskLeftValue() != 0 ) {
+            int disEng = this.planet.getEngineeringTaskLeftValue() - this.station.getEngineeringSkill();
             System.err.println("eng = "+disEng);
             if(disEng < 0){
                 if(result == null){
