@@ -24,6 +24,7 @@ public class Strategy {
             for (int p = 0; p < planets.length; p++){
                 distance = new Distances(myStations[i], planets[p]);
                 disMin = distance.getSmallerDistance(disMin);
+                System.err.println("Dist: ["+disMin.getPlanet().getPlanetId()+"] ["+disMin.getStation().getStationId()+"] dist= "+ disMin.getValueStationPlanet());
             }
         }
 

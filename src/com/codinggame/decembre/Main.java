@@ -82,9 +82,9 @@ public class Main {
             // Write an action using System.out.println()
             // To debug: System.err.println("Debug messages...");
 
-            printMyStations(myStations);
-            printOppStations(oppStations);
-            printPlanets(planets);
+            //printMyStations(myStations);
+            //printOppStations(oppStations);
+            //printPlanets(planets);
 
             System.out.println(strategy.execute());
         }
