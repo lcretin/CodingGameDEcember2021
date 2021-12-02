@@ -1,5 +1,5 @@
 /*
-This file has been generated Thu Dec 02 16:34:14 CET 2021
+This file has been generated Thu Dec 02 16:40:33 CET 2021
 */
 
 import java.util.Scanner;import java.util.ArrayList;
@@ -303,94 +303,97 @@ class Strategy {  // Strategy.java, 5
             int techREsearchBonusNum = 0;  // Strategy.java, 27
             if(BonusType.TECH_RESEARCH_2.equals(bonus)) {  // Strategy.java, 28
                 techREsearchBonusNum = 1;  // Strategy.java, 29
-            }else if(BonusType.TECH_RESEARCH_3.equals(bonus)) {  // Strategy.java, 30
-                techREsearchBonusNum = 2;  // Strategy.java, 31
-            }if(BonusType.TECH_RESEARCH_4.equals(bonus)) {  // Strategy.java, 32
-                techREsearchBonusNum = 3;  // Strategy.java, 33
-            }  // Strategy.java, 34
-            if (techREsearchBonusNum != 0) {  // Strategy.java, 35
-                for (int i = 0; i < myStations.length; i++) {  // Strategy.java, 36
-                    Station station = myStations[i];  // Strategy.java, 37
-                    if (station.getTerraformingSkill() == techREsearchBonusNum) {  // Strategy.java, 38
-                        preCommand = "TECH_RESEARCH " + station.getStationId() + " " + TechEnum.getCode(TechEnum.TERRAFORMING);  // Strategy.java, 39
-                        station.terraformingSkill += techREsearchBonusNum;  // Strategy.java, 40
-                        break;  // Strategy.java, 41
-                    } else if (station.getAlienSkill() == techREsearchBonusNum) {  // Strategy.java, 42
-                        preCommand = "TECH_RESEARCH " + station.getStationId() + " " + TechEnum.getCode(TechEnum.ALIEN);  // Strategy.java, 43
-                        station.alienSkill += techREsearchBonusNum;  // Strategy.java, 44
+                System.err.println("Found Bonus TechREsearch 2");  // Strategy.java, 30
+            }else if(BonusType.TECH_RESEARCH_3.equals(bonus)) {  // Strategy.java, 31
+                System.err.println("Found Bonus TechREsearch 3");  // Strategy.java, 32
+                techREsearchBonusNum = 2;  // Strategy.java, 33
+            }if(BonusType.TECH_RESEARCH_4.equals(bonus)) {  // Strategy.java, 34
+                System.err.println("Found Bonus TechREsearch 4");  // Strategy.java, 35
+                techREsearchBonusNum = 3;  // Strategy.java, 36
+            }  // Strategy.java, 37
+            if (techREsearchBonusNum != 0) {  // Strategy.java, 38
+                for (int i = 0; i < myStations.length; i++) {  // Strategy.java, 39
+                    Station station = myStations[i];  // Strategy.java, 40
+                    if (station.getTerraformingSkill() == techREsearchBonusNum) {  // Strategy.java, 42
+                        preCommand = "TECH_RESEARCH " + station.getStationId() + " " + TechEnum.getCode(TechEnum.TERRAFORMING);  // Strategy.java, 43
+                        station.terraformingSkill += techREsearchBonusNum;  // Strategy.java, 44
                         break;  // Strategy.java, 45
-                    } else if (station.getEngineeringSkill() == techREsearchBonusNum) {  // Strategy.java, 46
-                        preCommand = "TECH_RESEARCH " + station.getStationId() + " " + TechEnum.getCode(TechEnum.ENGINEERING);  // Strategy.java, 47
-                        station.engineeringSkill += techREsearchBonusNum;  // Strategy.java, 48
+                    } else if (station.getAlienSkill() == techREsearchBonusNum) {  // Strategy.java, 46
+                        preCommand = "TECH_RESEARCH " + station.getStationId() + " " + TechEnum.getCode(TechEnum.ALIEN);  // Strategy.java, 47
+                        station.alienSkill += techREsearchBonusNum;  // Strategy.java, 48
                         break;  // Strategy.java, 49
-                    } else if (station.getAgricultureSkill() == techREsearchBonusNum) {  // Strategy.java, 50
-                        preCommand = "TECH_RESEARCH " + station.getStationId() + " " + TechEnum.getCode(TechEnum.AGRICULTURE);  // Strategy.java, 51
-                        station.agricultureSkill += techREsearchBonusNum;  // Strategy.java, 52
+                    } else if (station.getEngineeringSkill() == techREsearchBonusNum) {  // Strategy.java, 50
+                        preCommand = "TECH_RESEARCH " + station.getStationId() + " " + TechEnum.getCode(TechEnum.ENGINEERING);  // Strategy.java, 51
+                        station.engineeringSkill += techREsearchBonusNum;  // Strategy.java, 52
                         break;  // Strategy.java, 53
-                    }  // Strategy.java, 54
-                }  // Strategy.java, 55
-            }  // Strategy.java, 56
-        }  // Strategy.java, 57
-        System.err.println("PreCommand-> ["+preCommand+"]");  // Strategy.java, 58
-        // main actions: COLONIZE | RESUPPLY  // Strategy.java, 60
-        // bonus actions: ENERGY_CORE | ALIEN_ARTIFACT | TECH_RESEARCH | NEW_TECH  // Strategy.java, 61
-        // Append text after any command and that text will appear on screen.  // Strategy.java, 62
-        Distances distance;  // Strategy.java, 63
-        Distances disMin = null;  // Strategy.java, 64
-        Distances disMinAvailable = null;  // Strategy.java, 65
-        for(int i=0; i<myStations.length; i++){  // Strategy.java, 66
-            for (Planet planet: planets){  // Strategy.java, 67
-                distance = new Distances(myStations[i], planet);  // Strategy.java, 68
-                disMin = distance.getSmallerDistance(disMin);  // Strategy.java, 69
-                disMinAvailable = distance.getSmallerAvailableDistance(disMinAvailable);  // Strategy.java, 70
-                System.err.println("Distance: ["+distance.getPlanet().getPlanetId()+"] ["+distance.getStation().getStationId()+"] dist= "+ distance.getValueStationPlanet());  // Strategy.java, 71
-            }  // Strategy.java, 73
-        }  // Strategy.java, 74
-        Distances distanceToPlay = disMin;  // Strategy.java, 75
-        if(distanceToPlay.getStation().isAvailable()) {  // Strategy.java, 76
-                return applyColonizeWithAllienAttempt(myBonus,distanceToPlay);  // Strategy.java, 77
-        }else{  // Strategy.java, 78
-            //do we have an avaialble station with the same distance ? if yes, let's colonize with it ....  // Strategy.java, 79
-            if(disMinAvailable != null && disMinAvailable.getValueStationPlanet() <= disMin.getValueStationPlanet()){  // Strategy.java, 80
-                return applyColonizeWithAllienAttempt(myBonus,disMinAvailable) ;  // Strategy.java, 81
-            }  // Strategy.java, 82
-            //... else let's try to apply a bonus to the non available better one  // Strategy.java, 83
-            //do dwe have a ENERGY BONUS to allow resupply and colonize in one shot  // Strategy.java, 84
-            return applyEnergyAndColonize_Or_Resupply(myBonus, applyColonizeWithAllienAttempt(myBonus,distanceToPlay));  // Strategy.java, 85
-        }  // Strategy.java, 87
-    }  // Strategy.java, 88
-    public  boolean isBonusAvailable(ArrayList<Bonus> myBonus, BonusType bonusType ){  // Strategy.java, 90
-        if(myBonus == null){  // Strategy.java, 91
-            return false;  // Strategy.java, 92
-        }  // Strategy.java, 93
-        for(Bonus bonus: myBonus){  // Strategy.java, 94
-            if(bonusType.equals(bonus.getBonus())){  // Strategy.java, 95
-                return true;  // Strategy.java, 96
-            }  // Strategy.java, 97
-        }  // Strategy.java, 98
-        return false;  // Strategy.java, 99
-    }  // Strategy.java, 100
-    public String applyEnergyAndColonize_Or_Resupply (ArrayList<Bonus> myBonus, String colonizeAction)  // Strategy.java, 102
-    {  // Strategy.java, 103
-        if(isBonusAvailable(myBonus, BonusType.ENERGY_CORE)){  // Strategy.java, 104
-            return BonusType.ENERGY_CORE+" "+ colonizeAction;  // Strategy.java, 105
-        }  // Strategy.java, 106
-        else{  // Strategy.java, 107
-            //no choice  // Strategy.java, 108
-            return "RESUPPLY";  // Strategy.java, 109
+                    } else if (station.getAgricultureSkill() == techREsearchBonusNum) {  // Strategy.java, 54
+                        preCommand = "TECH_RESEARCH " + station.getStationId() + " " + TechEnum.getCode(TechEnum.AGRICULTURE);  // Strategy.java, 55
+                        station.agricultureSkill += techREsearchBonusNum;  // Strategy.java, 56
+                        break;  // Strategy.java, 57
+                    }  // Strategy.java, 58
+                }  // Strategy.java, 59
+            }  // Strategy.java, 60
+        }  // Strategy.java, 61
+        System.err.println("PreCommand-> ["+preCommand+"]");  // Strategy.java, 62
+        // main actions: COLONIZE | RESUPPLY  // Strategy.java, 64
+        // bonus actions: ENERGY_CORE | ALIEN_ARTIFACT | TECH_RESEARCH | NEW_TECH  // Strategy.java, 65
+        // Append text after any command and that text will appear on screen.  // Strategy.java, 66
+        Distances distance;  // Strategy.java, 67
+        Distances disMin = null;  // Strategy.java, 68
+        Distances disMinAvailable = null;  // Strategy.java, 69
+        for(int i=0; i<myStations.length; i++){  // Strategy.java, 70
+            for (Planet planet: planets){  // Strategy.java, 71
+                distance = new Distances(myStations[i], planet);  // Strategy.java, 72
+                disMin = distance.getSmallerDistance(disMin);  // Strategy.java, 73
+                disMinAvailable = distance.getSmallerAvailableDistance(disMinAvailable);  // Strategy.java, 74
+                //System.err.println("Distance: ["+distance.getPlanet().getPlanetId()+"] ["+distance.getStation().getStationId()+"] dist= "+ distance.getValueStationPlanet());  // Strategy.java, 75
+            }  // Strategy.java, 77
+        }  // Strategy.java, 78
+        Distances distanceToPlay = disMin;  // Strategy.java, 79
+        if(distanceToPlay.getStation().isAvailable()) {  // Strategy.java, 80
+                return applyColonizeWithAllienAttempt(myBonus,distanceToPlay);  // Strategy.java, 81
+        }else{  // Strategy.java, 82
+            //do we have an avaialble station with the same distance ? if yes, let's colonize with it ....  // Strategy.java, 83
+            if(disMinAvailable != null && disMinAvailable.getValueStationPlanet() <= disMin.getValueStationPlanet()){  // Strategy.java, 84
+                return applyColonizeWithAllienAttempt(myBonus,disMinAvailable) ;  // Strategy.java, 85
+            }  // Strategy.java, 86
+            //... else let's try to apply a bonus to the non available better one  // Strategy.java, 87
+            //do dwe have a ENERGY BONUS to allow resupply and colonize in one shot  // Strategy.java, 88
+            return applyEnergyAndColonize_Or_Resupply(myBonus, applyColonizeWithAllienAttempt(myBonus,distanceToPlay));  // Strategy.java, 89
+        }  // Strategy.java, 91
+    }  // Strategy.java, 92
+    public  boolean isBonusAvailable(ArrayList<Bonus> myBonus, BonusType bonusType ){  // Strategy.java, 94
+        if(myBonus == null){  // Strategy.java, 95
+            return false;  // Strategy.java, 96
+        }  // Strategy.java, 97
+        for(Bonus bonus: myBonus){  // Strategy.java, 98
+            if(bonusType.equals(bonus.getBonus())){  // Strategy.java, 99
+                return true;  // Strategy.java, 100
+            }  // Strategy.java, 101
+        }  // Strategy.java, 102
+        return false;  // Strategy.java, 103
+    }  // Strategy.java, 104
+    public String applyEnergyAndColonize_Or_Resupply (ArrayList<Bonus> myBonus, String colonizeAction)  // Strategy.java, 106
+    {  // Strategy.java, 107
+        if(isBonusAvailable(myBonus, BonusType.ENERGY_CORE)){  // Strategy.java, 108
+            return BonusType.ENERGY_CORE+" "+ colonizeAction;  // Strategy.java, 109
         }  // Strategy.java, 110
-    }  // Strategy.java, 111
-    public String applyColonizeWithAllienAttempt(ArrayList<Bonus> myBonus, Distances distanceToPlay)  // Strategy.java, 113
-    {  // Strategy.java, 114
-        String prefixAllien = "";  // Strategy.java, 115
-        if (distanceToPlay.getValueStationPlanet()>=2 && isBonusAvailable(myBonus, BonusType.ALIEN_ARTIFACT))  // Strategy.java, 116
-        {  // Strategy.java, 117
-            prefixAllien+= "ALLIEN_ARTIFACT 0 1 ";  // Strategy.java, 118
-        }  // Strategy.java, 119
-        String colonizeAction="COLONIZE " + distanceToPlay.getStation().getStationId() + " " + distanceToPlay.getPlanet().getPlanetId() + " " + distanceToPlay.getPlanet().getBestBonus();  // Strategy.java, 121
-        return prefixAllien + colonizeAction;  // Strategy.java, 122
-    }  // Strategy.java, 123
-}  // Strategy.java, 124
+        else{  // Strategy.java, 111
+            //no choice  // Strategy.java, 112
+            return "RESUPPLY";  // Strategy.java, 113
+        }  // Strategy.java, 114
+    }  // Strategy.java, 115
+    public String applyColonizeWithAllienAttempt(ArrayList<Bonus> myBonus, Distances distanceToPlay)  // Strategy.java, 117
+    {  // Strategy.java, 118
+        String prefixAllien = "";  // Strategy.java, 119
+        if (distanceToPlay.getValueStationPlanet()>=2 && isBonusAvailable(myBonus, BonusType.ALIEN_ARTIFACT))  // Strategy.java, 120
+        {  // Strategy.java, 121
+            prefixAllien+= "ALLIEN_ARTIFACT 0 1 ";  // Strategy.java, 122
+        }  // Strategy.java, 123
+        String colonizeAction="COLONIZE " + distanceToPlay.getStation().getStationId() + " " + distanceToPlay.getPlanet().getPlanetId() + " " + distanceToPlay.getPlanet().getBestBonus();  // Strategy.java, 125
+        return prefixAllien + colonizeAction;  // Strategy.java, 126
+    }  // Strategy.java, 127
+}  // Strategy.java, 128
 
 enum TechEnum {  // TechEnum.java, 3
     TERRAFORMING,  // TechEnum.java, 4

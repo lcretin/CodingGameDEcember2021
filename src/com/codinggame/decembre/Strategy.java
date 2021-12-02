@@ -27,14 +27,18 @@ public class Strategy {
             int techREsearchBonusNum = 0;
             if(BonusType.TECH_RESEARCH_2.equals(bonus)) {
                 techREsearchBonusNum = 1;
+                System.err.println("Found Bonus TechREsearch 2");
             }else if(BonusType.TECH_RESEARCH_3.equals(bonus)) {
+                System.err.println("Found Bonus TechREsearch 3");
                 techREsearchBonusNum = 2;
             }if(BonusType.TECH_RESEARCH_4.equals(bonus)) {
+                System.err.println("Found Bonus TechREsearch 4");
                 techREsearchBonusNum = 3;
             }
             if (techREsearchBonusNum != 0) {
                 for (int i = 0; i < myStations.length; i++) {
                     Station station = myStations[i];
+
                     if (station.getTerraformingSkill() == techREsearchBonusNum) {
                         preCommand = "TECH_RESEARCH " + station.getStationId() + " " + TechEnum.getCode(TechEnum.TERRAFORMING);
                         station.terraformingSkill += techREsearchBonusNum;
@@ -68,7 +72,7 @@ public class Strategy {
                 distance = new Distances(myStations[i], planet);
                 disMin = distance.getSmallerDistance(disMin);
                 disMinAvailable = distance.getSmallerAvailableDistance(disMinAvailable);
-                System.err.println("Distance: ["+distance.getPlanet().getPlanetId()+"] ["+distance.getStation().getStationId()+"] dist= "+ distance.getValueStationPlanet());
+                //System.err.println("Distance: ["+distance.getPlanet().getPlanetId()+"] ["+distance.getStation().getStationId()+"] dist= "+ distance.getValueStationPlanet());
 
             }
         }
