@@ -1,16 +1,23 @@
 package com.codinggame.decembre;
 
+import java.util.ArrayList;
+
 public class Distances {
 
     private Station station;
     private Planet planet;
-    private Integer valueStationPlanet = null;
 
-
+    private Integer disValueStationPlanet = null;
     private Integer disValueTerraforming = null;
     private Integer disValueAlien = null;
     private Integer disValueEngineering = null;
     private Integer disValueAgriculture = null;
+
+    private Integer usableToken = null;
+    private Integer usableTokenTerraforming = null;
+    private Integer usableTokenAlien = null;
+    private Integer usableTokenEngineering = null;
+    private Integer usableTokenAgriculture = null;
 
     public Distances(Station station, Planet planet){
         this.station = station;
@@ -23,13 +30,16 @@ public class Distances {
         // If no task remaining and no skill on station, not considered in distance
         if(this.planet.getTerraformingTaskLeftValue() != 0 ) {
             disValueTerraforming = this.planet.getTerraformingTaskLeftValue() - this.station.getTerraformingSkill();
+            usableTokenTerraforming = Math.min(this.planet.getTerraformingTaskLeftValue(), this.station.getTerraformingSkill());
             if(disValueTerraforming < 0){
                 disValueTerraforming = 0;
             }
             if(result == null){
                 result = disValueTerraforming;
+                usableToken = usableTokenTerraforming;
             }else{
                 result += disValueTerraforming;
+                usableToken += usableTokenTerraforming;
             }
         }
 
@@ -37,13 +47,16 @@ public class Distances {
         // If no task remaining and no skill on station, not considered in distance
         if(this.planet.getAlienTaskLeftValue() != 0 ) {
             disValueAlien = this.planet.getAlienTaskLeftValue() - this.station.getAlienSkill();
+            usableTokenAlien = Math.min(this.planet.getAlienTaskLeftValue(), this.station.getAlienSkill());
             if(disValueAlien < 0){
                 disValueAlien = 0;
             }
             if(result == null){
                 result = disValueAlien;
+                usableToken = usableTokenAlien;
             }else{
                 result += disValueAlien;
+                usableToken += usableTokenAlien;
             }
         }
 
@@ -52,13 +65,15 @@ public class Distances {
         // If no task remaining and no skill on station, not considered in distance
         if(this.planet.getEngineeringTaskLeftValue() != 0 ) {
             disValueEngineering = this.planet.getEngineeringTaskLeftValue() - this.station.getEngineeringSkill();
+            usableTokenEngineering = Math.min(this.planet.getEngineeringTaskLeftValue(), this.station.getEngineeringSkill());
             if(disValueEngineering < 0){
                 disValueEngineering = 0;
             }
             if(result == null){
                 result = disValueEngineering;
+                usableToken = usableTokenEngineering;
             }else{
-                result += disValueEngineering;
+                result += usableTokenEngineering;
             }
         }
 
@@ -66,25 +81,32 @@ public class Distances {
         // If no task remaining and no skill on station, not considered in distance
         if(this.planet.getAgricultureTaskLeftValue() != 0 ) {
             disValueAgriculture= this.planet.getAgricultureTaskLeftValue() - this.station.getAgricultureSkill();
+            usableTokenAgriculture = Math.min(this.planet.getAgricultureTaskLeftValue(), this.station.getAgricultureSkill());
             if(disValueAgriculture < 0){
                 disValueAgriculture = 0;
             }
             if(result == null){
                 result = disValueAgriculture;
+                usableToken = usableTokenAgriculture;
             }else{
                 result += disValueAgriculture;
+                usableToken += usableTokenAgriculture;
             }
         }
 
-       this.valueStationPlanet = result;
+       this.disValueStationPlanet = result;
     }
 
-    public boolean isSmallerThan(Distances distances){
-        return distances == null || (distances.valueStationPlanet != null && this.valueStationPlanet < distances.valueStationPlanet);
+    public boolean isSmallerDistanceThan(Distances distances){
+        return distances == null || (distances.disValueStationPlanet != null && this.disValueStationPlanet < distances.disValueStationPlanet);
+    }
+
+    public boolean isEqualDistanceThan(Distances distances){
+        return distances != null && distances.disValueStationPlanet != null && this.disValueStationPlanet == distances.disValueStationPlanet;
     }
 
     public Distances getSmallerDistance(Distances distances){
-           if(this.isSmallerThan(distances)){
+           if(this.isSmallerDistanceThan(distances)){
                return this;
            }else{
                return distances;
@@ -92,7 +114,7 @@ public class Distances {
     }
 
     public Distances getSmallerAvailableDistance(Distances distances){
-        if(this.isSmallerThan(distances) && this.getStation().isAvailable()){
+        if(this.isSmallerDistanceThan(distances) && this.getStation().isAvailable()){
             return this;
         }else{
             return distances;
@@ -107,8 +129,8 @@ public class Distances {
         return planet;
     }
 
-    public int getValueStationPlanet() {
-        return valueStationPlanet;
+    public int getDisValueStationPlanet() {
+        return disValueStationPlanet;
     }
 
     public Integer getValueTerraformingStationPlanet(){
@@ -125,5 +147,9 @@ public class Distances {
 
     public Integer getValueAgricultureStationPlanet(){
         return disValueAgriculture;
+    }
+
+    public Integer getUsableToken() {
+        return usableToken;
     }
 }

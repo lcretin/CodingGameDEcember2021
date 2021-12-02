@@ -25,23 +25,37 @@ public class Strategy {
         // main actions: COLONIZE | RESUPPLY
         // bonus actions: ENERGY_CORE | ALIEN_ARTIFACT | TECH_RESEARCH | NEW_TECH
         // Append text after any command and that text will appear on screen.
+        ArrayList<Distances> distancesArrayList = new ArrayList<>();
         Distances distance;
         Distances disMin = null;
         Distances disMinAvailable = null;
         for(int i=0; i<myStations.length; i++){
             for (Planet planet: planets){
                 distance = new Distances(myStations[i], planet);
-                disMin = distance.getSmallerDistance(disMin);
-                disMinAvailable = distance.getSmallerAvailableDistance(disMinAvailable);
+                if(distancesArrayList.size() == 0){
+                    distancesArrayList.add(distance);
+                    disMin = distance;
+                }else{
+                    if(distance.isSmallerDistanceThan(disMin)){
+                        distancesArrayList.clear();
+                        distancesArrayList.add(distance);
+                        disMin = distance;
+                    }else if(distance.isEqualDistanceThan(disMin)){
+                        distancesArrayList.add(distance);
+                    }
+                }
                 //System.err.println("Distance: ["+distance.getPlanet().getPlanetId()+"] ["+distance.getStation().getStationId()+"] dist= "+ distance.getValueStationPlanet());
             }
         }
-        Distances distanceToPlay = disMin;
+
+
+        Distances distanceToPlay = getBestTokenUsableFromList(distancesArrayList) ;
         if(distanceToPlay.getStation().isAvailable()) {
                 return preCommand+applyColonizeWithAllienAttempt(myBonus,distanceToPlay);
         }else{
             //do we have an avaialble station with the same distance ? if yes, let's colonize with it ....
-            if(disMinAvailable != null && disMinAvailable.getValueStationPlanet() <= disMin.getValueStationPlanet()){
+            disMinAvailable = getBestTokenUsableFromList(geAvailablesFromList(distancesArrayList));
+            if(disMinAvailable != null && disMinAvailable.getDisValueStationPlanet() <= distanceToPlay.getDisValueStationPlanet()){
                 return preCommand+applyColonizeWithAllienAttempt(myBonus,disMinAvailable) ;
             }
             //... else let's try to apply a bonus to the non available better one
@@ -49,6 +63,36 @@ public class Strategy {
             return preCommand+applyEnergyAndColonize_Or_Resupply(myBonus, applyColonizeWithAllienAttempt(myBonus,distanceToPlay));
             
         }
+    }
+
+    public ArrayList<Distances> geAvailablesFromList(ArrayList<Distances> distancesArrayList){
+        ArrayList<Distances> list = new ArrayList<>();
+        if (distancesArrayList != null){
+            for(Distances distances: distancesArrayList){
+                if(distances.getStation().isAvailable()){
+                    list.add(distances);
+                }
+            }
+        }
+        return list;
+    }
+    public Distances getBestTokenUsableFromList(ArrayList<Distances> distancesArrayList){
+        if (distancesArrayList == null){
+            return null;
+        }
+        Distances prev = null;
+        Distances cur = null;
+        for(Distances distances: distancesArrayList){
+            if(prev == null){
+                prev = distances;
+                cur = distances;
+            }else{
+                if(cur.getUsableToken() > prev.getUsableToken()){
+                    prev = cur;
+                }
+            }
+        }
+        return prev;
     }
 
     public String applyTechPreCommand(){
@@ -132,7 +176,7 @@ public class Strategy {
     public String applyColonizeWithAllienAttempt(ArrayList<Bonus> myBonus, Distances distanceToPlay)
     {
         String prefixAllien = "";
-        if (distanceToPlay.getValueStationPlanet()>=2 && isBonusAvailable(myBonus, BonusType.ALIEN_ARTIFACT))
+        if (distanceToPlay.getDisValueStationPlanet()>=2 && isBonusAvailable(myBonus, BonusType.ALIEN_ARTIFACT))
         {
             int allien0;
             int allien1;
