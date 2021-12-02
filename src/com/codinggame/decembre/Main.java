@@ -74,6 +74,10 @@ public class Main {
                 planets[i] = p;
 
             }
+
+            // Reinit
+            oppBonus.clear();
+            myBonus.clear();
             int bonusCount = in.nextInt(); // bonuses in both you and your opponent's inventories
             for (int i = 0; i < bonusCount; i++) {
                 int mine = in.nextInt();
