@@ -21,7 +21,7 @@ public class Strategy {
     }
 
     public String execute(){
-        String preCommand = applyTechPreCommand();
+        String preCommand = applyTechPreCommand() + " ";
         // main actions: COLONIZE | RESUPPLY
         // bonus actions: ENERGY_CORE | ALIEN_ARTIFACT | TECH_RESEARCH | NEW_TECH
         // Append text after any command and that text will appear on screen.
@@ -39,15 +39,15 @@ public class Strategy {
         }
         Distances distanceToPlay = disMin;
         if(distanceToPlay.getStation().isAvailable()) {
-                return applyColonizeWithAllienAttempt(myBonus,distanceToPlay);
+                return preCommand+applyColonizeWithAllienAttempt(myBonus,distanceToPlay);
         }else{
             //do we have an avaialble station with the same distance ? if yes, let's colonize with it ....
             if(disMinAvailable != null && disMinAvailable.getValueStationPlanet() <= disMin.getValueStationPlanet()){
-                return applyColonizeWithAllienAttempt(myBonus,disMinAvailable) ;
+                return preCommand+applyColonizeWithAllienAttempt(myBonus,disMinAvailable) ;
             }
             //... else let's try to apply a bonus to the non available better one
             //do dwe have a ENERGY BONUS to allow resupply and colonize in one shot
-            return applyEnergyAndColonize_Or_Resupply(myBonus, applyColonizeWithAllienAttempt(myBonus,distanceToPlay));
+            return preCommand+applyEnergyAndColonize_Or_Resupply(myBonus, applyColonizeWithAllienAttempt(myBonus,distanceToPlay));
             
         }
     }
