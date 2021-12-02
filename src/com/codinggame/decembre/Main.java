@@ -1,5 +1,6 @@
 package com.codinggame.decembre;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -7,8 +8,10 @@ public class Main {
     Station[] myStations = new Station[4];
     Station[] oppStations = new Station[4];
     Planet[] planets = new Planet[5];
+    ArrayList<Bonus> myBonus = new ArrayList<Bonus>();
+    ArrayList<Bonus> oppBonus = new ArrayList<Bonus>();
 
-    Strategy strategy = new Strategy(myStations,oppStations,planets);
+    Strategy strategy = new Strategy(myStations,oppStations,planets, myBonus, oppBonus);
 
     public Main(String[] args) {
         Scanner in = new Scanner(System.in);
@@ -75,6 +78,11 @@ public class Main {
             for (int i = 0; i < bonusCount; i++) {
                 int mine = in.nextInt();
                 String bonus = in.next();
+                if(mine == 1){
+                    myBonus.add(new Bonus(bonus));
+                }else{
+                    oppBonus.add(new Bonus(bonus));
+                }
             }
             int myColonizationScore = in.nextInt(); // points from planet colonization, does not include bonus points
             int oppColonizationScore = in.nextInt();

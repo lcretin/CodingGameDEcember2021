@@ -1,5 +1,7 @@
 package com.codinggame.decembre;
 
+import java.util.ArrayList;
+
 public class Strategy {
 
 
@@ -7,11 +9,15 @@ public class Strategy {
 
     private Station[] oppStations = new Station[4];
     private Planet[] planets = new Planet[5];
+    private ArrayList<Bonus> myBonus = new ArrayList<Bonus>();
+    private ArrayList<Bonus> oppBonus = new ArrayList<Bonus>();
 
-    public Strategy(Station[] myStations , Station[] oppStations, Planet[] planets){
+    public Strategy(Station[] myStations , Station[] oppStations, Planet[] planets, ArrayList<Bonus> myBonus, ArrayList<Bonus> oppBonus){
         this.myStations = myStations;
         this.oppStations = oppStations;
         this.planets = planets;
+        this.myBonus = myBonus;
+        this.oppBonus = oppBonus;
     }
 
     public String execute(){
@@ -29,6 +35,7 @@ public class Strategy {
         }
 
         if(disMin.getStation().isAvailable()) {
+
             return "COLONIZE " + disMin.getStation().getStationId() + " " + disMin.getPlanet().getPlanetId() + " " + disMin.getPlanet().getBestBonus();
         }else{
             return "RESUPPLY";
