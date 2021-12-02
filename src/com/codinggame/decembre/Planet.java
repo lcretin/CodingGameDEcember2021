@@ -89,9 +89,9 @@ public class Planet {
             return "1";
         
         //then the energy
-        if (BonusType.ENERGY_CORE.toString().equals(this.bonus0) && !isBonusAvailable(myBonus, BonusType.ENERGY_CORE))
+        if (BonusType.ENERGY_CORE.toString().equals(this.bonus0) && !BonusType.ENERGY_CORE.isBonusAvailableInList(myBonus))
             return "0";
-        if (BonusType.ENERGY_CORE.toString().equals(this.bonus1) && !isBonusAvailable(myBonus, BonusType.ENERGY_CORE))
+        if (BonusType.ENERGY_CORE.toString().equals(this.bonus1) && !BonusType.ENERGY_CORE.isBonusAvailableInList(myBonus))
             return "1";
 
         //then the TECH TODO to be customized with station obj
@@ -120,16 +120,17 @@ public class Planet {
         return "0";
     }
 
-    // TODO IT IS DUPPLICATED PAS BIEN
-    private boolean isBonusAvailable(ArrayList<Bonus> myBonus, BonusType bonusType ){
-        if(myBonus == null){
-            return false;
-        }
-        for(Bonus bonus: myBonus){
-            if(bonusType.equals(bonus.getBonus())){
-                return true;
-            }
-        }
-        return false;
+    @Override
+    public String toString() {
+        return "Planet{" + planetId +
+                ", [" + terraformingTaskLeftValue +
+                ", " + alienTaskLeftValue +
+                ", " + engineeringTaskLeftValue +
+                ", " + agricultureTaskLeftValue +
+                "], myContributionTotalTaks=" + myContributionTotalTaks +
+                ", oppContributionTotalTasks=" + oppContributionTotalTasks +
+                ", colonizationScore=" + colonizationScore +
+                ", bonus=[" + bonus0 +
+                ", " + bonus1 + "]}";
     }
 }

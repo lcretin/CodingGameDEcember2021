@@ -50,12 +50,17 @@ public class Strategy {
 
 
         Distances distanceToPlay = getBestTokenUsableFromList(distancesArrayList) ;
+        System.err.println("Number of min Dist="+distancesArrayList.size());
+        System.err.println("Distrance To play:"+distanceToPlay.toString());
+
         if(distanceToPlay.getStation().isAvailable()) {
                 return preCommand+applyColonizeWithAllienAttempt(myBonus,distanceToPlay);
         }else{
             //do we have an avaialble station with the same distance ? if yes, let's colonize with it ....
             disMinAvailable = getBestTokenUsableFromList(geAvailablesFromList(distancesArrayList));
             if(disMinAvailable != null && disMinAvailable.getDisValueStationPlanet() <= distanceToPlay.getDisValueStationPlanet()){
+                System.err.println("Distrance To play (Min Available):"+disMinAvailable.toString());
+
                 return preCommand+applyColonizeWithAllienAttempt(myBonus,disMinAvailable) ;
             }
             //... else let's try to apply a bonus to the non available better one
@@ -76,6 +81,7 @@ public class Strategy {
         }
         return list;
     }
+
     public Distances getBestTokenUsableFromList(ArrayList<Distances> distancesArrayList){
         if (distancesArrayList == null){
             return null;
@@ -99,23 +105,19 @@ public class Strategy {
         String resultCommand = "";
         // Apply BONUS Pre Command: Apply Tech Reasearch on the first tech on the first station
         for(Bonus bonus: myBonus){
-            System.err.println("Bonus -> "+ bonus.getBonus());
+            System.err.println(bonus.toString());
             int techREsearchBonusNum = -1;
             String commandName = "";
             if(BonusType.NEW_TECH.equals(bonus.getBonus())) {
                 techREsearchBonusNum = 0;
-                System.err.println("Found Bonus NEW TECH");
                 commandName = "NEW_TECH ";
             }else if(BonusType.TECH_RESEARCH_2.equals(bonus.getBonus())) {
                 techREsearchBonusNum = 1;
-                System.err.println("Found Bonus TechREsearch 2");
                 commandName = "TECH_RESEARCH ";
             }else if(BonusType.TECH_RESEARCH_3.equals(bonus.getBonus())) {
-                System.err.println("Found Bonus TechREsearch 3");
                 techREsearchBonusNum = 2;
                 commandName = "TECH_RESEARCH ";
             }if(BonusType.TECH_RESEARCH_4.equals(bonus.getBonus())) {
-                System.err.println("Found Bonus TechREsearch 4");
                 techREsearchBonusNum = 3;
                 commandName = "TECH_RESEARCH ";
             }
@@ -149,20 +151,24 @@ public class Strategy {
                 if (!isBonusUsed) //bonus not used to fill station objective, let's fill the first available task-station
                 {
                     if (station.getTerraformingSkill() == techREsearchBonusNum) {
-                        resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.TERRAFORMING);
+                        resultCommand += commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.TERRAFORMING);
                         station.terraformingSkill += 1;
+                        System.err.println("Station impacted: "+station.toString());
                         break;
                     } else if (station.getAlienSkill() == techREsearchBonusNum) {
-                        resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.ALIEN);
+                        resultCommand += commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.ALIEN);
                         station.alienSkill += 1;
+                        System.err.println("Station impacted: "+station.toString());
                         break;
                     } else if (station.getEngineeringSkill() == techREsearchBonusNum) {
-                        resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.ENGINEERING);
+                        resultCommand += commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.ENGINEERING);
                         station.engineeringSkill += 1;
+                        System.err.println("Station impacted: "+station.toString());
                         break;
                     } else if (station.getAgricultureSkill() == techREsearchBonusNum) {
-                        resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.AGRICULTURE);
+                        resultCommand += commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.AGRICULTURE);
                         station.agricultureSkill += 1;
+                        System.err.println("Station impacted: "+station.toString());
                         break;
                     }
                 }
@@ -171,25 +177,13 @@ public class Strategy {
         if (!"".equals(resultCommand)){
             resultCommand += " ";
         }
-        System.err.println("PreCommand-> ["+resultCommand+"]");
+        System.err.println("PreCommand = "+resultCommand);
         return resultCommand;
-    }
-
-    public  boolean isBonusAvailable(ArrayList<Bonus> myBonus, BonusType bonusType ){
-        if(myBonus == null){
-            return false;
-        }
-        for(Bonus bonus: myBonus){
-            if(bonusType.equals(bonus.getBonus())){
-                return true;
-            }
-        }
-        return false;
     }
 
     public String applyEnergyAndColonize_Or_Resupply (ArrayList<Bonus> myBonus, String colonizeAction)
     {
-        if(isBonusAvailable(myBonus, BonusType.ENERGY_CORE)){
+        if(BonusType.ENERGY_CORE.isBonusAvailableInList(myBonus)){
             return BonusType.ENERGY_CORE+" "+ colonizeAction;
         }
         else{
@@ -201,7 +195,7 @@ public class Strategy {
     public String applyColonizeWithAllienAttempt(ArrayList<Bonus> myBonus, Distances distanceToPlay)
     {
         String prefixAllien = "";
-        if (distanceToPlay.getDisValueStationPlanet()>=2 && isBonusAvailable(myBonus, BonusType.ALIEN_ARTIFACT))
+        if (distanceToPlay.getDisValueStationPlanet()>=2 && BonusType.ALIEN_ARTIFACT.isBonusAvailableInList(myBonus))
         {
             int allien0;
             int allien1;

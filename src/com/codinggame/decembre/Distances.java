@@ -152,4 +152,22 @@ public class Distances {
     public Integer getUsableToken() {
         return usableToken;
     }
+
+    @Override
+    public String toString() {
+        return "Distances{\n" +
+                "    station=" + station + "\n" +
+                "    planet=" + planet + "\n" +
+                "    distance Value=" + disValueStationPlanet +
+                ", [" + disValueTerraforming +
+                ", " + disValueAlien +
+                ", " + disValueEngineering +
+                ", " + disValueAgriculture + "]\n" +
+                "    usableToken=" + usableToken +
+                ", [" + usableTokenTerraforming +
+                ", " + usableTokenAlien +
+                ", " + usableTokenEngineering +
+                ", " + usableTokenAgriculture +
+                "]\n}";
+    }
 }

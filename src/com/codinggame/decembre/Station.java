@@ -11,7 +11,6 @@ public class Station {
     int engineeringSkill;
     int agricultureSkill;
 
-    //
     StationObjective myStationObj;
 
     //constructor
@@ -81,28 +80,43 @@ public class Station {
         return myStationObj;
     }
 
+
     public boolean isTerraformingObjectiveReached() {
-        if (this.terraformingSkill >= this.myStationObj.terraLevelObj)
+        if (terraformingSkill >= myStationObj.terraLevelObj)
             return true;
         return false;
     }
 
     public boolean isAlienObjectiveReached() {
-        if (this.alienSkill >= this.myStationObj.alienLevelObj)
+        if (alienSkill >= myStationObj.alienLevelObj)
             return true;
         return false;
     }
 
     public boolean isEngineeringObjectiveReached() {
-        if (this.engineeringSkill >= this.myStationObj.engineeringLevelObj)
+        if (engineeringSkill >= myStationObj.engineeringLevelObj)
             return true;
         return false;
     }
 
     public boolean isAgricultureObjectiveReached() {
-    if (this.agricultureSkill >= this.myStationObj.agricultureLevelObj)
+    if (agricultureSkill >= myStationObj.agricultureLevelObj)
         return true;
     return false;
+    }
+
+
+    public String toString() {
+        return "Station{" +
+                "" + stationId +
+                ", mine=" + isMine +
+                ", avail=" + isAvailable +
+                ", skill=[" + terraformingSkill +
+                ", " + alienSkill +
+                ", " + engineeringSkill +
+                ", " + agricultureSkill +
+                "], " + myStationObj +
+                "}";
     }
 
 }
