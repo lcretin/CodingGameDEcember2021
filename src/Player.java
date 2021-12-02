@@ -1,5 +1,5 @@
 /*
-This file has been generated Thu Dec 02 17:04:15 CET 2021
+This file has been generated Thu Dec 02 17:08:39 CET 2021
 */
 
 import java.util.Scanner;import java.util.ArrayList;
@@ -355,19 +355,19 @@ class Strategy {  // Strategy.java, 5
                     Station station = myStations[i];  // Strategy.java, 80
                     if (station.getTerraformingSkill() == techREsearchBonusNum) {  // Strategy.java, 82
                         resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.TERRAFORMING);  // Strategy.java, 83
-                        station.terraformingSkill += techREsearchBonusNum;  // Strategy.java, 84
+                        station.terraformingSkill += 1;  // Strategy.java, 84
                         break;  // Strategy.java, 85
                     } else if (station.getAlienSkill() == techREsearchBonusNum) {  // Strategy.java, 86
                         resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.ALIEN);  // Strategy.java, 87
-                        station.alienSkill += techREsearchBonusNum;  // Strategy.java, 88
+                        station.alienSkill += 1;  // Strategy.java, 88
                         break;  // Strategy.java, 89
                     } else if (station.getEngineeringSkill() == techREsearchBonusNum) {  // Strategy.java, 90
                         resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.ENGINEERING);  // Strategy.java, 91
-                        station.engineeringSkill += techREsearchBonusNum;  // Strategy.java, 92
+                        station.engineeringSkill += 1;  // Strategy.java, 92
                         break;  // Strategy.java, 93
                     } else if (station.getAgricultureSkill() == techREsearchBonusNum) {  // Strategy.java, 94
                         resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.AGRICULTURE);  // Strategy.java, 95
-                        station.agricultureSkill += techREsearchBonusNum;  // Strategy.java, 96
+                        station.agricultureSkill += 1;  // Strategy.java, 96
                         break;  // Strategy.java, 97
                     }  // Strategy.java, 98
                 }  // Strategy.java, 99

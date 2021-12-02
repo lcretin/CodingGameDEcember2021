@@ -81,19 +81,19 @@ public class Strategy {
 
                     if (station.getTerraformingSkill() == techREsearchBonusNum) {
                         resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.TERRAFORMING);
-                        station.terraformingSkill += techREsearchBonusNum;
+                        station.terraformingSkill += 1;
                         break;
                     } else if (station.getAlienSkill() == techREsearchBonusNum) {
                         resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.ALIEN);
-                        station.alienSkill += techREsearchBonusNum;
+                        station.alienSkill += 1;
                         break;
                     } else if (station.getEngineeringSkill() == techREsearchBonusNum) {
                         resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.ENGINEERING);
-                        station.engineeringSkill += techREsearchBonusNum;
+                        station.engineeringSkill += 1;
                         break;
                     } else if (station.getAgricultureSkill() == techREsearchBonusNum) {
                         resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.AGRICULTURE);
-                        station.agricultureSkill += techREsearchBonusNum;
+                        station.agricultureSkill += 1;
                         break;
                     }
                 }
