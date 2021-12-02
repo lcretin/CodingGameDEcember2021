@@ -1,5 +1,5 @@
 /*
-This file has been generated Thu Dec 02 15:19:56 CET 2021
+This file has been generated Thu Dec 02 15:23:22 CET 2021
 */
 
 import java.util.Scanner;import java.util.ArrayList;
@@ -101,6 +101,25 @@ class Distances {  // Distances.java, 3
         return valueStationPlanet;  // Distances.java, 113
     }  // Distances.java, 114
 }  // Distances.java, 115
+
+enum BonusType  // BonusType.java, 3
+    {  // BonusType.java, 4
+        ENERGY_CORE("ENERGY_CORE"),  // BonusType.java, 5
+        TECH_RESEARCH_2SIT("TECH_RESEARCH_2"),  // BonusType.java, 6
+        TECH_RESEARCH_3("TECH_RESEARCH_3"),  // BonusType.java, 7
+        TECH_RESEARCH_4("TECH_RESEARCH_4"),  // BonusType.java, 8
+        POINTS_1("POINTS_1"),  // BonusType.java, 9
+        POINTS_2("POINTS_2"),  // BonusType.java, 10
+        POINTS_3("POINTS_3"),  // BonusType.java, 11
+        ALIEN_ARTIFACT("ALIEN_ARTIFACT");  // BonusType.java, 12
+        private String bonusValue;  // BonusType.java, 14
+        BonusType(String bonusValue) {  // BonusType.java, 16
+            this.bonusValue = bonusValue;  // BonusType.java, 17
+        }  // BonusType.java, 18
+        public String getBonusValue() {  // BonusType.java, 20
+            return bonusValue;  // BonusType.java, 21
+        }  // BonusType.java, 22
+    }  // BonusType.java, 23
 
 class StationObjective {  // StationObjective.java, 3
     int scoreIfReached;  // StationObjective.java, 4
@@ -245,40 +264,14 @@ class Station {  // Station.java, 3
 }  // Station.java, 83
 
 class Bonus {  // Bonus.java, 5
-    public enum BonusType  // Bonus.java, 7
-    {  // Bonus.java, 8
-        ENERGY_CORE("ENERGY_CORE"),  // Bonus.java, 9
-        TECH_RESEARCH_2SIT("TECH_RESEARCH_2"),  // Bonus.java, 10
-        TECH_RESEARCH_3("TECH_RESEARCH_3"),  // Bonus.java, 11
-        TECH_RESEARCH_4("TECH_RESEARCH_4"),  // Bonus.java, 12
-        POINTS_1("POINTS_1"),  // Bonus.java, 13
-        POINTS_2("POINTS_2"),  // Bonus.java, 14
-        POINTS_3("POINTS_3"),  // Bonus.java, 15
-        ALIEN_ARTIFACT("ALIEN_ARTIFACT");  // Bonus.java, 16
-        private String bonusValue;  // Bonus.java, 18
-        BonusType(String bonusValue) {  // Bonus.java, 20
-            this.bonusValue = bonusValue;  // Bonus.java, 21
-        }  // Bonus.java, 22
-        public String getBonusValue() {  // Bonus.java, 24
-            return bonusValue;  // Bonus.java, 25
-        }  // Bonus.java, 26
-    }  // Bonus.java, 27
-    private BonusType bonus;  // Bonus.java, 29
-    public Bonus(String bonus){  // Bonus.java, 31
-        this.bonus = BonusType.valueOf(bonus);  // Bonus.java, 32
-    }  // Bonus.java, 33
-    public static boolean isBonusAvailable(ArrayList<Bonus> myBonus, BonusType bonusType ){  // Bonus.java, 35
-        if(myBonus == null){  // Bonus.java, 36
-            return false;  // Bonus.java, 37
-        }  // Bonus.java, 38
-        for(Bonus bonus: myBonus){  // Bonus.java, 39
-            if(bonusType.equals(bonus.bonus)){  // Bonus.java, 40
-                return true;  // Bonus.java, 41
-            }  // Bonus.java, 42
-        }  // Bonus.java, 43
-        return false;  // Bonus.java, 44
-    }  // Bonus.java, 45
-}  // Bonus.java, 47
+    private BonusType bonus;  // Bonus.java, 7
+    public Bonus(String bonus){  // Bonus.java, 9
+        this.bonus = BonusType.valueOf(bonus);  // Bonus.java, 10
+    }  // Bonus.java, 11
+    public BonusType getBonus() {  // Bonus.java, 13
+        return bonus;  // Bonus.java, 14
+    }  // Bonus.java, 15
+}  // Bonus.java, 16
 
 class Strategy {  // Strategy.java, 5
     private Station[] myStations = new Station[4];  // Strategy.java, 8
@@ -311,8 +304,8 @@ class Strategy {  // Strategy.java, 5
                 return colonizeAction;  // Strategy.java, 39
         }else{  // Strategy.java, 40
             //do dwe have a ENERGY BONUS to allow resupply and colonize in one shot  // Strategy.java, 41
-            if(Bonus.isBonusAvailable(myBonus, Bonus.BonusType.ENERGY_CORE)){  // Strategy.java, 42
-                return Bonus.BonusType.ENERGY_CORE+" "+colonizeAction;  // Strategy.java, 43
+            if(isBonusAvailable(myBonus, BonusType.ENERGY_CORE)){  // Strategy.java, 42
+                return BonusType.ENERGY_CORE+" "+colonizeAction;  // Strategy.java, 43
             }  // Strategy.java, 44
             else{  // Strategy.java, 45
                 //no choice  // Strategy.java, 46
@@ -320,7 +313,18 @@ class Strategy {  // Strategy.java, 5
             }  // Strategy.java, 48
         }  // Strategy.java, 50
     }  // Strategy.java, 51
-}  // Strategy.java, 53
+    public  boolean isBonusAvailable(ArrayList<Bonus> myBonus, BonusType bonusType ){  // Strategy.java, 53
+        if(myBonus == null){  // Strategy.java, 54
+            return false;  // Strategy.java, 55
+        }  // Strategy.java, 56
+        for(Bonus bonus: myBonus){  // Strategy.java, 57
+            if(bonusType.equals(bonus.getBonus())){  // Strategy.java, 58
+                return true;  // Strategy.java, 59
+            }  // Strategy.java, 60
+        }  // Strategy.java, 61
+        return false;  // Strategy.java, 62
+    }  // Strategy.java, 63
+}  // Strategy.java, 64
 
 class Main {  // Main.java, 6
     Station[] myStations = new Station[4];  // Main.java, 8

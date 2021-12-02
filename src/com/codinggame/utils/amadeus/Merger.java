@@ -26,17 +26,17 @@ public class Merger {
             String current = new File(".").getCanonicalPath();
             System.out.println("Current dir:" + current);
 
-            Stream<Path> walk = Files.walk(Paths.get(current+SRC_PROJECT+JAVA_PROJECT.replace('.','/')));
+            Stream<Path> walk = Files.walk(Paths.get(current + SRC_PROJECT + JAVA_PROJECT.replace('.', '/')));
             List<String> result = walk.filter(Files::isRegularFile)
                     .map(x -> x.toString()).collect(Collectors.toList());
 
             // Read all the java class into CodeFile
-            for(String fileName: result){
+            for (String fileName : result) {
                 files.put(fileName, new CodeFile(fileName));
             }
 
             // create the new file. Retrieve the location and create the file
-            String absoluteFilePath = current+SRC_PROJECT+MAIN_CLASS+JAVA_EXTENSION;
+            String absoluteFilePath = current + SRC_PROJECT + MAIN_CLASS + JAVA_EXTENSION;
             System.out.println(absoluteFilePath);
 
             File file = new File(absoluteFilePath);
@@ -47,7 +47,7 @@ public class Merger {
 
             writer.write("/*");
             writer.newLine();
-            writer.write("This file has been generated "+ new Date());
+            writer.write("This file has been generated " + new Date());
             writer.newLine();
             writer.write("*/");
             writer.newLine();
@@ -60,11 +60,11 @@ public class Merger {
             }
 
             // write all the import into the file
-            for(String importLine: importSet){
+            for (String importLine : importSet) {
                 writer.write(importLine);
             }
             writer.newLine();
-            writer.write("class "+ MAIN_CLASS + " {");
+            writer.write("class " + MAIN_CLASS + " {");
             writer.newLine();
 
             for (Map.Entry<String, CodeFile> entry : files.entrySet()) {
@@ -72,11 +72,11 @@ public class Merger {
                 writer.newLine();
             }
 
-            writer.write("public static void main(String[] args) { (new "+ MAIN_CLASS + "()).new Main(args); }");
+            writer.write("public static void main(String[] args) { (new " + MAIN_CLASS + "()).new Main(args); }");
             writer.newLine();
             writer.write("}");
             writer.close();
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

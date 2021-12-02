@@ -39,8 +39,8 @@ public class Strategy {
                 return colonizeAction;
         }else{
             //do dwe have a ENERGY BONUS to allow resupply and colonize in one shot
-            if(Bonus.isBonusAvailable(myBonus, Bonus.BonusType.ENERGY_CORE)){
-                return Bonus.BonusType.ENERGY_CORE+" "+colonizeAction;
+            if(isBonusAvailable(myBonus, BonusType.ENERGY_CORE)){
+                return BonusType.ENERGY_CORE+" "+colonizeAction;
             }
             else{
                 //no choice
@@ -50,4 +50,15 @@ public class Strategy {
         }
     }
 
+    public  boolean isBonusAvailable(ArrayList<Bonus> myBonus, BonusType bonusType ){
+        if(myBonus == null){
+            return false;
+        }
+        for(Bonus bonus: myBonus){
+            if(bonusType.equals(bonus.getBonus())){
+                return true;
+            }
+        }
+        return false;
+    }
 }
