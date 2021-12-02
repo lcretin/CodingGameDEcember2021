@@ -134,7 +134,42 @@ public class Strategy {
         String prefixAllien = "";
         if (distanceToPlay.getValueStationPlanet()>=2 && isBonusAvailable(myBonus, BonusType.ALIEN_ARTIFACT))
         {
-            prefixAllien+= "ALLIEN_ARTIFACT 0 1 ";
+            int allien0;
+            int allien1;
+            int bonusCounter = 2;
+            int[] tasks = new int[2];
+            int currentTerraValue = distanceToPlay.getValueTerraformingStationPlanet();
+            int currentAllienValue = distanceToPlay.getValueAlienStationPlanet();
+            int currentEngValue = distanceToPlay.getValueEngineeringStationPlanet();
+            int currentAgriValue = distanceToPlay.getValueAgricultureStationPlanet();
+            
+            while (currentTerraValue>=1 && bonusCounter>0)
+             {   
+                tasks[tasks.length-bonusCounter] = 0; //0 for terra
+                bonusCounter--;
+                currentTerraValue--;
+             }
+             while (currentAllienValue>=1 && bonusCounter>0)
+             {   
+                tasks[tasks.length-bonusCounter] = 1; //0 for allien
+                bonusCounter--;
+                currentAllienValue--;
+             }
+             while (currentEngValue>=1 && bonusCounter>0)
+             {   
+                tasks[tasks.length-bonusCounter] = 2; //0 for eng
+                bonusCounter--;
+                currentEngValue--;
+             }
+             while (currentAgriValue>=1 && bonusCounter>0)
+             {   
+                tasks[tasks.length-bonusCounter] = 3; //0 for agri
+                bonusCounter--;
+                currentAgriValue--;
+             }
+                 
+
+            prefixAllien+= "ALLIEN_ARTIFACT " + tasks[0] + " "+ tasks[1] + " ";
         }
         
         String colonizeAction="COLONIZE " + distanceToPlay.getStation().getStationId() + " " + distanceToPlay.getPlanet().getPlanetId() + " " + distanceToPlay.getPlanet().getBestBonus();
