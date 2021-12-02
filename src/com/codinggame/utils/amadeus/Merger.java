@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 public class Merger {
 
     public static String SRC_PROJECT = "/src/";
-    public static String JAVA_PROJECT = "com.codinggame.utils.amadeus.tst";
+    public static String JAVA_PROJECT = "com.codinggame.decembre";
     public static String MAIN_CLASS = "Player";
     public static String JAVA_EXTENSION = ".java";
 
