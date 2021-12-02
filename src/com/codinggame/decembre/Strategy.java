@@ -21,6 +21,42 @@ public class Strategy {
     }
 
     public String execute(){
+        String preCommand = "";
+        // Apply BONUS Pre Command: Apply Tech Reasearch on the first tech on the first station
+        for(Bonus bonus: myBonus){
+            int techREsearchBonusNum = 0;
+            if(BonusType.TECH_RESEARCH_2.equals(bonus)) {
+                techREsearchBonusNum = 1;
+            }else if(BonusType.TECH_RESEARCH_3.equals(bonus)) {
+                techREsearchBonusNum = 2;
+            }if(BonusType.TECH_RESEARCH_4.equals(bonus)) {
+                techREsearchBonusNum = 3;
+            }
+            if (techREsearchBonusNum != 0) {
+                for (int i = 0; i < myStations.length; i++) {
+                    Station station = myStations[i];
+                    if (station.getTerraformingSkill() == techREsearchBonusNum) {
+                        preCommand = "TECH_RESEARCH " + station.getStationId() + " " + TechEnum.getCode(TechEnum.TERRAFORMING);
+                        station.terraformingSkill += techREsearchBonusNum;
+                        break;
+                    } else if (station.getAlienSkill() == techREsearchBonusNum) {
+                        preCommand = "TECH_RESEARCH " + station.getStationId() + " " + TechEnum.getCode(TechEnum.ALIEN);
+                        station.alienSkill += techREsearchBonusNum;
+                        break;
+                    } else if (station.getEngineeringSkill() == techREsearchBonusNum) {
+                        preCommand = "TECH_RESEARCH " + station.getStationId() + " " + TechEnum.getCode(TechEnum.ENGINEERING);
+                        station.engineeringSkill += techREsearchBonusNum;
+                        break;
+                    } else if (station.getAgricultureSkill() == techREsearchBonusNum) {
+                        preCommand = "TECH_RESEARCH " + station.getStationId() + " " + TechEnum.getCode(TechEnum.AGRICULTURE);
+                        station.agricultureSkill += techREsearchBonusNum;
+                        break;
+                    }
+                }
+            }
+        }
+        System.err.println("PreCommand-> ["+preCommand+"]");
+
         // main actions: COLONIZE | RESUPPLY
         // bonus actions: ENERGY_CORE | ALIEN_ARTIFACT | TECH_RESEARCH | NEW_TECH
         // Append text after any command and that text will appear on screen.
