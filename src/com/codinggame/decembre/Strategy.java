@@ -21,48 +21,7 @@ public class Strategy {
     }
 
     public String execute(){
-        String preCommand = "";
-        // Apply BONUS Pre Command: Apply Tech Reasearch on the first tech on the first station
-        System.err.println("Start looking at bonus: "+ myBonus.size());
-        for(Bonus bonus: myBonus){
-            System.err.println("Bonus -> "+ bonus.toString());
-            int techREsearchBonusNum = 0;
-            if(BonusType.TECH_RESEARCH_2.equals(bonus)) {
-                techREsearchBonusNum = 1;
-                System.err.println("Found Bonus TechREsearch 2");
-            }else if(BonusType.TECH_RESEARCH_3.equals(bonus)) {
-                System.err.println("Found Bonus TechREsearch 3");
-                techREsearchBonusNum = 2;
-            }if(BonusType.TECH_RESEARCH_4.equals(bonus)) {
-                System.err.println("Found Bonus TechREsearch 4");
-                techREsearchBonusNum = 3;
-            }
-            if (techREsearchBonusNum != 0) {
-                for (int i = 0; i < myStations.length; i++) {
-                    Station station = myStations[i];
-
-                    if (station.getTerraformingSkill() == techREsearchBonusNum) {
-                        preCommand = "TECH_RESEARCH " + station.getStationId() + " " + TechEnum.getCode(TechEnum.TERRAFORMING);
-                        station.terraformingSkill += techREsearchBonusNum;
-                        break;
-                    } else if (station.getAlienSkill() == techREsearchBonusNum) {
-                        preCommand = "TECH_RESEARCH " + station.getStationId() + " " + TechEnum.getCode(TechEnum.ALIEN);
-                        station.alienSkill += techREsearchBonusNum;
-                        break;
-                    } else if (station.getEngineeringSkill() == techREsearchBonusNum) {
-                        preCommand = "TECH_RESEARCH " + station.getStationId() + " " + TechEnum.getCode(TechEnum.ENGINEERING);
-                        station.engineeringSkill += techREsearchBonusNum;
-                        break;
-                    } else if (station.getAgricultureSkill() == techREsearchBonusNum) {
-                        preCommand = "TECH_RESEARCH " + station.getStationId() + " " + TechEnum.getCode(TechEnum.AGRICULTURE);
-                        station.agricultureSkill += techREsearchBonusNum;
-                        break;
-                    }
-                }
-            }
-        }
-        System.err.println("PreCommand-> ["+preCommand+"]");
-
+        String preCommand = applyTechPreCommand();
         // main actions: COLONIZE | RESUPPLY
         // bonus actions: ENERGY_CORE | ALIEN_ARTIFACT | TECH_RESEARCH | NEW_TECH
         // Append text after any command and that text will appear on screen.
@@ -91,6 +50,51 @@ public class Strategy {
             return applyEnergyAndColonize_Or_Resupply(myBonus, applyColonizeWithAllienAttempt(myBonus,distanceToPlay));
             
         }
+    }
+
+    public String applyTechPreCommand(){
+        String preCommand = "";
+        // Apply BONUS Pre Command: Apply Tech Reasearch on the first tech on the first station
+        System.err.println("Start looking at bonus: "+ myBonus.size());
+        for(Bonus bonus: myBonus){
+            System.err.println("Bonus -> "+ bonus.getBonus());
+            int techREsearchBonusNum = 0;
+            if(BonusType.TECH_RESEARCH_2.equals(bonus.getBonus())) {
+                techREsearchBonusNum = 1;
+                System.err.println("Found Bonus TechREsearch 2");
+            }else if(BonusType.TECH_RESEARCH_3.equals(bonus.getBonus())) {
+                System.err.println("Found Bonus TechREsearch 3");
+                techREsearchBonusNum = 2;
+            }if(BonusType.TECH_RESEARCH_4.equals(bonus.getBonus())) {
+                System.err.println("Found Bonus TechREsearch 4");
+                techREsearchBonusNum = 3;
+            }
+            if (techREsearchBonusNum != 0) {
+                for (int i = 0; i < myStations.length; i++) {
+                    Station station = myStations[i];
+
+                    if (station.getTerraformingSkill() == techREsearchBonusNum) {
+                        preCommand = "TECH_RESEARCH " + station.getStationId() + " " + TechEnum.getCode(TechEnum.TERRAFORMING);
+                        station.terraformingSkill += techREsearchBonusNum;
+                        break;
+                    } else if (station.getAlienSkill() == techREsearchBonusNum) {
+                        preCommand = "TECH_RESEARCH " + station.getStationId() + " " + TechEnum.getCode(TechEnum.ALIEN);
+                        station.alienSkill += techREsearchBonusNum;
+                        break;
+                    } else if (station.getEngineeringSkill() == techREsearchBonusNum) {
+                        preCommand = "TECH_RESEARCH " + station.getStationId() + " " + TechEnum.getCode(TechEnum.ENGINEERING);
+                        station.engineeringSkill += techREsearchBonusNum;
+                        break;
+                    } else if (station.getAgricultureSkill() == techREsearchBonusNum) {
+                        preCommand = "TECH_RESEARCH " + station.getStationId() + " " + TechEnum.getCode(TechEnum.AGRICULTURE);
+                        station.agricultureSkill += techREsearchBonusNum;
+                        break;
+                    }
+                }
+            }
+        }
+        System.err.println("PreCommand-> ["+preCommand+"]");
+        return preCommand;
     }
 
     public  boolean isBonusAvailable(ArrayList<Bonus> myBonus, BonusType bonusType ){
