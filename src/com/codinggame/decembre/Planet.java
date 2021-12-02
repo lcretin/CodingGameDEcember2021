@@ -72,6 +72,6 @@ public class Planet {
     }
 
     public String getBestBonus(){
-        return bonus0;
+        return "0";
     }
 }
