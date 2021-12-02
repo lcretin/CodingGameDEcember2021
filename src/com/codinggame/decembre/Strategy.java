@@ -55,11 +55,13 @@ public class Strategy {
     public String applyTechPreCommand(){
         String preCommand = "";
         // Apply BONUS Pre Command: Apply Tech Reasearch on the first tech on the first station
-        System.err.println("Start looking at bonus: "+ myBonus.size());
         for(Bonus bonus: myBonus){
             System.err.println("Bonus -> "+ bonus.getBonus());
-            int techREsearchBonusNum = 0;
-            if(BonusType.TECH_RESEARCH_2.equals(bonus.getBonus())) {
+            int techREsearchBonusNum = -1;
+            if(BonusType.NEW_TECH.equals(bonus.getBonus())) {
+                techREsearchBonusNum = 0;
+                System.err.println("Found Bonus NEW TECH");
+            }else if(BonusType.TECH_RESEARCH_2.equals(bonus.getBonus())) {
                 techREsearchBonusNum = 1;
                 System.err.println("Found Bonus TechREsearch 2");
             }else if(BonusType.TECH_RESEARCH_3.equals(bonus.getBonus())) {
@@ -69,7 +71,7 @@ public class Strategy {
                 System.err.println("Found Bonus TechREsearch 4");
                 techREsearchBonusNum = 3;
             }
-            if (techREsearchBonusNum != 0) {
+            if (techREsearchBonusNum >= 0) {
                 for (int i = 0; i < myStations.length; i++) {
                     Station station = myStations[i];
 

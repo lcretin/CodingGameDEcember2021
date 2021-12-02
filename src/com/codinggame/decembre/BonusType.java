@@ -6,6 +6,7 @@ public enum BonusType
         TECH_RESEARCH_2("TECH_RESEARCH_2"),
         TECH_RESEARCH_3("TECH_RESEARCH_3"),
         TECH_RESEARCH_4("TECH_RESEARCH_4"),
+        NEW_TECH("NEW_TECH"),
         POINTS_1("POINTS_1"),
         POINTS_2("POINTS_2"),
         POINTS_3("POINTS_3"),
