@@ -8,7 +8,7 @@ public class Distances {
 
     public Distances(Station station, Planet planet){
         this.station = station;
-        this.planet = planet;
+        this.planet = planet; 
         this.compute();
     }
 
