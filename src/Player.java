@@ -1,5 +1,5 @@
 /*
-This file has been generated Thu Dec 02 14:38:13 CET 2021
+This file has been generated Thu Dec 02 14:44:42 CET 2021
 */
 
 import java.util.Scanner;
@@ -18,85 +18,89 @@ class Distances {  // Distances.java, 3
         // If no task remaining and no skill on station, not considered in distance  // Distances.java, 17
         if(this.planet.getTerraformingTaskLeftValue() != 0 ) {  // Distances.java, 18
             int disTerra = this.planet.getTerraformingTaskLeftValue() - this.station.getTerraformingSkill();  // Distances.java, 19
-            if(disTerra < 0){  // Distances.java, 20
-                if(result == null){  // Distances.java, 21
-                    result = 0;  // Distances.java, 22
-                }  // Distances.java, 23
-            }else{  // Distances.java, 24
-                if(result == null){  // Distances.java, 25
-                    result = disTerra;  // Distances.java, 26
-                }else{  // Distances.java, 27
-                    result += disTerra;  // Distances.java, 28
-                }  // Distances.java, 29
-            }  // Distances.java, 30
-        }  // Distances.java, 31
-        // If no task remaining and no skill on station, not considered in distance  // Distances.java, 34
-        if(this.planet.getAlienTaskLeftValue() != 0 ) {  // Distances.java, 35
-            int disAlien = this.planet.getAlienTaskLeftValue() - this.station.getAlienSkill();  // Distances.java, 36
-            if(disAlien < 0){  // Distances.java, 37
-                if(result == null){  // Distances.java, 38
-                    result = 0;  // Distances.java, 39
-                }  // Distances.java, 40
-            }else{  // Distances.java, 41
-                if(result == null){  // Distances.java, 42
-                    result = disAlien;  // Distances.java, 43
-                }else{  // Distances.java, 44
-                    result += disAlien;  // Distances.java, 45
-                }  // Distances.java, 46
-            }  // Distances.java, 47
-        }  // Distances.java, 48
-        // If no task remaining and no skill on station, not considered in distance  // Distances.java, 52
-        if(this.planet.getAlienTaskLeftValue() != 0 ) {  // Distances.java, 53
-            int disEng = this.planet.getAlienTaskLeftValue() - this.station.getAlienSkill();  // Distances.java, 54
-            if(disEng < 0){  // Distances.java, 55
-                if(result == null){  // Distances.java, 56
-                    result = 0;  // Distances.java, 57
-                }  // Distances.java, 58
-            }else{  // Distances.java, 59
-                if(result == null){  // Distances.java, 60
-                    result = disEng;  // Distances.java, 61
-                }else{  // Distances.java, 62
-                    result += disEng;  // Distances.java, 63
-                }  // Distances.java, 64
-            }  // Distances.java, 65
-        }  // Distances.java, 66
-        // If no task remaining and no skill on station, not considered in distance  // Distances.java, 69
-        if(this.planet.getAgricultureTaskLeftValue() != 0 ) {  // Distances.java, 70
-            int disAgri = this.planet.getAgricultureTaskLeftValue() - this.station.getAgricultureSkill();  // Distances.java, 71
-            if(disAgri < 0){  // Distances.java, 72
-                if(result == null){  // Distances.java, 73
-                    result = 0;  // Distances.java, 74
-                }  // Distances.java, 75
-            }else{  // Distances.java, 76
+            System.err.println("terra = "+disTerra);  // Distances.java, 20
+            if(disTerra < 0){  // Distances.java, 21
+                if(result == null){  // Distances.java, 22
+                    result = 0;  // Distances.java, 23
+                }  // Distances.java, 24
+            }else{  // Distances.java, 25
+                if(result == null){  // Distances.java, 26
+                    result = disTerra;  // Distances.java, 27
+                }else{  // Distances.java, 28
+                    result += disTerra;  // Distances.java, 29
+                }  // Distances.java, 30
+            }  // Distances.java, 31
+        }  // Distances.java, 32
+        // If no task remaining and no skill on station, not considered in distance  // Distances.java, 35
+        if(this.planet.getAlienTaskLeftValue() != 0 ) {  // Distances.java, 36
+            int disAlien = this.planet.getAlienTaskLeftValue() - this.station.getAlienSkill();  // Distances.java, 37
+            System.err.println("alien = "+disAlien);  // Distances.java, 38
+            if(disAlien < 0){  // Distances.java, 39
+                if(result == null){  // Distances.java, 40
+                    result = 0;  // Distances.java, 41
+                }  // Distances.java, 42
+            }else{  // Distances.java, 43
+                if(result == null){  // Distances.java, 44
+                    result = disAlien;  // Distances.java, 45
+                }else{  // Distances.java, 46
+                    result += disAlien;  // Distances.java, 47
+                }  // Distances.java, 48
+            }  // Distances.java, 49
+        }  // Distances.java, 50
+        // If no task remaining and no skill on station, not considered in distance  // Distances.java, 54
+        if(this.planet.getAlienTaskLeftValue() != 0 ) {  // Distances.java, 55
+            int disEng = this.planet.getAlienTaskLeftValue() - this.station.getAlienSkill();  // Distances.java, 56
+            System.err.println("eng = "+disEng);  // Distances.java, 57
+            if(disEng < 0){  // Distances.java, 58
+                if(result == null){  // Distances.java, 59
+                    result = 0;  // Distances.java, 60
+                }  // Distances.java, 61
+            }else{  // Distances.java, 62
+                if(result == null){  // Distances.java, 63
+                    result = disEng;  // Distances.java, 64
+                }else{  // Distances.java, 65
+                    result += disEng;  // Distances.java, 66
+                }  // Distances.java, 67
+            }  // Distances.java, 68
+        }  // Distances.java, 69
+        // If no task remaining and no skill on station, not considered in distance  // Distances.java, 72
+        if(this.planet.getAgricultureTaskLeftValue() != 0 ) {  // Distances.java, 73
+            int disAgri = this.planet.getAgricultureTaskLeftValue() - this.station.getAgricultureSkill();  // Distances.java, 74
+            System.err.println("agri = "+disAgri);  // Distances.java, 75
+            if(disAgri < 0){  // Distances.java, 76
                 if(result == null){  // Distances.java, 77
-                    result = disAgri;  // Distances.java, 78
-                }else{  // Distances.java, 79
-                    result += disAgri;  // Distances.java, 80
-                }  // Distances.java, 81
-            }  // Distances.java, 82
-        }  // Distances.java, 83
-       this.valueStationPlanet = result;  // Distances.java, 85
-    }  // Distances.java, 86
-    public boolean isSmallerThan(Distances distances){  // Distances.java, 88
-        return distances == null || (distances.valueStationPlanet != null && this.valueStationPlanet < distances.valueStationPlanet);  // Distances.java, 89
+                    result = 0;  // Distances.java, 78
+                }  // Distances.java, 79
+            }else{  // Distances.java, 80
+                if(result == null){  // Distances.java, 81
+                    result = disAgri;  // Distances.java, 82
+                }else{  // Distances.java, 83
+                    result += disAgri;  // Distances.java, 84
+                }  // Distances.java, 85
+            }  // Distances.java, 86
+        }  // Distances.java, 87
+       this.valueStationPlanet = result;  // Distances.java, 89
     }  // Distances.java, 90
-    public Distances getSmallerDistance(Distances distances){  // Distances.java, 92
-           if(this.isSmallerThan(distances)){  // Distances.java, 93
-               return this;  // Distances.java, 94
-           }else{  // Distances.java, 95
-               return distances;  // Distances.java, 96
-           }  // Distances.java, 97
-    }  // Distances.java, 98
-    public Station getStation() {  // Distances.java, 100
-        return station;  // Distances.java, 101
+    public boolean isSmallerThan(Distances distances){  // Distances.java, 92
+        return distances == null || (distances.valueStationPlanet != null && this.valueStationPlanet < distances.valueStationPlanet);  // Distances.java, 93
+    }  // Distances.java, 94
+    public Distances getSmallerDistance(Distances distances){  // Distances.java, 96
+           if(this.isSmallerThan(distances)){  // Distances.java, 97
+               return this;  // Distances.java, 98
+           }else{  // Distances.java, 99
+               return distances;  // Distances.java, 100
+           }  // Distances.java, 101
     }  // Distances.java, 102
-    public Planet getPlanet() {  // Distances.java, 104
-        return planet;  // Distances.java, 105
+    public Station getStation() {  // Distances.java, 104
+        return station;  // Distances.java, 105
     }  // Distances.java, 106
-    public int getValueStationPlanet() {  // Distances.java, 108
-        return valueStationPlanet;  // Distances.java, 109
+    public Planet getPlanet() {  // Distances.java, 108
+        return planet;  // Distances.java, 109
     }  // Distances.java, 110
-}  // Distances.java, 111
+    public int getValueStationPlanet() {  // Distances.java, 112
+        return valueStationPlanet;  // Distances.java, 113
+    }  // Distances.java, 114
+}  // Distances.java, 115
 
 class StationObjective {  // StationObjective.java, 3
     int scoreIfReached;  // StationObjective.java, 4
