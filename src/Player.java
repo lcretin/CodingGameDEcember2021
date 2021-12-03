@@ -1,5 +1,5 @@
 /*
-This file has been generated Fri Dec 03 13:05:21 CET 2021
+This file has been generated Fri Dec 03 13:09:47 CET 2021
 */
 
 import java.util.List;import java.util.Scanner;import java.util.ArrayList;
@@ -749,9 +749,9 @@ class Strategy {  // Strategy.java, 6
                             System.err.println("***Best applying Tech Enum to --->" + bestForObjectiveCandidate);  // Strategy.java, 208
                         }  // Strategy.java, 209
                         // default on new tech only if the objective is not reached.  // Strategy.java, 210
-                        if(defaultNewTech == null && currentTechCommand.canApplyBestObjectiveTechEnum(curTechEnum)) {  // Strategy.java, 211
-                            currentTechCommand.setTechApplying(curTechEnum);  // Strategy.java, 212
-                            defaultNewTech = currentTechCommand;  // Strategy.java, 213
+                        if(defaultNewTech == null && currentDefaultNewTechTechCommand.canApplyBestObjectiveTechEnum(curTechEnum)) {  // Strategy.java, 211
+                            currentDefaultNewTechTechCommand.setTechApplying(curTechEnum);  // Strategy.java, 212
+                            defaultNewTech = currentDefaultNewTechTechCommand;  // Strategy.java, 213
                             System.err.println("***NEW TEch default applying Techn Enum to --->" + defaultNewTech);  // Strategy.java, 214
                         }  // Strategy.java, 215
                     }  // Strategy.java, 217

@@ -208,9 +208,9 @@ public class Strategy {
                             System.err.println("***Best applying Tech Enum to --->" + bestForObjectiveCandidate);
                         }
                         // default on new tech only if the objective is not reached.
-                        if(defaultNewTech == null && currentTechCommand.canApplyBestObjectiveTechEnum(curTechEnum)) {
-                            currentTechCommand.setTechApplying(curTechEnum);
-                            defaultNewTech = currentTechCommand;
+                        if(defaultNewTech == null && currentDefaultNewTechTechCommand.canApplyBestObjectiveTechEnum(curTechEnum)) {
+                            currentDefaultNewTechTechCommand.setTechApplying(curTechEnum);
+                            defaultNewTech = currentDefaultNewTechTechCommand;
                             System.err.println("***NEW TEch default applying Techn Enum to --->" + defaultNewTech);
                         }
 
