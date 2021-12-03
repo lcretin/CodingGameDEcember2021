@@ -3,7 +3,6 @@ package com.codinggame.decembre;
 //import java.util.ArrayList;
 
 public class Distances {
-    private Logger logger = new Logger();
 
     private Station station;
     private Planet planet;
@@ -189,7 +188,6 @@ public class Distances {
         if (planet.myContributionTotalTaks < planet.oppContributionTotalTasks 
             && (planet.myContributionTotalTaks + usableToken + extraToken >= planet.oppContributionTotalTasks))
             {
-                logger.println("we will be better than opp on planet " + planet.planetId + " alien bonus =" + extraToken);
                 return true;
             }
         return false;
@@ -205,7 +203,6 @@ public class Distances {
 
         if (usableToken + extraToken >= disValueStationPlanet)
          {
-            logger.println("we will be complete the colonization of planet " + planet.planetId + " alien bonus =" + extraToken);
             return true;
          }
         return false;

@@ -31,7 +31,7 @@ public class Strategy {
         //ArrayList<Distances> distancesArrayList = computeAllSmallestDistances();
         ArrayList<Distances> distancesArrayList = computeAllDistances();
         Distances distanceToPlay = getBestTokenUsableFromList(distancesArrayList, myBonus);
-        logger.println("Distance To play:" + distanceToPlay.toString());
+//        logger.println("Distance To play:" + distanceToPlay.toString());
 
         //is the station to play from a distance point of view available?...
         if (distanceToPlay.getStation().isAvailable()) {
@@ -56,9 +56,7 @@ public class Strategy {
             //#######################################################################################
             // ENERGY +ALLIEN + COLONIZE or RESUPPLY
             cmd = techResearchBonusPreCommand + applyEnergyAndColonize_Or_Resupply(myBonus, applyColonizeWithAllienAttempt(myBonus, distanceToPlay));
-            logger.println("COMMAND3 = " + cmd);
             return cmd;
-
         }
     }
 
@@ -225,8 +223,6 @@ public class Strategy {
 
 
         for (Bonus bonus : bonusArrayList) {
-            logger.println(bonus.toString());
-
             // Check that the bonus is a Tech Command
             if (BonusType.NEW_TECH.equals(bonus.getBonus()) ||
                     BonusType.TECH_RESEARCH_2.equals(bonus.getBonus()) ||
@@ -268,15 +264,12 @@ public class Strategy {
                 if (bestForObjectiveCandidate != null) {
                     bestForObjectiveCandidate.apply();
                     techCommands.add(bestForObjectiveCandidate);
-                    //logger.println("      BestObjectiveCandidate for Bonus " + bestForObjectiveCandidate.toString());
                 } else if (defaultCandidate != null) {
                     defaultCandidate.apply();
                     techCommands.add(defaultCandidate);
-                    //logger.println("      Default Candidate for Bonus " + defaultCandidate.toString());
                 } else if (defaultNewTech != null) {
                     defaultNewTech.apply();
                     techCommands.add(defaultNewTech);
-                    //logger.println("      Default NEW Tech for Bonus " + defaultNewTech.toString());
                 } else {
                     logger.println("The Bonus is not applicable " + bonus.toString());
                 }
@@ -311,7 +304,6 @@ public class Strategy {
                 Station station = myStations[i];
 
                 int tech = station.getTechToCompleteOjbective();
-                logger.println("getTechToCompleteObecjtive ->" + tech + ", " + station.toString());
                 if (tech != -1) {
                     TechCommand techCommand = new TechCommand(bonus.getBonus(), station);
                     TechEnum curTechEnum = null;

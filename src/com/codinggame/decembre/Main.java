@@ -88,7 +88,6 @@ public class Main {
                 int mine = in.nextInt();
                 String bonus = in.next();
                 Bonus bon = new Bonus(bonus);
-                logger.println("mine=" + mine+ ", Bonus="+bonus);
                 if(mine == 1){
                     myBonus.add(bon);
                 }else{
@@ -99,13 +98,12 @@ public class Main {
             int oppColonizationScore = in.nextInt();
 
             // Write an action using System.out.println()
-            // To debug: logger.println("Debug messages...");
 
             //printMyStations(myStations);
             //printOppStations(oppStations);
             //printPlanets(planets);
             String execute =  strategy.execute();
-            logger.println("Command = "+ execute);
+            logger.println("Command Executed = '"+ execute+"'");
             System.out.println(execute);
         }
     }

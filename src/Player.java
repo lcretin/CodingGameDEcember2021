@@ -1,12 +1,11 @@
 /*
-This file has been generated Fri Dec 03 14:53:53 CET 2021
+This file has been generated Fri Dec 03 14:58:42 CET 2021
 */
 
 import java.util.List;import java.util.Scanner;import java.util.ArrayList;
 class Player {
 //import java.util.ArrayList;
 class Distances {
-    private Logger logger = new Logger();
     private Station station;
     private Planet planet;
     private Integer disValueStationPlanet = null;
@@ -157,7 +156,6 @@ class Distances {
         if (planet.myContributionTotalTaks < planet.oppContributionTotalTasks 
             && (planet.myContributionTotalTaks + usableToken + extraToken >= planet.oppContributionTotalTasks))
             {
-                logger.println("we will be better than opp on planet " + planet.planetId + " alien bonus =" + extraToken);
                 return true;
             }
         return false;
@@ -171,7 +169,6 @@ class Distances {
             extraToken=2;
         if (usableToken + extraToken >= disValueStationPlanet)
          {
-            logger.println("we will be complete the colonization of planet " + planet.planetId + " alien bonus =" + extraToken);
             return true;
          }
         return false;
@@ -646,7 +643,7 @@ class Strategy {
         //ArrayList<Distances> distancesArrayList = computeAllSmallestDistances();
         ArrayList<Distances> distancesArrayList = computeAllDistances();
         Distances distanceToPlay = getBestTokenUsableFromList(distancesArrayList, myBonus);
-        logger.println("Distance To play:" + distanceToPlay.toString());
+//        logger.println("Distance To play:" + distanceToPlay.toString());
         //is the station to play from a distance point of view available?...
         if (distanceToPlay.getStation().isAvailable()) {
             //#######################################################################################
@@ -670,7 +667,6 @@ class Strategy {
             //#######################################################################################
             // ENERGY +ALLIEN + COLONIZE or RESUPPLY
             cmd = techResearchBonusPreCommand + applyEnergyAndColonize_Or_Resupply(myBonus, applyColonizeWithAllienAttempt(myBonus, distanceToPlay));
-            logger.println("COMMAND3 = " + cmd);
             return cmd;
         }
     }
@@ -813,7 +809,6 @@ class Strategy {
         bonusArrayList.addAll(research3Bonus);
         bonusArrayList.addAll(research4Bonus);
         for (Bonus bonus : bonusArrayList) {
-            logger.println(bonus.toString());
             // Check that the bonus is a Tech Command
             if (BonusType.NEW_TECH.equals(bonus.getBonus()) ||
                     BonusType.TECH_RESEARCH_2.equals(bonus.getBonus()) ||
@@ -850,15 +845,12 @@ class Strategy {
                 if (bestForObjectiveCandidate != null) {
                     bestForObjectiveCandidate.apply();
                     techCommands.add(bestForObjectiveCandidate);
-                    //logger.println("      BestObjectiveCandidate for Bonus " + bestForObjectiveCandidate.toString());
                 } else if (defaultCandidate != null) {
                     defaultCandidate.apply();
                     techCommands.add(defaultCandidate);
-                    //logger.println("      Default Candidate for Bonus " + defaultCandidate.toString());
                 } else if (defaultNewTech != null) {
                     defaultNewTech.apply();
                     techCommands.add(defaultNewTech);
-                    //logger.println("      Default NEW Tech for Bonus " + defaultNewTech.toString());
                 } else {
                     logger.println("The Bonus is not applicable " + bonus.toString());
                 }
@@ -889,7 +881,6 @@ class Strategy {
             for (int i = 0; i < myStations.length; i++) {
                 Station station = myStations[i];
                 int tech = station.getTechToCompleteOjbective();
-                logger.println("getTechToCompleteObecjtive ->" + tech + ", " + station.toString());
                 if (tech != -1) {
                     TechCommand techCommand = new TechCommand(bonus.getBonus(), station);
                     TechEnum curTechEnum = null;
@@ -1130,7 +1121,6 @@ class Main {
                 int mine = in.nextInt();
                 String bonus = in.next();
                 Bonus bon = new Bonus(bonus);
-                logger.println("mine=" + mine+ ", Bonus="+bonus);
                 if(mine == 1){
                     myBonus.add(bon);
                 }else{
@@ -1140,12 +1130,11 @@ class Main {
             int myColonizationScore = in.nextInt(); // points from planet colonization, does not include bonus points
             int oppColonizationScore = in.nextInt();
             // Write an action using System.out.println()
-            // To debug: logger.println("Debug messages...");
             //printMyStations(myStations);
             //printOppStations(oppStations);
             //printPlanets(planets);
             String execute =  strategy.execute();
-            logger.println("Command = "+ execute);
+            logger.println("Command Executed = '"+ execute+"'");
             System.out.println(execute);
         }
     }
