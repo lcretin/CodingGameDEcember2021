@@ -81,6 +81,34 @@ public class Station {
     }
 
 
+    public int getTechToCompleteOjbective()
+    {
+        if (myStationObj == null)
+            return -1;
+        
+        //terra
+        if (myStationObj.terraLevelObj==1 && terraformingSkill==0
+        && isAlienObjectiveReached() && isEngineeringObjectiveReached() && isAgricultureObjectiveReached())
+            return 0;
+        
+        //alien
+        if(myStationObj.alienLevelObj==1 && alienSkill==0
+            && isTerraformingObjectiveReached() && isEngineeringObjectiveReached() && isAgricultureObjectiveReached())
+                return 1;
+
+        //engin
+        if(myStationObj.engineeringLevelObj==1 && engineeringSkill==0
+            && isAlienObjectiveReached() && isTerraformingObjectiveReached() && isAgricultureObjectiveReached())
+                return 2;
+
+        //agri            
+        if(myStationObj.agricultureLevelObj==1 && agricultureSkill==0
+            && isAlienObjectiveReached() && isEngineeringObjectiveReached() && isTerraformingObjectiveReached())
+              return 3;
+        
+        return -1;
+    }
+
     public boolean isTerraformingObjectiveReached() {
         if (myStationObj != null && terraformingSkill >= myStationObj.terraLevelObj)
             return true;
