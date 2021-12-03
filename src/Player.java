@@ -1,5 +1,5 @@
 /*
-This file has been generated Fri Dec 03 13:51:41 CET 2021
+This file has been generated Fri Dec 03 13:56:38 CET 2021
 */
 
 import java.util.List;import java.util.Scanner;import java.util.ArrayList;
@@ -726,6 +726,7 @@ class Strategy {
                 }
             }
         }
+        logger.println("Usable token max is -> "+prev.toString());
         //if same nbr of tokens, chose the station/planet where we can win against the opp
         //Build the list of Distances with the same nbr of token to be used
         ArrayList<Distances> optimizedForTokenDistances = new ArrayList<Distances>();

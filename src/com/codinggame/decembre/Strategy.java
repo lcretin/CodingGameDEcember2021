@@ -154,6 +154,8 @@ public class Strategy {
             }
         }
 
+        logger.println("Usable token max is -> "+prev.toString());
+
         //if same nbr of tokens, chose the station/planet where we can win against the opp
         //Build the list of Distances with the same nbr of token to be used
         ArrayList<Distances> optimizedForTokenDistances = new ArrayList<Distances>();
