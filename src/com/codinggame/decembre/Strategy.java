@@ -44,7 +44,6 @@ public class Strategy {
             //... else do we have an avaialble station with the same distance ? if yes, let's colonize with it ....
             newDistanceToPlay = getBestTokenUsableFromList(geAvailablesFromList(distancesArrayList), myBonus);
             if (newDistanceToPlay != null && newDistanceToPlay.getDisValueStationPlanet() <= distanceToPlay.getDisValueStationPlanet()) {
-                logger.println("Distance To play (Min Available):" + newDistanceToPlay.toString());
                 //#######################################################################################
                 // ALLIEN + COLONIZE (NEXT AVAILABLE STATION IF FIRST IS DISABLED)
                 cmd = techResearchBonusPreCommand + applyColonizeWithAllienAttempt(myBonus, newDistanceToPlay);
@@ -89,8 +88,6 @@ public class Strategy {
                 //logger.println("Distance: ["+distance.getPlanet().getPlanetId()+"] ["+distance.getStation().getStationId()+"] dist= "+ distance.getValueStationPlanet());
             }
         }
-
-        logger.println("Number of min Dist=" + distancesArrayList.size());
 
         return distancesArrayList;
     }
@@ -153,14 +150,12 @@ public class Strategy {
             }
         }
 
-        logger.println("Usable token max is -> " + prev.toString());
 
         //if same nbr of tokens, chose the station/planet where we can win against the opp
         //Build the list of Distances with the same nbr of token to be used
         ArrayList<Distances> optimizedForTokenDistances = new ArrayList<Distances>();
         for (Distances distances : distancesArrayList) {
             if (distances.getUsableToken() == prev.getUsableToken()) {
-                logger.println(distances.toString());
                 optimizedForTokenDistances.add(distances);
             }
         }
@@ -319,7 +314,6 @@ public class Strategy {
                     techCommand.setTechApplying(curTechEnum);
                     techCommand.setBonusType(bonus.getBonus());
                     techCommands.add(techCommand);
-                    logger.println("NEW TECH -> " + techCommand);
                     myBonus.remove(bonus);
                 }
             }

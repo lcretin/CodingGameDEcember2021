@@ -9,10 +9,4 @@ public class Logger {
             System.err.println(log);
         }
     }
-
-    public void print(String log){
-        if(logActivasted){
-            System.err.print(log);
-        }
-    }
 }
