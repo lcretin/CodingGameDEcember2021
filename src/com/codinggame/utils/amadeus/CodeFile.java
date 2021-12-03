@@ -45,7 +45,7 @@ public class CodeFile {
                         line = line.replace("public enum", "enum");
                     }
                     builder.append(line);
-                    builder.append("  // " + fileName + ", " + lineNumber);
+                   // builder.append("  // " + fileName + ", " + lineNumber);
                     builder.append("\n");
                 }
             }
