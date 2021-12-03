@@ -77,6 +77,10 @@ public class TechCommand {
         this.techApplying = techApplying;
     }
 
+    public void setBonusType(BonusType bonusType) {
+        this.bonusType = bonusType;
+    }
+
     public TechCommand apply() {
         if(this.techApplying != null) {
             if (TechEnum.TERRAFORMING.equals(techApplying)) {
