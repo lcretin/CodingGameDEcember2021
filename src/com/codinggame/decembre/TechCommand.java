@@ -9,6 +9,7 @@ public class TechCommand {
     // NEW_TECH value is 1
     private int newTechValue;
     private String commandName;
+    private String suffix = "";
 
     public TechCommand(BonusType bonusType, Station station) {
         this.bonusType = bonusType;
@@ -78,7 +79,11 @@ public class TechCommand {
     }
 
     public void setBonusType(BonusType bonusType) {
+        if(BonusType.NEW_TECH.equals(this.bonusType)){
+            suffix = " " + bonusType.getBonusValue();
+        }
         this.bonusType = bonusType;
+
     }
 
     public TechCommand apply() {
@@ -119,6 +124,7 @@ public class TechCommand {
         } else if (TechEnum.AGRICULTURE.equals(techApplying)) {
             command += TechEnum.getCode(TechEnum.AGRICULTURE);
         }
+        command += suffix;
         return command;
     }
 

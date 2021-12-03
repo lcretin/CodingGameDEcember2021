@@ -1,5 +1,5 @@
 /*
-This file has been generated Fri Dec 03 13:25:29 CET 2021
+This file has been generated Fri Dec 03 13:29:19 CET 2021
 */
 
 import java.util.List;import java.util.Scanner;import java.util.ArrayList;
@@ -469,110 +469,115 @@ class TechCommand {  // TechCommand.java, 3
     // NEW_TECH value is 1  // TechCommand.java, 9
     private int newTechValue;  // TechCommand.java, 10
     private String commandName;  // TechCommand.java, 11
-    public TechCommand(BonusType bonusType, Station station) {  // TechCommand.java, 13
-        this.bonusType = bonusType;  // TechCommand.java, 14
-        this.station = station;  // TechCommand.java, 15
-        commandName = "";  // TechCommand.java, 16
-        if (BonusType.NEW_TECH.equals(bonusType)) {  // TechCommand.java, 17
-            this.newTechValue = 1;  // TechCommand.java, 18
-            commandName = "NEW_TECH ";  // TechCommand.java, 19
-        } else if (BonusType.TECH_RESEARCH_2.equals(bonusType)) {  // TechCommand.java, 20
-            this.newTechValue = 2;  // TechCommand.java, 21
-            commandName = "TECH_RESEARCH ";  // TechCommand.java, 22
-        } else if (BonusType.TECH_RESEARCH_3.equals(bonusType)) {  // TechCommand.java, 23
-            this.newTechValue = 3;  // TechCommand.java, 24
-            commandName = "TECH_RESEARCH ";  // TechCommand.java, 25
-        }  // TechCommand.java, 26
-        if (BonusType.TECH_RESEARCH_4.equals(bonusType)) {  // TechCommand.java, 27
-            this.newTechValue = 4;  // TechCommand.java, 28
-            commandName = "TECH_RESEARCH ";  // TechCommand.java, 29
-        }  // TechCommand.java, 30
-    }  // TechCommand.java, 31
-    public boolean canApplyTechEnum(TechEnum techApplying) {  // TechCommand.java, 33
-        if (TechEnum.TERRAFORMING.equals(techApplying)) {  // TechCommand.java, 34
-            if (station.getTerraformingSkill() == this.newTechValue - 1) {  // TechCommand.java, 35
-                return true;  // TechCommand.java, 36
-            }  // TechCommand.java, 37
-        } else if (TechEnum.ALIEN.equals(techApplying)) {  // TechCommand.java, 38
-            if (station.getAlienSkill() == this.newTechValue - 1) {  // TechCommand.java, 39
-                return true;  // TechCommand.java, 40
-            }  // TechCommand.java, 41
-        } else if (TechEnum.ENGINEERING.equals(techApplying)) {  // TechCommand.java, 42
-            if (station.getEngineeringSkill() == this.newTechValue - 1) {  // TechCommand.java, 43
-                return true;  // TechCommand.java, 44
-            }  // TechCommand.java, 45
-        } else if (TechEnum.AGRICULTURE.equals(techApplying)) {  // TechCommand.java, 46
-            if (station.getAgricultureSkill() == this.newTechValue - 1) {  // TechCommand.java, 47
-                return true;  // TechCommand.java, 48
-            }  // TechCommand.java, 49
-        }  // TechCommand.java, 50
-        return false;  // TechCommand.java, 51
-    }  // TechCommand.java, 52
-    public boolean canApplyBestObjectiveTechEnum(TechEnum techApplying) {  // TechCommand.java, 54
-       // System.err.println(station.isTerraformingObjectiveReached());  // TechCommand.java, 55
-        if (TechEnum.TERRAFORMING.equals(techApplying) && !station.isTerraformingObjectiveReached()) {  // TechCommand.java, 56
-            if (station.getTerraformingSkill() == this.newTechValue - 1) {  // TechCommand.java, 57
-                return true;  // TechCommand.java, 58
-            }  // TechCommand.java, 59
-        } else if (TechEnum.ALIEN.equals(techApplying) && !station.isAlienObjectiveReached()) {  // TechCommand.java, 60
-            if (station.getAlienSkill() == this.newTechValue - 1) {  // TechCommand.java, 61
-                return true;  // TechCommand.java, 62
-            }  // TechCommand.java, 63
-        } else if (TechEnum.ENGINEERING.equals(techApplying) && !station.isEngineeringObjectiveReached()) {  // TechCommand.java, 64
-            if (station.getEngineeringSkill() == this.newTechValue - 1) {  // TechCommand.java, 65
-                return true;  // TechCommand.java, 66
-            }  // TechCommand.java, 67
-        } else if (TechEnum.AGRICULTURE.equals(techApplying) && !station.isAgricultureObjectiveReached()) {  // TechCommand.java, 68
-            if (station.getAgricultureSkill() == this.newTechValue - 1) {  // TechCommand.java, 69
-                return true;  // TechCommand.java, 70
-            }  // TechCommand.java, 71
-        }  // TechCommand.java, 72
-        return false;  // TechCommand.java, 73
-    }  // TechCommand.java, 74
-    public void setTechApplying(TechEnum techApplying) {  // TechCommand.java, 76
-        this.techApplying = techApplying;  // TechCommand.java, 77
-    }  // TechCommand.java, 78
-    public void setBonusType(BonusType bonusType) {  // TechCommand.java, 80
-        this.bonusType = bonusType;  // TechCommand.java, 81
-    }  // TechCommand.java, 82
-    public TechCommand apply() {  // TechCommand.java, 84
-        if(this.techApplying != null) {  // TechCommand.java, 85
-            if (TechEnum.TERRAFORMING.equals(techApplying)) {  // TechCommand.java, 86
-                station.terraformingSkill = this.newTechValue;  // TechCommand.java, 87
-            } else if (TechEnum.ALIEN.equals(techApplying)) {  // TechCommand.java, 88
-                station.alienSkill = this.newTechValue;  // TechCommand.java, 89
-            } else if (TechEnum.ENGINEERING.equals(techApplying)) {  // TechCommand.java, 90
-                station.engineeringSkill = this.newTechValue;  // TechCommand.java, 91
-            } else if (TechEnum.AGRICULTURE.equals(techApplying)) {  // TechCommand.java, 92
-                station.agricultureSkill = this.newTechValue;  // TechCommand.java, 93
-            }  // TechCommand.java, 94
-        }  // TechCommand.java, 95
-        return this;  // TechCommand.java, 96
-    }  // TechCommand.java, 97
-    @Override  // TechCommand.java, 99
-    public String toString() {  // TechCommand.java, 100
-        return "TechCommand{" +  // TechCommand.java, 101
-                "bonusType=" + bonusType +  // TechCommand.java, 102
-                ", station=" + station +  // TechCommand.java, 103
-                ", onTech=" + techApplying +  // TechCommand.java, 104
-                ", newValue=" + newTechValue +  // TechCommand.java, 105
-                '}';  // TechCommand.java, 106
-    }  // TechCommand.java, 107
-    // Execute the command and return it.  // TechCommand.java, 109
-    public String executeCommand() {  // TechCommand.java, 110
-        String command = commandName + station.getStationId() + " ";  // TechCommand.java, 111
-        if (TechEnum.TERRAFORMING.equals(techApplying)) {  // TechCommand.java, 113
-            command += TechEnum.getCode(TechEnum.TERRAFORMING);  // TechCommand.java, 114
-        } else if (TechEnum.ALIEN.equals(techApplying)) {  // TechCommand.java, 115
-            command += TechEnum.getCode(TechEnum.ALIEN);  // TechCommand.java, 116
-        } else if (TechEnum.ENGINEERING.equals(techApplying)) {  // TechCommand.java, 117
-            command += TechEnum.getCode(TechEnum.ENGINEERING);  // TechCommand.java, 118
-        } else if (TechEnum.AGRICULTURE.equals(techApplying)) {  // TechCommand.java, 119
-            command += TechEnum.getCode(TechEnum.AGRICULTURE);  // TechCommand.java, 120
-        }  // TechCommand.java, 121
-        return command;  // TechCommand.java, 122
-    }  // TechCommand.java, 123
-}  // TechCommand.java, 126
+    private String suffix = "";  // TechCommand.java, 12
+    public TechCommand(BonusType bonusType, Station station) {  // TechCommand.java, 14
+        this.bonusType = bonusType;  // TechCommand.java, 15
+        this.station = station;  // TechCommand.java, 16
+        commandName = "";  // TechCommand.java, 17
+        if (BonusType.NEW_TECH.equals(bonusType)) {  // TechCommand.java, 18
+            this.newTechValue = 1;  // TechCommand.java, 19
+            commandName = "NEW_TECH ";  // TechCommand.java, 20
+        } else if (BonusType.TECH_RESEARCH_2.equals(bonusType)) {  // TechCommand.java, 21
+            this.newTechValue = 2;  // TechCommand.java, 22
+            commandName = "TECH_RESEARCH ";  // TechCommand.java, 23
+        } else if (BonusType.TECH_RESEARCH_3.equals(bonusType)) {  // TechCommand.java, 24
+            this.newTechValue = 3;  // TechCommand.java, 25
+            commandName = "TECH_RESEARCH ";  // TechCommand.java, 26
+        }  // TechCommand.java, 27
+        if (BonusType.TECH_RESEARCH_4.equals(bonusType)) {  // TechCommand.java, 28
+            this.newTechValue = 4;  // TechCommand.java, 29
+            commandName = "TECH_RESEARCH ";  // TechCommand.java, 30
+        }  // TechCommand.java, 31
+    }  // TechCommand.java, 32
+    public boolean canApplyTechEnum(TechEnum techApplying) {  // TechCommand.java, 34
+        if (TechEnum.TERRAFORMING.equals(techApplying)) {  // TechCommand.java, 35
+            if (station.getTerraformingSkill() == this.newTechValue - 1) {  // TechCommand.java, 36
+                return true;  // TechCommand.java, 37
+            }  // TechCommand.java, 38
+        } else if (TechEnum.ALIEN.equals(techApplying)) {  // TechCommand.java, 39
+            if (station.getAlienSkill() == this.newTechValue - 1) {  // TechCommand.java, 40
+                return true;  // TechCommand.java, 41
+            }  // TechCommand.java, 42
+        } else if (TechEnum.ENGINEERING.equals(techApplying)) {  // TechCommand.java, 43
+            if (station.getEngineeringSkill() == this.newTechValue - 1) {  // TechCommand.java, 44
+                return true;  // TechCommand.java, 45
+            }  // TechCommand.java, 46
+        } else if (TechEnum.AGRICULTURE.equals(techApplying)) {  // TechCommand.java, 47
+            if (station.getAgricultureSkill() == this.newTechValue - 1) {  // TechCommand.java, 48
+                return true;  // TechCommand.java, 49
+            }  // TechCommand.java, 50
+        }  // TechCommand.java, 51
+        return false;  // TechCommand.java, 52
+    }  // TechCommand.java, 53
+    public boolean canApplyBestObjectiveTechEnum(TechEnum techApplying) {  // TechCommand.java, 55
+       // System.err.println(station.isTerraformingObjectiveReached());  // TechCommand.java, 56
+        if (TechEnum.TERRAFORMING.equals(techApplying) && !station.isTerraformingObjectiveReached()) {  // TechCommand.java, 57
+            if (station.getTerraformingSkill() == this.newTechValue - 1) {  // TechCommand.java, 58
+                return true;  // TechCommand.java, 59
+            }  // TechCommand.java, 60
+        } else if (TechEnum.ALIEN.equals(techApplying) && !station.isAlienObjectiveReached()) {  // TechCommand.java, 61
+            if (station.getAlienSkill() == this.newTechValue - 1) {  // TechCommand.java, 62
+                return true;  // TechCommand.java, 63
+            }  // TechCommand.java, 64
+        } else if (TechEnum.ENGINEERING.equals(techApplying) && !station.isEngineeringObjectiveReached()) {  // TechCommand.java, 65
+            if (station.getEngineeringSkill() == this.newTechValue - 1) {  // TechCommand.java, 66
+                return true;  // TechCommand.java, 67
+            }  // TechCommand.java, 68
+        } else if (TechEnum.AGRICULTURE.equals(techApplying) && !station.isAgricultureObjectiveReached()) {  // TechCommand.java, 69
+            if (station.getAgricultureSkill() == this.newTechValue - 1) {  // TechCommand.java, 70
+                return true;  // TechCommand.java, 71
+            }  // TechCommand.java, 72
+        }  // TechCommand.java, 73
+        return false;  // TechCommand.java, 74
+    }  // TechCommand.java, 75
+    public void setTechApplying(TechEnum techApplying) {  // TechCommand.java, 77
+        this.techApplying = techApplying;  // TechCommand.java, 78
+    }  // TechCommand.java, 79
+    public void setBonusType(BonusType bonusType) {  // TechCommand.java, 81
+        if(BonusType.NEW_TECH.equals(this.bonusType)){  // TechCommand.java, 82
+            suffix = " " + bonusType.getBonusValue();  // TechCommand.java, 83
+        }  // TechCommand.java, 84
+        this.bonusType = bonusType;  // TechCommand.java, 85
+    }  // TechCommand.java, 87
+    public TechCommand apply() {  // TechCommand.java, 89
+        if(this.techApplying != null) {  // TechCommand.java, 90
+            if (TechEnum.TERRAFORMING.equals(techApplying)) {  // TechCommand.java, 91
+                station.terraformingSkill = this.newTechValue;  // TechCommand.java, 92
+            } else if (TechEnum.ALIEN.equals(techApplying)) {  // TechCommand.java, 93
+                station.alienSkill = this.newTechValue;  // TechCommand.java, 94
+            } else if (TechEnum.ENGINEERING.equals(techApplying)) {  // TechCommand.java, 95
+                station.engineeringSkill = this.newTechValue;  // TechCommand.java, 96
+            } else if (TechEnum.AGRICULTURE.equals(techApplying)) {  // TechCommand.java, 97
+                station.agricultureSkill = this.newTechValue;  // TechCommand.java, 98
+            }  // TechCommand.java, 99
+        }  // TechCommand.java, 100
+        return this;  // TechCommand.java, 101
+    }  // TechCommand.java, 102
+    @Override  // TechCommand.java, 104
+    public String toString() {  // TechCommand.java, 105
+        return "TechCommand{" +  // TechCommand.java, 106
+                "bonusType=" + bonusType +  // TechCommand.java, 107
+                ", station=" + station +  // TechCommand.java, 108
+                ", onTech=" + techApplying +  // TechCommand.java, 109
+                ", newValue=" + newTechValue +  // TechCommand.java, 110
+                '}';  // TechCommand.java, 111
+    }  // TechCommand.java, 112
+    // Execute the command and return it.  // TechCommand.java, 114
+    public String executeCommand() {  // TechCommand.java, 115
+        String command = commandName + station.getStationId() + " ";  // TechCommand.java, 116
+        if (TechEnum.TERRAFORMING.equals(techApplying)) {  // TechCommand.java, 118
+            command += TechEnum.getCode(TechEnum.TERRAFORMING);  // TechCommand.java, 119
+        } else if (TechEnum.ALIEN.equals(techApplying)) {  // TechCommand.java, 120
+            command += TechEnum.getCode(TechEnum.ALIEN);  // TechCommand.java, 121
+        } else if (TechEnum.ENGINEERING.equals(techApplying)) {  // TechCommand.java, 122
+            command += TechEnum.getCode(TechEnum.ENGINEERING);  // TechCommand.java, 123
+        } else if (TechEnum.AGRICULTURE.equals(techApplying)) {  // TechCommand.java, 124
+            command += TechEnum.getCode(TechEnum.AGRICULTURE);  // TechCommand.java, 125
+        }  // TechCommand.java, 126
+        command += suffix;  // TechCommand.java, 127
+        return command;  // TechCommand.java, 128
+    }  // TechCommand.java, 129
+}  // TechCommand.java, 132
 
 class Strategy {  // Strategy.java, 6
     private Logger logger = new Logger();  // Strategy.java, 8
