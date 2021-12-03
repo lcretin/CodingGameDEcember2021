@@ -2,6 +2,8 @@ package com.codinggame.decembre;
 
 import java.util.ArrayList;
 
+import javax.swing.text.StyledEditorKit.BoldAction;
+
 public class Strategy {
 
     private Logger logger = new Logger();
@@ -24,32 +26,38 @@ public class Strategy {
     public String execute(){
         
         String techResearchBonusPreCommand = applyTechPreCommand();
-        
+        String cmd;
         Distances newDistanceToPlay = null;
 
         ArrayList<Distances> distancesArrayList=computeAllDIstances();
-        Distances distanceToPlay = getBestTokenUsableFromList(distancesArrayList) ;
+        Distances distanceToPlay = getBestTokenUsableFromList(distancesArrayList,myBonus) ;
         logger.println("Distrance To play:"+distanceToPlay.toString());
 
         //is the station to play from a distance point of view available?...
         if(distanceToPlay.getStation().isAvailable()) {
                 //#######################################################################################
                 // ALLIEN + COLONIZE
-                return techResearchBonusPreCommand+applyColonizeWithAllienAttempt(myBonus,distanceToPlay);
+                cmd = techResearchBonusPreCommand+applyColonizeWithAllienAttempt(myBonus,distanceToPlay);
+                logger.println("COMMAND1 = "+ cmd);
+                return cmd;
         }else{
             //... else do we have an avaialble station with the same distance ? if yes, let's colonize with it ....
-            newDistanceToPlay = getBestTokenUsableFromList(geAvailablesFromList(distancesArrayList));
+            newDistanceToPlay = getBestTokenUsableFromList(geAvailablesFromList(distancesArrayList),myBonus);
             if(newDistanceToPlay != null && newDistanceToPlay.getDisValueStationPlanet() <= distanceToPlay.getDisValueStationPlanet()){
                 logger.println("Distance To play (Min Available):"+newDistanceToPlay.toString());
                  //#######################################################################################
                 // ALLIEN + COLONIZE (NEXT AVAILABLE STATION IF FIRST IS DISABLED)
-                return techResearchBonusPreCommand+applyColonizeWithAllienAttempt(myBonus,newDistanceToPlay) ;
+                cmd = techResearchBonusPreCommand+applyColonizeWithAllienAttempt(myBonus,newDistanceToPlay) ;
+                logger.println("COMMAND2 = "+ cmd);
+                return cmd;
             }
             //... else let's try to apply a bonus to the non available better one
             //do we have a ENERGY BONUS to allow resupply and colonize in one shot
              //#######################################################################################
                 // ENERGY +ALLIEN + COLONIZE or RESUPPLY
-            return techResearchBonusPreCommand+applyEnergyAndColonize_Or_Resupply(myBonus, applyColonizeWithAllienAttempt(myBonus,distanceToPlay));
+                cmd = techResearchBonusPreCommand+applyEnergyAndColonize_Or_Resupply(myBonus, applyColonizeWithAllienAttempt(myBonus,distanceToPlay));
+                logger.println("COMMAND3 = "+ cmd);
+                return cmd;
             
         }
     }
@@ -111,8 +119,8 @@ public class Strategy {
      * @param distancesArrayList
      * @return the best Distances object (max usage of skills tokens when all distances are equal)
      */
-    public Distances getBestTokenUsableFromList(ArrayList<Distances> distancesArrayList){
-        if (distancesArrayList == null){
+    public Distances getBestTokenUsableFromList(ArrayList<Distances> distancesArrayList, ArrayList<Bonus> myBonus){
+        if (distancesArrayList == null || distancesArrayList.size()==0){
             return null;
         }
         Distances prev = null;
@@ -127,7 +135,30 @@ public class Strategy {
                 }
             }
         }
-        return prev;
+           
+        //if same nbr of tokens, chose the station/planet where we can win against the opp
+        //Build the list of Distances with the same nbr of token to be used
+        ArrayList<Distances> optimizedForTokenDistances = new ArrayList<Distances>();
+        for(Distances distances: distancesArrayList){
+            if (distances.getUsableToken() == prev.getUsableToken())
+                optimizedForTokenDistances.add(distances);
+        }
+
+        boolean usedAlienBonus = isAlienTokenElligible(myBonus, optimizedForTokenDistances.get(0));
+  
+        //if we can be better than the opp let's do it
+        for(Distances optimDis: optimizedForTokenDistances){
+            if (optimDis.willBeBetter(usedAlienBonus))
+                return optimDis;
+        }
+
+        //if we can complete a colonization and win against the opp at teh same time, let's do it
+        for(Distances optimDis: optimizedForTokenDistances){
+        if (optimDis.willCompleteColonize(usedAlienBonus))
+            return optimDis;
+        }
+        
+        return optimizedForTokenDistances.get(0);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -253,15 +284,26 @@ public class Strategy {
     public String applyColonizeWithAllienAttempt(ArrayList<Bonus> myBonus, Distances distanceToPlay)
     {
         String prefixAllien = "";
-        if (distanceToPlay.getDisValueStationPlanet()>=2 && BonusType.ALIEN_ARTIFACT.isBonusAvailableInList(myBonus))
+        if (isAlienTokenElligible(myBonus, distanceToPlay))
         {
             int bonusCounter = 2;
             int[] tasks = new int[2];
-            int currentTerraValue = distanceToPlay.getValueTerraformingStationPlanet();
-            int currentAllienValue = distanceToPlay.getValueAlienStationPlanet();
-            int currentEngValue = distanceToPlay.getValueEngineeringStationPlanet();
-            int currentAgriValue = distanceToPlay.getValueAgricultureStationPlanet();
-            
+            int currentTerraValue = 0;
+            if (distanceToPlay.getValueTerraformingStationPlanet()!=null)
+                currentTerraValue = distanceToPlay.getValueTerraformingStationPlanet();
+
+            int currentAllienValue = 0;
+            if (distanceToPlay.getValueAlienStationPlanet()!=null)
+                currentAllienValue = distanceToPlay.getValueAlienStationPlanet();
+
+            int currentEngValue = 0;
+            if (distanceToPlay.getValueEngineeringStationPlanet()!=null)
+                currentEngValue = distanceToPlay.getValueEngineeringStationPlanet();
+
+            int currentAgriValue = 0;
+            if (distanceToPlay.getValueAgricultureStationPlanet()!=null)
+                currentAgriValue = distanceToPlay.getValueAgricultureStationPlanet();
+
             while (currentTerraValue>=1 && bonusCounter>0)
              {   
                 tasks[tasks.length-bonusCounter] = 0; //0 for terra
@@ -295,28 +337,10 @@ public class Strategy {
         return prefixAllien + colonizeAction;
     }
 
-    public static void main(String[] args) {
-        System.out.println("-------------- TESTING ");
-
-        Station myStation = new Station(1,1);
-        myStation.setTechLevel(1,0,3,0);
-
-        Station oppStation = new Station(2,0);
-        oppStation.setTechLevel(1,1,1,1);
-
-        Planet myPlanet = new Planet(1,0,1,1,0,0,0,2,"ENERGY_CORE", "POINTS_3");
-        Distances distance = new Distances(myStation, myPlanet);
-        Distances oppDistance = new Distances(oppStation, myPlanet);
-
-        System.err.println("my distance = " + distance.getDisValueStationPlanet());
-        System.err.println("opp distance = " + oppDistance.getDisValueStationPlanet());
-
-        if (distance.isSmallerDistanceThan(oppDistance)){
-            System.err.println("my station smaller than opponant");
-        }
-        else {
-            System.err.println("opp station smaller than mine");
-        }
-        System.out.println("END -------------- TESTING ");
+    //this method is called twice : applyColonizeWithAllienAttempt and execute to tune best token
+    public Boolean isAlienTokenElligible(ArrayList<Bonus> myBonus, Distances distanceToPlay)
+    {
+        return distanceToPlay.getDisValueStationPlanet()>=2 && BonusType.ALIEN_ARTIFACT.isBonusAvailableInList(myBonus);
     }
+
 }

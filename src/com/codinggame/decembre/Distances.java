@@ -3,6 +3,7 @@ package com.codinggame.decembre;
 //import java.util.ArrayList;
 
 public class Distances {
+    private Logger logger = new Logger();
 
     private Station station;
     private Planet planet;
@@ -37,9 +38,6 @@ public class Distances {
             if(result == null){
                 result = disValueTerraforming;
                 usableToken = usableTokenTerraforming;
-            }else{
-                result += disValueTerraforming;
-                usableToken += usableTokenTerraforming;
             }
         }
 
@@ -152,6 +150,39 @@ public class Distances {
 
     public Integer getUsableToken() {
         return usableToken;
+    }
+
+    /**
+     * @return true if we will win against the opponant
+     */
+    public boolean willBeBetter (boolean withAlienBonus) {
+   
+        int extraToken = 0;
+        if (withAlienBonus)
+            extraToken=2;
+        if (planet.myContributionTotalTaks < planet.oppContributionTotalTasks 
+            && (planet.myContributionTotalTaks + usableToken + extraToken >= planet.oppContributionTotalTasks))
+            {
+                logger.println("we will be better than opp on planet " + planet.planetId + " alien bonus =" + extraToken);
+                return true;
+            }
+        return false;
+    }
+
+    /**
+     * @return true if we will finish the colonization of this planet
+     */
+    public boolean willCompleteColonize (boolean withAlienBonus) {
+        int extraToken = 0;
+        if (withAlienBonus)
+            extraToken=2;
+
+        if (usableToken + extraToken >= disValueStationPlanet)
+         {
+            logger.println("we will be complete the colonization of planet " + planet.planetId + " alien bonus =" + extraToken);
+            return true;
+         }
+        return false;
     }
 
     @Override
