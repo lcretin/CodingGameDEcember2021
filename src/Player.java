@@ -1,5 +1,5 @@
 /*
-This file has been generated Fri Dec 03 14:45:31 CET 2021
+This file has been generated Fri Dec 03 14:53:53 CET 2021
 */
 
 import java.util.List;import java.util.Scanner;import java.util.ArrayList;
@@ -645,7 +645,6 @@ class Strategy {
         Distances newDistanceToPlay = null;
         //ArrayList<Distances> distancesArrayList = computeAllSmallestDistances();
         ArrayList<Distances> distancesArrayList = computeAllDistances();
-        logger.println(" Distance size "+distancesArrayList.size());
         Distances distanceToPlay = getBestTokenUsableFromList(distancesArrayList, myBonus);
         logger.println("Distance To play:" + distanceToPlay.toString());
         //is the station to play from a distance point of view available?...
@@ -746,7 +745,7 @@ class Strategy {
         }
         Distances prev = null;
         for (Distances distances : distancesArrayList) {
-           // logger.println("**insidebets** "+distances.toString());
+            // logger.println("**insidebets** "+distances.toString());
             if (prev == null) {
                 prev = distances;
             } else {
@@ -755,13 +754,12 @@ class Strategy {
                 }
             }
         }
-        logger.println("Usable token max is -> "+prev.toString());
+        logger.println("Usable token max is -> " + prev.toString());
         //if same nbr of tokens, chose the station/planet where we can win against the opp
         //Build the list of Distances with the same nbr of token to be used
         ArrayList<Distances> optimizedForTokenDistances = new ArrayList<Distances>();
         for (Distances distances : distancesArrayList) {
-            if (distances.getUsableToken() == prev.getUsableToken())
-            {
+            if (distances.getUsableToken() == prev.getUsableToken()) {
                 logger.println(distances.toString());
                 optimizedForTokenDistances.add(distances);
             }
@@ -798,7 +796,23 @@ class Strategy {
         // Apply BONUS Pre Command: Apply Tech Reasearch on the first tech on the first station
         ArrayList<TechCommand> techCommands = new ArrayList<TechCommand>();
         List<TechEnum> techEnumList = TechEnum.getAllTechEnum();
+        ArrayList<Bonus> research2Bonus = new ArrayList<Bonus>();
+        ArrayList<Bonus> research3Bonus = new ArrayList<Bonus>();
+        ArrayList<Bonus> research4Bonus = new ArrayList<Bonus>();
         for (Bonus bonus : myBonus) {
+            if (BonusType.TECH_RESEARCH_2.equals(bonus.getBonus())) {
+                research2Bonus.add(bonus);
+            } else if (BonusType.TECH_RESEARCH_3.equals(bonus.getBonus())) {
+                research3Bonus.add(bonus);
+            } else if (BonusType.TECH_RESEARCH_4.equals(bonus.getBonus())) {
+                research4Bonus.add(bonus);
+            }
+        }
+        ArrayList<Bonus> bonusArrayList = new ArrayList<>();
+        bonusArrayList.addAll(research2Bonus);
+        bonusArrayList.addAll(research3Bonus);
+        bonusArrayList.addAll(research4Bonus);
+        for (Bonus bonus : bonusArrayList) {
             logger.println(bonus.toString());
             // Check that the bonus is a Tech Command
             if (BonusType.NEW_TECH.equals(bonus.getBonus()) ||
@@ -816,38 +830,35 @@ class Strategy {
                         if (defaultCandidate == null && currentTechCommand.canApplyTechEnum(curTechEnum)) {
                             currentTechCommand.setTechApplying(curTechEnum);
                             defaultCandidate = currentTechCommand;
-                            System.err.println("***Default applying Techn Enum to --->" + defaultCandidate);
+                            //System.err.println("***Default applying Techn Enum to --->" + defaultCandidate);
                         }
                         if (bestForObjectiveCandidate == null && currentTechCommand.canApplyBestObjectiveTechEnum(curTechEnum)) {
                             currentTechCommand.setTechApplying(curTechEnum);
                             bestForObjectiveCandidate = currentTechCommand;
-                            System.err.println("***Best applying Tech Enum to --->" + bestForObjectiveCandidate);
+                            //System.err.println("***Best applying Tech Enum to --->" + bestForObjectiveCandidate);
                         }
                         // default on new tech only if the objective is not reached.
                         if (defaultNewTech == null && currentDefaultNewTechTechCommand.canApplyBestObjectiveTechEnum(curTechEnum)) {
                             currentDefaultNewTechTechCommand.setTechApplying(curTechEnum);
                             currentDefaultNewTechTechCommand.setBonusType(bonus.getBonus());
                             defaultNewTech = currentDefaultNewTechTechCommand;
-                            System.err.println("***NEW TEch default applying Techn Enum to --->" + defaultNewTech);
+                            //System.err.println("***NEW TEch default applying Techn Enum to --->" + defaultNewTech);
                         }
                     }
                 }
-                logger.println("--->Found best " + bestForObjectiveCandidate);
-                logger.println("--->Default " + defaultCandidate);
-                logger.println("--->Default NEW TEch" + defaultNewTech);
                 // Now I will add either the best to fulfill
                 if (bestForObjectiveCandidate != null) {
                     bestForObjectiveCandidate.apply();
                     techCommands.add(bestForObjectiveCandidate);
-                    logger.println("      BestObjectiveCandidate for Bonus " + bestForObjectiveCandidate.toString());
+                    //logger.println("      BestObjectiveCandidate for Bonus " + bestForObjectiveCandidate.toString());
                 } else if (defaultCandidate != null) {
                     defaultCandidate.apply();
                     techCommands.add(defaultCandidate);
-                    logger.println("      Default Candidate for Bonus " + defaultCandidate.toString());
+                    //logger.println("      Default Candidate for Bonus " + defaultCandidate.toString());
                 } else if (defaultNewTech != null) {
                     defaultNewTech.apply();
                     techCommands.add(defaultNewTech);
-                    logger.println("      Default NEW Tech for Bonus " + defaultNewTech.toString());
+                    //logger.println("      Default NEW Tech for Bonus " + defaultNewTech.toString());
                 } else {
                     logger.println("The Bonus is not applicable " + bonus.toString());
                 }
@@ -861,11 +872,11 @@ class Strategy {
         for (Bonus bonus : myBonus) {
             if (BonusType.ALIEN_ARTIFACT.equals(bonus.getBonus())) {
                 allienBonus.add(bonus);
-            }else  if (BonusType.POINTS_1.equals(bonus.getBonus())) {
+            } else if (BonusType.POINTS_1.equals(bonus.getBonus())) {
                 point1Bonus.add(bonus);
-            }else  if (BonusType.POINTS_2.equals(bonus.getBonus())) {
+            } else if (BonusType.POINTS_2.equals(bonus.getBonus())) {
                 point2Bonus.add(bonus);
-            }else  if (BonusType.POINTS_3.equals(bonus.getBonus())) {
+            } else if (BonusType.POINTS_3.equals(bonus.getBonus())) {
                 point3Bonus.add(bonus);
             }
         }
@@ -878,24 +889,29 @@ class Strategy {
             for (int i = 0; i < myStations.length; i++) {
                 Station station = myStations[i];
                 int tech = station.getTechToCompleteOjbective();
-                logger.println("getTechToCompleteObecjtive ->"+tech+", "+station.toString());
-                if(tech != -1){
+                logger.println("getTechToCompleteObecjtive ->" + tech + ", " + station.toString());
+                if (tech != -1) {
                     TechCommand techCommand = new TechCommand(bonus.getBonus(), station);
                     TechEnum curTechEnum = null;
-                    if(tech == 0) { curTechEnum = TechEnum.TERRAFORMING;}
-                    else if(tech == 1) { curTechEnum = TechEnum.ALIEN;}
-                    else if(tech == 2) { curTechEnum = TechEnum.ENGINEERING;}
-                    else if(tech == 3) { curTechEnum = TechEnum.AGRICULTURE;}
+                    if (tech == 0) {
+                        curTechEnum = TechEnum.TERRAFORMING;
+                    } else if (tech == 1) {
+                        curTechEnum = TechEnum.ALIEN;
+                    } else if (tech == 2) {
+                        curTechEnum = TechEnum.ENGINEERING;
+                    } else if (tech == 3) {
+                        curTechEnum = TechEnum.AGRICULTURE;
+                    }
                     techCommand.setTechApplying(curTechEnum);
                     techCommand.setBonusType(bonus.getBonus());
                     techCommands.add(techCommand);
-                    logger.println("NEW TECH -> "+ techCommand);
+                    logger.println("NEW TECH -> " + techCommand);
                     myBonus.remove(bonus);
                 }
             }
         }
         String command = "";
-        if(!techCommands.isEmpty()) {
+        if (!techCommands.isEmpty()) {
             for (TechCommand techCommand : techCommands) {
                 command = techCommand.executeCommand();
             }
