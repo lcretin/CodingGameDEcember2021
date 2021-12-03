@@ -1,6 +1,6 @@
 package com.codinggame.decembre;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
 public class Distances {
 
@@ -73,7 +73,8 @@ public class Distances {
                 result = disValueEngineering;
                 usableToken = usableTokenEngineering;
             }else{
-                result += usableTokenEngineering;
+                result += disValueEngineering;
+                usableToken += usableTokenEngineering;
             }
         }
 
