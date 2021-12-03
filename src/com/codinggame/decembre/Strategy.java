@@ -143,6 +143,12 @@ public class Strategy {
         if (distancesArrayList == null || distancesArrayList.size() == 0) {
             return null;
         }
+
+        for (Distances currDis : distancesArrayList) {
+            if (currDis.willCompleteColonize(false))
+                return currDis;
+        }
+
         Distances prev = null;
         for (Distances distances : distancesArrayList) {
             if (prev == null) {
