@@ -145,6 +145,7 @@ public class Strategy {
         }
         Distances prev = null;
         for (Distances distances : distancesArrayList) {
+            logger.println("**insidebets** "+distances.toString());
             if (prev == null) {
                 prev = distances;
             } else {
