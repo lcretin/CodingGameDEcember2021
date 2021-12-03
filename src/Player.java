@@ -1,599 +1,32 @@
 /*
-This file has been generated Fri Dec 03 14:02:01 CET 2021
+This file has been generated Fri Dec 03 14:20:37 CET 2021
 */
 
 import java.util.List;import java.util.Scanner;import java.util.ArrayList;
 class Player {
-//import java.util.ArrayList;
-class Distances {
-    private Logger logger = new Logger();
-    private Station station;
-    private Planet planet;
-    private Integer disValueStationPlanet = null;
-    private Integer disValueTerraforming = null;
-    private Integer disValueAlien = null;
-    private Integer disValueEngineering = null;
-    private Integer disValueAgriculture = null;
-    private Integer usableToken = null;
-    private Integer usableTokenTerraforming = null;
-    private Integer usableTokenAlien = null;
-    private Integer usableTokenEngineering = null;
-    private Integer usableTokenAgriculture = null;
-    private Integer disToStationObjective = null;
-    public Distances(Station station, Planet planet){
-        this.station = station;
-        this.planet = planet; 
-        this.compute();
-        this.computeDisToObjective();
-    }
-    public void compute(){
-        Integer result = null;
-        // If no task remaining and no skill on station, not considered in distance
-        if(this.planet.getTerraformingTaskLeftValue() != 0 ) {
-            disValueTerraforming = this.planet.getTerraformingTaskLeftValue() - this.station.getTerraformingSkill();
-            usableTokenTerraforming = Math.min(this.planet.getTerraformingTaskLeftValue(), this.station.getTerraformingSkill());
-            if(disValueTerraforming < 0){
-                disValueTerraforming = 0;
-            }
-            if(result == null){
-                result = disValueTerraforming;
-                usableToken = usableTokenTerraforming;
-            }
-        }
-        // If no task remaining and no skill on station, not considered in distance
-        if(this.planet.getAlienTaskLeftValue() != 0 ) {
-            disValueAlien = this.planet.getAlienTaskLeftValue() - this.station.getAlienSkill();
-            usableTokenAlien = Math.min(this.planet.getAlienTaskLeftValue(), this.station.getAlienSkill());
-            if(disValueAlien < 0){
-                disValueAlien = 0;
-            }
-            if(result == null){
-                result = disValueAlien;
-                usableToken = usableTokenAlien;
-            }else{
-                result += disValueAlien;
-                usableToken += usableTokenAlien;
-            }
-        }
-        // If no task remaining and no skill on station, not considered in distance
-        if(this.planet.getEngineeringTaskLeftValue() != 0 ) {
-            disValueEngineering = this.planet.getEngineeringTaskLeftValue() - this.station.getEngineeringSkill();
-            usableTokenEngineering = Math.min(this.planet.getEngineeringTaskLeftValue(), this.station.getEngineeringSkill());
-            if(disValueEngineering < 0){
-                disValueEngineering = 0;
-            }
-            if(result == null){
-                result = disValueEngineering;
-                usableToken = usableTokenEngineering;
-            }else{
-                result += disValueEngineering;
-                usableToken += usableTokenEngineering;
-            }
-        }
-        // If no task remaining and no skill on station, not considered in distance
-        if(this.planet.getAgricultureTaskLeftValue() != 0 ) {
-            disValueAgriculture= this.planet.getAgricultureTaskLeftValue() - this.station.getAgricultureSkill();
-            usableTokenAgriculture = Math.min(this.planet.getAgricultureTaskLeftValue(), this.station.getAgricultureSkill());
-            if(disValueAgriculture < 0){
-                disValueAgriculture = 0;
-            }
-            if(result == null){
-                result = disValueAgriculture;
-                usableToken = usableTokenAgriculture;
-            }else{
-                result += disValueAgriculture;
-                usableToken += usableTokenAgriculture;
-            }
-        }
-       this.disValueStationPlanet = result;
-    }
-    public void computeDisToObjective()
-    {
-        Integer curDistanceToObjective = 0;
-        if (this.station.myStationObj.terraLevelObj > this.station.terraformingSkill)
-            curDistanceToObjective+= this.station.myStationObj.terraLevelObj - this.station.terraformingSkill;
-        if (this.station.myStationObj.alienLevelObj > this.station.alienSkill)
-            curDistanceToObjective+= this.station.myStationObj.alienLevelObj - this.station.alienSkill;  
-        if (this.station.myStationObj.engineeringLevelObj > this.station.engineeringSkill)
-            curDistanceToObjective+= this.station.myStationObj.engineeringLevelObj - this.station.engineeringSkill;
-        if (this.station.myStationObj.agricultureLevelObj > this.station.agricultureSkill)
-            curDistanceToObjective+= this.station.myStationObj.agricultureLevelObj - this.station.agricultureSkill;  
-        this.disToStationObjective = curDistanceToObjective;
-    }
-    public boolean isSmallerDistanceThan(Distances distances){
-        return distances == null || (distances.disValueStationPlanet != null && this.disValueStationPlanet < distances.disValueStationPlanet);
-    }
-    public boolean isEqualDistanceThan(Distances distances){
-        return distances != null && distances.disValueStationPlanet != null && this.disValueStationPlanet == distances.disValueStationPlanet;
-    }
-    public Distances getSmallerDistance(Distances distances){
-           if(this.isSmallerDistanceThan(distances)){
-               return this;
-           }else{
-               return distances;
-           }
-    }
-    public Distances getSmallerAvailableDistance(Distances distances){
-        if(this.isSmallerDistanceThan(distances) && this.getStation().isAvailable()){
-            return this;
+enum TechEnum {
+    TERRAFORMING,
+    ALIEN,
+    ENGINEERING,
+    AGRICULTURE;
+    public static int getCode(TechEnum techEnum){
+        if(TERRAFORMING.equals(techEnum)){
+            return 0;
+        }else if(ALIEN.equals(techEnum)){
+            return 1;
+        }else if (ENGINEERING.equals(techEnum)){
+            return 2;
         }else{
-            return distances;
+            return 3;
         }
     }
-    public Station getStation() {
-        return station;
-    }
-    public Planet getPlanet() {
-        return planet;
-    }
-    public int getDisValueStationPlanet() {
-        return disValueStationPlanet;
-    }
-    public Integer getValueTerraformingStationPlanet(){
-        return disValueTerraforming;
-    }
-    public Integer getValueAlienStationPlanet(){
-        return disValueAlien;
-    }
-    public Integer getValueEngineeringStationPlanet(){
-        return disValueEngineering;
-    }
-    public Integer getValueAgricultureStationPlanet(){
-        return disValueAgriculture;
-    }
-    public Integer getUsableToken() {
-        return usableToken;
-    }
-    public Integer getDistanceToObjective(){
-        return disToStationObjective;
-    }
-    /**
-     * @return true if we will win against the opponant
-     */
-    public boolean willBeBetter (boolean withAlienBonus) {
-        int extraToken = 0;
-        if (withAlienBonus)
-            extraToken=2;
-        if (planet.myContributionTotalTaks < planet.oppContributionTotalTasks 
-            && (planet.myContributionTotalTaks + usableToken + extraToken >= planet.oppContributionTotalTasks))
-            {
-                logger.println("we will be better than opp on planet " + planet.planetId + " alien bonus =" + extraToken);
-                return true;
-            }
-        return false;
-    }
-    /**
-     * @return true if we will finish the colonization of this planet
-     */
-    public boolean willCompleteColonize (boolean withAlienBonus) {
-        int extraToken = 0;
-        if (withAlienBonus)
-            extraToken=2;
-        if (usableToken + extraToken >= disValueStationPlanet)
-         {
-            logger.println("we will be complete the colonization of planet " + planet.planetId + " alien bonus =" + extraToken);
-            return true;
-         }
-        return false;
-    }
-    @Override
-    public String toString() {
-        return "Distances{\n" +
-                "    station=" + station + "\n" +
-                "    planet=" + planet + "\n" +
-                "    distance Value=" + disValueStationPlanet +
-                ", [" + disValueTerraforming +
-                ", " + disValueAlien +
-                ", " + disValueEngineering +
-                ", " + disValueAgriculture + "]\n" +
-                "    usableToken=" + usableToken +
-                ", [" + usableTokenTerraforming +
-                ", " + usableTokenAlien +
-                ", " + usableTokenEngineering +
-                ", " + usableTokenAgriculture +
-                "]\n}";
-    }
-}
-
-enum BonusType {
-    ENERGY_CORE("ENERGY_CORE"),
-    TECH_RESEARCH_2("TECH_RESEARCH_2"),
-    TECH_RESEARCH_3("TECH_RESEARCH_3"),
-    TECH_RESEARCH_4("TECH_RESEARCH_4"),
-    NEW_TECH("NEW_TECH"),
-    POINTS_1("POINTS_1"),
-    POINTS_2("POINTS_2"),
-    POINTS_3("POINTS_3"),
-    ALIEN_ARTIFACT("ALIEN_ARTIFACT");
-    private String bonusValue;
-    BonusType(String bonusValue) {
-        this.bonusValue = bonusValue;
-    }
-    @Override
-    public String toString() {
-        return  bonusValue ;
-    }
-    public String getBonusValue() {
-        return bonusValue;
-    }
-    public boolean isBonusAvailableInList(ArrayList<Bonus> myBonus) {
-        if (myBonus == null) {
-            return false;
-        }
-        for (Bonus bonus : myBonus) {
-            if (this.equals(bonus.getBonus())) {
-                return true;
-            }
-        }
-        return false;
-    }
-}
-
-class StationObjective {
-    int scoreIfReached;
-    int terraLevelObj;
-    int alienLevelObj;
-    int engineeringLevelObj;
-    int agricultureLevelObj;
-    public StationObjective(int score,int obj0, int obj1, int obj2, int obj3)
-    {
-        this.scoreIfReached=score;
-        this.terraLevelObj=obj0;
-        this.alienLevelObj=obj1;
-        this.engineeringLevelObj=obj2;
-        this.agricultureLevelObj=obj3;
-    }
-    @Override
-    public String toString() {
-        return "StationObj{" +
-                "Score=" + scoreIfReached +
-                ", Level=[" + terraLevelObj +
-                ", " + alienLevelObj +
-                ", " + engineeringLevelObj +
-                ", " + agricultureLevelObj +
-                "]}";
-    }
-}
-
-class Planet {
-    int planetId;
-    //left to complete
-    int terraformingTaskLeftValue;
-    int alienTaskLeftValue;
-    int engineeringTaskLeftValue;
-    int agricultureTaskLeftValue;
-    int myContributionTotalTaks;
-    int oppContributionTotalTasks;
-    int colonizationScore;
-    String bonus0;
-    String bonus1;
-    public Planet(int id, int tValue, int alValue, int eValue, int agValue, int myC, int oppC, int coloScore,String bonus0, String bonus1)
-    {
-        this.planetId=id;
-        this.terraformingTaskLeftValue =tValue;
-        this.alienTaskLeftValue =alValue;
-        this.engineeringTaskLeftValue =eValue;
-        this.agricultureTaskLeftValue =agValue;
-        this.myContributionTotalTaks = myC;
-        this.oppContributionTotalTasks=oppC;
-        this.colonizationScore=coloScore;
-        this.bonus0=bonus0;
-        this.bonus1=bonus1;
-    }
-    public int getPlanetId() {
-        return planetId;
-    }
-    public int getTerraformingTaskLeftValue() {
-        return terraformingTaskLeftValue;
-    }
-    public int getAlienTaskLeftValue() {
-        return alienTaskLeftValue;
-    }
-    public int getEngineeringTaskLeftValue() {
-        return engineeringTaskLeftValue;
-    }
-    public int getAgricultureTaskLeftValue() {
-        return agricultureTaskLeftValue;
-    }
-    public int getMyContributionTotalTaks() {
-        return myContributionTotalTaks;
-    }
-    public int getOppContributionTotalTasks() {
-        return oppContributionTotalTasks;
-    }
-    public int getColonizationScore() {
-        return colonizationScore;
-    }
-    public String getBonus0() {
-        return bonus0;
-    }
-    public String getBonus1() {
-        return bonus1;
-    }
-    public String getBestBonus(ArrayList<Bonus> myBonus){
-        //let's take the points first
-        if (BonusType.POINTS_3.toString().equals(this.bonus0))
-            return "0";
-        if (BonusType.POINTS_3.toString().equals(this.bonus1))
-            return "1";
-        if (BonusType.POINTS_2.toString().equals(this.bonus0))
-            return "0";
-        if (BonusType.POINTS_2.toString().equals(this.bonus1))
-            return "1";
-        if (BonusType.POINTS_1.toString().equals(this.bonus0))
-            return "0";
-        if (BonusType.POINTS_1.toString().equals(this.bonus1))
-            return "1";
-        //then the energy
-        if (BonusType.ENERGY_CORE.toString().equals(this.bonus0) && !BonusType.ENERGY_CORE.isBonusAvailableInList(myBonus))
-            return "0";
-        if (BonusType.ENERGY_CORE.toString().equals(this.bonus1) && !BonusType.ENERGY_CORE.isBonusAvailableInList(myBonus))
-            return "1";
-        //then the TECH TODO to be customized with station obj
-        if (BonusType.NEW_TECH.toString().equals(this.bonus0))
-            return "0";
-        if (BonusType.NEW_TECH.toString().equals(this.bonus1))
-            return "1";
-        if (BonusType.TECH_RESEARCH_2.toString().equals(this.bonus0))
-            return "0";
-        if (BonusType.TECH_RESEARCH_2.toString().equals(this.bonus1))
-            return "1";
-        if (BonusType.TECH_RESEARCH_3.toString().equals(this.bonus0))
-            return "0";
-        if (BonusType.TECH_RESEARCH_3.toString().equals(this.bonus1))
-            return "1";
-            if (BonusType.TECH_RESEARCH_4.toString().equals(this.bonus0))
-            return "0";
-        if (BonusType.TECH_RESEARCH_4.toString().equals(this.bonus1))
-            return "1";
-        if (BonusType.ALIEN_ARTIFACT.toString().equals(this.bonus0))
-            return "0";
-        if (BonusType.ALIEN_ARTIFACT.toString().equals(this.bonus1))
-            return "1";
-        return "0";
-    }
-    @Override
-    public String toString() {
-        return "Planet{" + planetId +
-                ", [" + terraformingTaskLeftValue +
-                ", " + alienTaskLeftValue +
-                ", " + engineeringTaskLeftValue +
-                ", " + agricultureTaskLeftValue +
-                "], myContributionTotalTaks=" + myContributionTotalTaks +
-                ", oppContributionTotalTasks=" + oppContributionTotalTasks +
-                ", colonizationScore=" + colonizationScore +
-                ", bonus=[" + bonus0 +
-                ", " + bonus1 + "]}";
-    }
-}
-
-class Station {
-    int stationId;
-    int isMine;
-    int isAvailable;
-    //tech values
-    int terraformingSkill;
-    int alienSkill;
-    int engineeringSkill;
-    int agricultureSkill;
-    StationObjective myStationObj;
-    //constructor
-    public Station(int id,int isMine)
-    {
-        this.stationId=id;
-        this.isMine=isMine;
-    }
-    public void setTechLevel(int tValue,int alValue,int eValue,int agValue)
-    {
-        this.terraformingSkill =tValue;
-        this.alienSkill =alValue;
-        this.engineeringSkill =eValue;
-        this.agricultureSkill =agValue;
-    }
-    public void setAvailable(int available)
-    {
-        this.isAvailable=available;
-    }
-    public int isMine()
-    {
-        return isMine;
-    }
-    public boolean isAvailable()
-    {
-        return isAvailable==1;
-    }
-    public void setObjective(StationObjective stO)
-    {
-        this.myStationObj=stO;
-    }
-    public int getStationId() {
-        return stationId;
-    }
-    public int getIsMine() {
-        return isMine;
-    }
-    public int getIsAvailable() {
-        return isAvailable;
-    }
-    public int getTerraformingSkill() {
-        return terraformingSkill;
-    }
-    public int getAlienSkill() {
-        return alienSkill;
-    }
-    public int getEngineeringSkill() {
-        return engineeringSkill;
-    }
-    public int getAgricultureSkill() {
-        return agricultureSkill;
-    }
-    public StationObjective getMyStationObj() {
-        return myStationObj;
-    }
-    public boolean isTerraformingObjectiveReached() {
-        if (myStationObj != null && terraformingSkill >= myStationObj.terraLevelObj)
-            return true;
-        return false;
-    }
-    public boolean isAlienObjectiveReached() {
-        if (myStationObj != null && alienSkill >= myStationObj.alienLevelObj)
-            return true;
-        return false;
-    }
-    public boolean isEngineeringObjectiveReached() {
-        if (myStationObj != null && engineeringSkill >= myStationObj.engineeringLevelObj)
-            return true;
-        return false;
-    }
-    public boolean isAgricultureObjectiveReached() {
-    if (myStationObj != null && agricultureSkill >= myStationObj.agricultureLevelObj)
-        return true;
-    return false;
-    }
-    public String toString() {
-        return "Station{" +
-                "" + stationId +
-                ", mine=" + isMine +
-                ", avail=" + isAvailable +
-                ", skill=[" + terraformingSkill +
-                ", " + alienSkill +
-                ", " + engineeringSkill +
-                ", " + agricultureSkill +
-                "], " + myStationObj +
-                "}";
-    }
-}
-
-class Bonus {
-    private BonusType bonus;
-    public Bonus(String bonus) {
-        this.bonus = BonusType.valueOf(bonus);
-    }
-    public BonusType getBonus() {
-        return bonus;
-    }
-    @Override
-    public String toString() {
-        return "Bonus{" + bonus +
-                '}';
-    }
-}
-
-class TechCommand {
-    private BonusType bonusType;
-    private Station station;
-    private TechEnum techApplying;
-    // Contains the expected tech value for the tech enum. Meaning TECH_RESEARCH_2 -> newTechValue is 2
-    // NEW_TECH value is 1
-    private int newTechValue;
-    private String commandName;
-    private String suffix = "";
-    public TechCommand(BonusType bonusType, Station station) {
-        this.bonusType = bonusType;
-        this.station = station;
-        commandName = "";
-        if (BonusType.NEW_TECH.equals(bonusType)) {
-            this.newTechValue = 1;
-            commandName = "NEW_TECH ";
-        } else if (BonusType.TECH_RESEARCH_2.equals(bonusType)) {
-            this.newTechValue = 2;
-            commandName = "TECH_RESEARCH ";
-        } else if (BonusType.TECH_RESEARCH_3.equals(bonusType)) {
-            this.newTechValue = 3;
-            commandName = "TECH_RESEARCH ";
-        }
-        if (BonusType.TECH_RESEARCH_4.equals(bonusType)) {
-            this.newTechValue = 4;
-            commandName = "TECH_RESEARCH ";
-        }
-    }
-    public boolean canApplyTechEnum(TechEnum techApplying) {
-        if (TechEnum.TERRAFORMING.equals(techApplying)) {
-            if (station.getTerraformingSkill() == this.newTechValue - 1) {
-                return true;
-            }
-        } else if (TechEnum.ALIEN.equals(techApplying)) {
-            if (station.getAlienSkill() == this.newTechValue - 1) {
-                return true;
-            }
-        } else if (TechEnum.ENGINEERING.equals(techApplying)) {
-            if (station.getEngineeringSkill() == this.newTechValue - 1) {
-                return true;
-            }
-        } else if (TechEnum.AGRICULTURE.equals(techApplying)) {
-            if (station.getAgricultureSkill() == this.newTechValue - 1) {
-                return true;
-            }
-        }
-        return false;
-    }
-    public boolean canApplyBestObjectiveTechEnum(TechEnum techApplying) {
-       // System.err.println(station.isTerraformingObjectiveReached());
-        if (TechEnum.TERRAFORMING.equals(techApplying) && !station.isTerraformingObjectiveReached()) {
-            if (station.getTerraformingSkill() == this.newTechValue - 1) {
-                return true;
-            }
-        } else if (TechEnum.ALIEN.equals(techApplying) && !station.isAlienObjectiveReached()) {
-            if (station.getAlienSkill() == this.newTechValue - 1) {
-                return true;
-            }
-        } else if (TechEnum.ENGINEERING.equals(techApplying) && !station.isEngineeringObjectiveReached()) {
-            if (station.getEngineeringSkill() == this.newTechValue - 1) {
-                return true;
-            }
-        } else if (TechEnum.AGRICULTURE.equals(techApplying) && !station.isAgricultureObjectiveReached()) {
-            if (station.getAgricultureSkill() == this.newTechValue - 1) {
-                return true;
-            }
-        }
-        return false;
-    }
-    public void setTechApplying(TechEnum techApplying) {
-        this.techApplying = techApplying;
-    }
-    public void setBonusType(BonusType bonusType) {
-        if(BonusType.NEW_TECH.equals(this.bonusType)){
-            suffix = " " + bonusType.getBonusValue();
-        }
-        this.bonusType = bonusType;
-    }
-    public TechCommand apply() {
-        if(this.techApplying != null) {
-            if (TechEnum.TERRAFORMING.equals(techApplying)) {
-                station.terraformingSkill = this.newTechValue;
-            } else if (TechEnum.ALIEN.equals(techApplying)) {
-                station.alienSkill = this.newTechValue;
-            } else if (TechEnum.ENGINEERING.equals(techApplying)) {
-                station.engineeringSkill = this.newTechValue;
-            } else if (TechEnum.AGRICULTURE.equals(techApplying)) {
-                station.agricultureSkill = this.newTechValue;
-            }
-        }
-        return this;
-    }
-    @Override
-    public String toString() {
-        return "TechCommand{" +
-                "bonusType=" + bonusType +
-                ", station=" + station +
-                ", onTech=" + techApplying +
-                ", newValue=" + newTechValue +
-                '}';
-    }
-    // Execute the command and return it.
-    public String executeCommand() {
-        String command = commandName + station.getStationId() + " ";
-        if (TechEnum.TERRAFORMING.equals(techApplying)) {
-            command += TechEnum.getCode(TechEnum.TERRAFORMING);
-        } else if (TechEnum.ALIEN.equals(techApplying)) {
-            command += TechEnum.getCode(TechEnum.ALIEN);
-        } else if (TechEnum.ENGINEERING.equals(techApplying)) {
-            command += TechEnum.getCode(TechEnum.ENGINEERING);
-        } else if (TechEnum.AGRICULTURE.equals(techApplying)) {
-            command += TechEnum.getCode(TechEnum.AGRICULTURE);
-        }
-        command += suffix;
-        return command;
+    public static List<TechEnum> getAllTechEnum(){
+        List<TechEnum> list = new ArrayList<TechEnum>();
+        list.add(TERRAFORMING);
+        list.add(ALIEN);
+        list.add(ENGINEERING);
+        list.add(AGRICULTURE);
+        return list;
     }
 }
 
@@ -716,9 +149,13 @@ class Strategy {
         if (distancesArrayList == null || distancesArrayList.size() == 0) {
             return null;
         }
+        for (Distances currDis : distancesArrayList) {
+            if (currDis.willCompleteColonize(false))
+                return currDis;
+        }
         Distances prev = null;
         for (Distances distances : distancesArrayList) {
-            logger.println("**insidebets** "+distances.toString());
+           // logger.println("**insidebets** "+distances.toString());
             if (prev == null) {
                 prev = distances;
             } else {
@@ -934,29 +371,44 @@ class Strategy {
     */
 }
 
-enum TechEnum {
-    TERRAFORMING,
-    ALIEN,
-    ENGINEERING,
-    AGRICULTURE;
-    public static int getCode(TechEnum techEnum){
-        if(TERRAFORMING.equals(techEnum)){
-            return 0;
-        }else if(ALIEN.equals(techEnum)){
-            return 1;
-        }else if (ENGINEERING.equals(techEnum)){
-            return 2;
-        }else{
-            return 3;
-        }
+class StationObjective {
+    int scoreIfReached;
+    int terraLevelObj;
+    int alienLevelObj;
+    int engineeringLevelObj;
+    int agricultureLevelObj;
+    public StationObjective(int score,int obj0, int obj1, int obj2, int obj3)
+    {
+        this.scoreIfReached=score;
+        this.terraLevelObj=obj0;
+        this.alienLevelObj=obj1;
+        this.engineeringLevelObj=obj2;
+        this.agricultureLevelObj=obj3;
     }
-    public static List<TechEnum> getAllTechEnum(){
-        List<TechEnum> list = new ArrayList<TechEnum>();
-        list.add(TERRAFORMING);
-        list.add(ALIEN);
-        list.add(ENGINEERING);
-        list.add(AGRICULTURE);
-        return list;
+    @Override
+    public String toString() {
+        return "StationObj{" +
+                "Score=" + scoreIfReached +
+                ", Level=[" + terraLevelObj +
+                ", " + alienLevelObj +
+                ", " + engineeringLevelObj +
+                ", " + agricultureLevelObj +
+                "]}";
+    }
+}
+
+class Bonus {
+    private BonusType bonus;
+    public Bonus(String bonus) {
+        this.bonus = BonusType.valueOf(bonus);
+    }
+    public BonusType getBonus() {
+        return bonus;
+    }
+    @Override
+    public String toString() {
+        return "Bonus{" + bonus +
+                '}';
     }
 }
 
@@ -971,6 +423,343 @@ class Logger {
         if(logActivasted){
             System.err.print(log);
         }
+    }
+}
+
+class Planet {
+    int planetId;
+    //left to complete
+    int terraformingTaskLeftValue;
+    int alienTaskLeftValue;
+    int engineeringTaskLeftValue;
+    int agricultureTaskLeftValue;
+    int myContributionTotalTaks;
+    int oppContributionTotalTasks;
+    int colonizationScore;
+    String bonus0;
+    String bonus1;
+    public Planet(int id, int tValue, int alValue, int eValue, int agValue, int myC, int oppC, int coloScore,String bonus0, String bonus1)
+    {
+        this.planetId=id;
+        this.terraformingTaskLeftValue =tValue;
+        this.alienTaskLeftValue =alValue;
+        this.engineeringTaskLeftValue =eValue;
+        this.agricultureTaskLeftValue =agValue;
+        this.myContributionTotalTaks = myC;
+        this.oppContributionTotalTasks=oppC;
+        this.colonizationScore=coloScore;
+        this.bonus0=bonus0;
+        this.bonus1=bonus1;
+    }
+    public int getPlanetId() {
+        return planetId;
+    }
+    public int getTerraformingTaskLeftValue() {
+        return terraformingTaskLeftValue;
+    }
+    public int getAlienTaskLeftValue() {
+        return alienTaskLeftValue;
+    }
+    public int getEngineeringTaskLeftValue() {
+        return engineeringTaskLeftValue;
+    }
+    public int getAgricultureTaskLeftValue() {
+        return agricultureTaskLeftValue;
+    }
+    public int getMyContributionTotalTaks() {
+        return myContributionTotalTaks;
+    }
+    public int getOppContributionTotalTasks() {
+        return oppContributionTotalTasks;
+    }
+    public int getColonizationScore() {
+        return colonizationScore;
+    }
+    public String getBonus0() {
+        return bonus0;
+    }
+    public String getBonus1() {
+        return bonus1;
+    }
+    public String getBestBonus(ArrayList<Bonus> myBonus){
+        //let's take the points first
+        if (BonusType.POINTS_3.toString().equals(this.bonus0))
+            return "0";
+        if (BonusType.POINTS_3.toString().equals(this.bonus1))
+            return "1";
+        if (BonusType.POINTS_2.toString().equals(this.bonus0))
+            return "0";
+        if (BonusType.POINTS_2.toString().equals(this.bonus1))
+            return "1";
+        if (BonusType.POINTS_1.toString().equals(this.bonus0))
+            return "0";
+        if (BonusType.POINTS_1.toString().equals(this.bonus1))
+            return "1";
+        //then the energy
+        if (BonusType.ENERGY_CORE.toString().equals(this.bonus0) && !BonusType.ENERGY_CORE.isBonusAvailableInList(myBonus))
+            return "0";
+        if (BonusType.ENERGY_CORE.toString().equals(this.bonus1) && !BonusType.ENERGY_CORE.isBonusAvailableInList(myBonus))
+            return "1";
+        //then the TECH TODO to be customized with station obj
+        if (BonusType.NEW_TECH.toString().equals(this.bonus0))
+            return "0";
+        if (BonusType.NEW_TECH.toString().equals(this.bonus1))
+            return "1";
+        if (BonusType.TECH_RESEARCH_2.toString().equals(this.bonus0))
+            return "0";
+        if (BonusType.TECH_RESEARCH_2.toString().equals(this.bonus1))
+            return "1";
+        if (BonusType.TECH_RESEARCH_3.toString().equals(this.bonus0))
+            return "0";
+        if (BonusType.TECH_RESEARCH_3.toString().equals(this.bonus1))
+            return "1";
+            if (BonusType.TECH_RESEARCH_4.toString().equals(this.bonus0))
+            return "0";
+        if (BonusType.TECH_RESEARCH_4.toString().equals(this.bonus1))
+            return "1";
+        if (BonusType.ALIEN_ARTIFACT.toString().equals(this.bonus0))
+            return "0";
+        if (BonusType.ALIEN_ARTIFACT.toString().equals(this.bonus1))
+            return "1";
+        return "0";
+    }
+    @Override
+    public String toString() {
+        return "Planet{" + planetId +
+                ", [" + terraformingTaskLeftValue +
+                ", " + alienTaskLeftValue +
+                ", " + engineeringTaskLeftValue +
+                ", " + agricultureTaskLeftValue +
+                "], myContributionTotalTaks=" + myContributionTotalTaks +
+                ", oppContributionTotalTasks=" + oppContributionTotalTasks +
+                ", colonizationScore=" + colonizationScore +
+                ", bonus=[" + bonus0 +
+                ", " + bonus1 + "]}";
+    }
+}
+
+enum BonusType {
+    ENERGY_CORE("ENERGY_CORE"),
+    TECH_RESEARCH_2("TECH_RESEARCH_2"),
+    TECH_RESEARCH_3("TECH_RESEARCH_3"),
+    TECH_RESEARCH_4("TECH_RESEARCH_4"),
+    NEW_TECH("NEW_TECH"),
+    POINTS_1("POINTS_1"),
+    POINTS_2("POINTS_2"),
+    POINTS_3("POINTS_3"),
+    ALIEN_ARTIFACT("ALIEN_ARTIFACT");
+    private String bonusValue;
+    BonusType(String bonusValue) {
+        this.bonusValue = bonusValue;
+    }
+    @Override
+    public String toString() {
+        return  bonusValue ;
+    }
+    public String getBonusValue() {
+        return bonusValue;
+    }
+    public boolean isBonusAvailableInList(ArrayList<Bonus> myBonus) {
+        if (myBonus == null) {
+            return false;
+        }
+        for (Bonus bonus : myBonus) {
+            if (this.equals(bonus.getBonus())) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+//import java.util.ArrayList;
+class Distances {
+    private Logger logger = new Logger();
+    private Station station;
+    private Planet planet;
+    private Integer disValueStationPlanet = null;
+    private Integer disValueTerraforming = null;
+    private Integer disValueAlien = null;
+    private Integer disValueEngineering = null;
+    private Integer disValueAgriculture = null;
+    private Integer usableToken = null;
+    private Integer usableTokenTerraforming = null;
+    private Integer usableTokenAlien = null;
+    private Integer usableTokenEngineering = null;
+    private Integer usableTokenAgriculture = null;
+    private Integer disToStationObjective = null;
+    public Distances(Station station, Planet planet){
+        this.station = station;
+        this.planet = planet; 
+        this.compute();
+        this.computeDisToObjective();
+    }
+    public void compute(){
+        Integer result = null;
+        // If no task remaining and no skill on station, not considered in distance
+        if(this.planet.getTerraformingTaskLeftValue() != 0 ) {
+            disValueTerraforming = this.planet.getTerraformingTaskLeftValue() - this.station.getTerraformingSkill();
+            usableTokenTerraforming = Math.min(this.planet.getTerraformingTaskLeftValue(), this.station.getTerraformingSkill());
+            if(disValueTerraforming < 0){
+                disValueTerraforming = 0;
+            }
+            if(result == null){
+                result = disValueTerraforming;
+                usableToken = usableTokenTerraforming;
+            }
+        }
+        // If no task remaining and no skill on station, not considered in distance
+        if(this.planet.getAlienTaskLeftValue() != 0 ) {
+            disValueAlien = this.planet.getAlienTaskLeftValue() - this.station.getAlienSkill();
+            usableTokenAlien = Math.min(this.planet.getAlienTaskLeftValue(), this.station.getAlienSkill());
+            if(disValueAlien < 0){
+                disValueAlien = 0;
+            }
+            if(result == null){
+                result = disValueAlien;
+                usableToken = usableTokenAlien;
+            }else{
+                result += disValueAlien;
+                usableToken += usableTokenAlien;
+            }
+        }
+        // If no task remaining and no skill on station, not considered in distance
+        if(this.planet.getEngineeringTaskLeftValue() != 0 ) {
+            disValueEngineering = this.planet.getEngineeringTaskLeftValue() - this.station.getEngineeringSkill();
+            usableTokenEngineering = Math.min(this.planet.getEngineeringTaskLeftValue(), this.station.getEngineeringSkill());
+            if(disValueEngineering < 0){
+                disValueEngineering = 0;
+            }
+            if(result == null){
+                result = disValueEngineering;
+                usableToken = usableTokenEngineering;
+            }else{
+                result += disValueEngineering;
+                usableToken += usableTokenEngineering;
+            }
+        }
+        // If no task remaining and no skill on station, not considered in distance
+        if(this.planet.getAgricultureTaskLeftValue() != 0 ) {
+            disValueAgriculture= this.planet.getAgricultureTaskLeftValue() - this.station.getAgricultureSkill();
+            usableTokenAgriculture = Math.min(this.planet.getAgricultureTaskLeftValue(), this.station.getAgricultureSkill());
+            if(disValueAgriculture < 0){
+                disValueAgriculture = 0;
+            }
+            if(result == null){
+                result = disValueAgriculture;
+                usableToken = usableTokenAgriculture;
+            }else{
+                result += disValueAgriculture;
+                usableToken += usableTokenAgriculture;
+            }
+        }
+       this.disValueStationPlanet = result;
+    }
+    public void computeDisToObjective()
+    {
+        Integer curDistanceToObjective = 0;
+        if (this.station.myStationObj.terraLevelObj > this.station.terraformingSkill)
+            curDistanceToObjective+= this.station.myStationObj.terraLevelObj - this.station.terraformingSkill;
+        if (this.station.myStationObj.alienLevelObj > this.station.alienSkill)
+            curDistanceToObjective+= this.station.myStationObj.alienLevelObj - this.station.alienSkill;  
+        if (this.station.myStationObj.engineeringLevelObj > this.station.engineeringSkill)
+            curDistanceToObjective+= this.station.myStationObj.engineeringLevelObj - this.station.engineeringSkill;
+        if (this.station.myStationObj.agricultureLevelObj > this.station.agricultureSkill)
+            curDistanceToObjective+= this.station.myStationObj.agricultureLevelObj - this.station.agricultureSkill;  
+        this.disToStationObjective = curDistanceToObjective;
+    }
+    public boolean isSmallerDistanceThan(Distances distances){
+        return distances == null || (distances.disValueStationPlanet != null && this.disValueStationPlanet < distances.disValueStationPlanet);
+    }
+    public boolean isEqualDistanceThan(Distances distances){
+        return distances != null && distances.disValueStationPlanet != null && this.disValueStationPlanet == distances.disValueStationPlanet;
+    }
+    public Distances getSmallerDistance(Distances distances){
+           if(this.isSmallerDistanceThan(distances)){
+               return this;
+           }else{
+               return distances;
+           }
+    }
+    public Distances getSmallerAvailableDistance(Distances distances){
+        if(this.isSmallerDistanceThan(distances) && this.getStation().isAvailable()){
+            return this;
+        }else{
+            return distances;
+        }
+    }
+    public Station getStation() {
+        return station;
+    }
+    public Planet getPlanet() {
+        return planet;
+    }
+    public int getDisValueStationPlanet() {
+        return disValueStationPlanet;
+    }
+    public Integer getValueTerraformingStationPlanet(){
+        return disValueTerraforming;
+    }
+    public Integer getValueAlienStationPlanet(){
+        return disValueAlien;
+    }
+    public Integer getValueEngineeringStationPlanet(){
+        return disValueEngineering;
+    }
+    public Integer getValueAgricultureStationPlanet(){
+        return disValueAgriculture;
+    }
+    public Integer getUsableToken() {
+        return usableToken;
+    }
+    public Integer getDistanceToObjective(){
+        return disToStationObjective;
+    }
+    /**
+     * @return true if we will win against the opponant
+     */
+    public boolean willBeBetter (boolean withAlienBonus) {
+        int extraToken = 0;
+        if (withAlienBonus)
+            extraToken=2;
+        if (planet.myContributionTotalTaks < planet.oppContributionTotalTasks 
+            && (planet.myContributionTotalTaks + usableToken + extraToken >= planet.oppContributionTotalTasks))
+            {
+                logger.println("we will be better than opp on planet " + planet.planetId + " alien bonus =" + extraToken);
+                return true;
+            }
+        return false;
+    }
+    /**
+     * @return true if we will finish the colonization of this planet
+     */
+    public boolean willCompleteColonize (boolean withAlienBonus) {
+        int extraToken = 0;
+        if (withAlienBonus)
+            extraToken=2;
+        if (usableToken + extraToken >= disValueStationPlanet)
+         {
+            logger.println("we will be complete the colonization of planet " + planet.planetId + " alien bonus =" + extraToken);
+            return true;
+         }
+        return false;
+    }
+    @Override
+    public String toString() {
+        return "Distances{\n" +
+                "    station=" + station + "\n" +
+                "    planet=" + planet + "\n" +
+                "    distance Value=" + disValueStationPlanet +
+                ", [" + disValueTerraforming +
+                ", " + disValueAlien +
+                ", " + disValueEngineering +
+                ", " + disValueAgriculture + "]\n" +
+                "    usableToken=" + usableToken +
+                ", [" + usableTokenTerraforming +
+                ", " + usableTokenAlien +
+                ", " + usableTokenEngineering +
+                ", " + usableTokenAgriculture +
+                "]\n}";
     }
 }
 
@@ -1103,6 +892,221 @@ class Main {
             //logger.println("Planet "  + planets[i].planetId + " task1" + planets[i].terraformingTaskLeftValue + " task2" + planets[i].alienTaskLeftValue + " task3" + planets[i].engineeringTaskLeftValue + " task4" + planets[i].agricultureTaskLeftValue);
             //logger.println("     myContribution=" + planets[i].myContributionTotalTaks + " oppContribution=" + planets[i].oppContributionTotalTasks + " score=" + planets[i].colonizationScore + " bonus0="+ planets[i].bonus0 + " bonus1=" + planets[i].bonus1);
         }
+    }
+}
+
+class Station {
+    int stationId;
+    int isMine;
+    int isAvailable;
+    //tech values
+    int terraformingSkill;
+    int alienSkill;
+    int engineeringSkill;
+    int agricultureSkill;
+    StationObjective myStationObj;
+    //constructor
+    public Station(int id,int isMine)
+    {
+        this.stationId=id;
+        this.isMine=isMine;
+    }
+    public void setTechLevel(int tValue,int alValue,int eValue,int agValue)
+    {
+        this.terraformingSkill =tValue;
+        this.alienSkill =alValue;
+        this.engineeringSkill =eValue;
+        this.agricultureSkill =agValue;
+    }
+    public void setAvailable(int available)
+    {
+        this.isAvailable=available;
+    }
+    public int isMine()
+    {
+        return isMine;
+    }
+    public boolean isAvailable()
+    {
+        return isAvailable==1;
+    }
+    public void setObjective(StationObjective stO)
+    {
+        this.myStationObj=stO;
+    }
+    public int getStationId() {
+        return stationId;
+    }
+    public int getIsMine() {
+        return isMine;
+    }
+    public int getIsAvailable() {
+        return isAvailable;
+    }
+    public int getTerraformingSkill() {
+        return terraformingSkill;
+    }
+    public int getAlienSkill() {
+        return alienSkill;
+    }
+    public int getEngineeringSkill() {
+        return engineeringSkill;
+    }
+    public int getAgricultureSkill() {
+        return agricultureSkill;
+    }
+    public StationObjective getMyStationObj() {
+        return myStationObj;
+    }
+    public boolean isTerraformingObjectiveReached() {
+        if (myStationObj != null && terraformingSkill >= myStationObj.terraLevelObj)
+            return true;
+        return false;
+    }
+    public boolean isAlienObjectiveReached() {
+        if (myStationObj != null && alienSkill >= myStationObj.alienLevelObj)
+            return true;
+        return false;
+    }
+    public boolean isEngineeringObjectiveReached() {
+        if (myStationObj != null && engineeringSkill >= myStationObj.engineeringLevelObj)
+            return true;
+        return false;
+    }
+    public boolean isAgricultureObjectiveReached() {
+    if (myStationObj != null && agricultureSkill >= myStationObj.agricultureLevelObj)
+        return true;
+    return false;
+    }
+    public String toString() {
+        return "Station{" +
+                "" + stationId +
+                ", mine=" + isMine +
+                ", avail=" + isAvailable +
+                ", skill=[" + terraformingSkill +
+                ", " + alienSkill +
+                ", " + engineeringSkill +
+                ", " + agricultureSkill +
+                "], " + myStationObj +
+                "}";
+    }
+}
+
+class TechCommand {
+    private BonusType bonusType;
+    private Station station;
+    private TechEnum techApplying;
+    // Contains the expected tech value for the tech enum. Meaning TECH_RESEARCH_2 -> newTechValue is 2
+    // NEW_TECH value is 1
+    private int newTechValue;
+    private String commandName;
+    private String suffix = "";
+    public TechCommand(BonusType bonusType, Station station) {
+        this.bonusType = bonusType;
+        this.station = station;
+        commandName = "";
+        if (BonusType.NEW_TECH.equals(bonusType)) {
+            this.newTechValue = 1;
+            commandName = "NEW_TECH ";
+        } else if (BonusType.TECH_RESEARCH_2.equals(bonusType)) {
+            this.newTechValue = 2;
+            commandName = "TECH_RESEARCH ";
+        } else if (BonusType.TECH_RESEARCH_3.equals(bonusType)) {
+            this.newTechValue = 3;
+            commandName = "TECH_RESEARCH ";
+        }
+        if (BonusType.TECH_RESEARCH_4.equals(bonusType)) {
+            this.newTechValue = 4;
+            commandName = "TECH_RESEARCH ";
+        }
+    }
+    public boolean canApplyTechEnum(TechEnum techApplying) {
+        if (TechEnum.TERRAFORMING.equals(techApplying)) {
+            if (station.getTerraformingSkill() == this.newTechValue - 1) {
+                return true;
+            }
+        } else if (TechEnum.ALIEN.equals(techApplying)) {
+            if (station.getAlienSkill() == this.newTechValue - 1) {
+                return true;
+            }
+        } else if (TechEnum.ENGINEERING.equals(techApplying)) {
+            if (station.getEngineeringSkill() == this.newTechValue - 1) {
+                return true;
+            }
+        } else if (TechEnum.AGRICULTURE.equals(techApplying)) {
+            if (station.getAgricultureSkill() == this.newTechValue - 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean canApplyBestObjectiveTechEnum(TechEnum techApplying) {
+       // System.err.println(station.isTerraformingObjectiveReached());
+        if (TechEnum.TERRAFORMING.equals(techApplying) && !station.isTerraformingObjectiveReached()) {
+            if (station.getTerraformingSkill() == this.newTechValue - 1) {
+                return true;
+            }
+        } else if (TechEnum.ALIEN.equals(techApplying) && !station.isAlienObjectiveReached()) {
+            if (station.getAlienSkill() == this.newTechValue - 1) {
+                return true;
+            }
+        } else if (TechEnum.ENGINEERING.equals(techApplying) && !station.isEngineeringObjectiveReached()) {
+            if (station.getEngineeringSkill() == this.newTechValue - 1) {
+                return true;
+            }
+        } else if (TechEnum.AGRICULTURE.equals(techApplying) && !station.isAgricultureObjectiveReached()) {
+            if (station.getAgricultureSkill() == this.newTechValue - 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public void setTechApplying(TechEnum techApplying) {
+        this.techApplying = techApplying;
+    }
+    public void setBonusType(BonusType bonusType) {
+        if(BonusType.NEW_TECH.equals(this.bonusType)){
+            suffix = " " + bonusType.getBonusValue();
+        }
+        this.bonusType = bonusType;
+    }
+    public TechCommand apply() {
+        if(this.techApplying != null) {
+            if (TechEnum.TERRAFORMING.equals(techApplying)) {
+                station.terraformingSkill = this.newTechValue;
+            } else if (TechEnum.ALIEN.equals(techApplying)) {
+                station.alienSkill = this.newTechValue;
+            } else if (TechEnum.ENGINEERING.equals(techApplying)) {
+                station.engineeringSkill = this.newTechValue;
+            } else if (TechEnum.AGRICULTURE.equals(techApplying)) {
+                station.agricultureSkill = this.newTechValue;
+            }
+        }
+        return this;
+    }
+    @Override
+    public String toString() {
+        return "TechCommand{" +
+                "bonusType=" + bonusType +
+                ", station=" + station +
+                ", onTech=" + techApplying +
+                ", newValue=" + newTechValue +
+                '}';
+    }
+    // Execute the command and return it.
+    public String executeCommand() {
+        String command = commandName + station.getStationId() + " ";
+        if (TechEnum.TERRAFORMING.equals(techApplying)) {
+            command += TechEnum.getCode(TechEnum.TERRAFORMING);
+        } else if (TechEnum.ALIEN.equals(techApplying)) {
+            command += TechEnum.getCode(TechEnum.ALIEN);
+        } else if (TechEnum.ENGINEERING.equals(techApplying)) {
+            command += TechEnum.getCode(TechEnum.ENGINEERING);
+        } else if (TechEnum.AGRICULTURE.equals(techApplying)) {
+            command += TechEnum.getCode(TechEnum.AGRICULTURE);
+        }
+        command += suffix;
+        return command;
     }
 }
 
