@@ -22,14 +22,49 @@ public class Strategy {
     }
 
     public String execute(){
-        String preCommand = applyTechPreCommand();
-        // main actions: COLONIZE | RESUPPLY
-        // bonus actions: ENERGY_CORE | ALIEN_ARTIFACT | TECH_RESEARCH | NEW_TECH
-        // Append text after any command and that text will appear on screen.
+        
+        String techResearchBonusPreCommand = applyTechPreCommand();
+        
+        Distances newDistanceToPlay = null;
+
+        ArrayList<Distances> distancesArrayList=computeAllDIstances();
+        Distances distanceToPlay = getBestTokenUsableFromList(distancesArrayList) ;
+        logger.println("Distrance To play:"+distanceToPlay.toString());
+
+        //is the station to play from a distance point of view available?...
+        if(distanceToPlay.getStation().isAvailable()) {
+                //#######################################################################################
+                // ALLIEN + COLONIZE
+                return techResearchBonusPreCommand+applyColonizeWithAllienAttempt(myBonus,distanceToPlay);
+        }else{
+            //... else do we have an avaialble station with the same distance ? if yes, let's colonize with it ....
+            newDistanceToPlay = getBestTokenUsableFromList(geAvailablesFromList(distancesArrayList));
+            if(newDistanceToPlay != null && newDistanceToPlay.getDisValueStationPlanet() <= distanceToPlay.getDisValueStationPlanet()){
+                logger.println("Distance To play (Min Available):"+newDistanceToPlay.toString());
+                 //#######################################################################################
+                // ALLIEN + COLONIZE (NEXT AVAILABLE STATION IF FIRST IS DISABLED)
+                return techResearchBonusPreCommand+applyColonizeWithAllienAttempt(myBonus,newDistanceToPlay) ;
+            }
+            //... else let's try to apply a bonus to the non available better one
+            //do we have a ENERGY BONUS to allow resupply and colonize in one shot
+             //#######################################################################################
+                // ENERGY +ALLIEN + COLONIZE or RESUPPLY
+            return techResearchBonusPreCommand+applyEnergyAndColonize_Or_Resupply(myBonus, applyColonizeWithAllienAttempt(myBonus,distanceToPlay));
+            
+        }
+    }
+
+    /**
+     * compute all needed distances and tokens
+     * @return
+     */
+    public ArrayList<Distances> computeAllDIstances()
+    {
         ArrayList<Distances> distancesArrayList = new ArrayList<>();
+
         Distances distance;
         Distances disMin = null;
-        Distances disMinAvailable = null;
+        
         for(int i=0; i<myStations.length; i++){
             for (Planet planet: planets){
                 distance = new Distances(myStations[i], planet);
@@ -49,28 +84,16 @@ public class Strategy {
             }
         }
 
-
-        Distances distanceToPlay = getBestTokenUsableFromList(distancesArrayList) ;
         logger.println("Number of min Dist="+distancesArrayList.size());
-        logger.println("Distrance To play:"+distanceToPlay.toString());
-
-        if(distanceToPlay.getStation().isAvailable()) {
-                return preCommand+applyColonizeWithAllienAttempt(myBonus,distanceToPlay);
-        }else{
-            //do we have an avaialble station with the same distance ? if yes, let's colonize with it ....
-            disMinAvailable = getBestTokenUsableFromList(geAvailablesFromList(distancesArrayList));
-            if(disMinAvailable != null && disMinAvailable.getDisValueStationPlanet() <= distanceToPlay.getDisValueStationPlanet()){
-                logger.println("Distrance To play (Min Available):"+disMinAvailable.toString());
-
-                return preCommand+applyColonizeWithAllienAttempt(myBonus,disMinAvailable) ;
-            }
-            //... else let's try to apply a bonus to the non available better one
-            //do dwe have a ENERGY BONUS to allow resupply and colonize in one shot
-            return preCommand+applyEnergyAndColonize_Or_Resupply(myBonus, applyColonizeWithAllienAttempt(myBonus,distanceToPlay));
-            
-        }
+        
+        return distancesArrayList;
     }
 
+    /**
+     * 
+     * @param distancesArrayList
+     * @return a list whit only available stations in every distance
+     */
     public ArrayList<Distances> geAvailablesFromList(ArrayList<Distances> distancesArrayList){
         ArrayList<Distances> list = new ArrayList<>();
         if (distancesArrayList != null){
@@ -83,6 +106,11 @@ public class Strategy {
         return list;
     }
 
+    /**
+     * 
+     * @param distancesArrayList
+     * @return the best Distances object (max usage of skills tokens when all distances are equal)
+     */
     public Distances getBestTokenUsableFromList(ArrayList<Distances> distancesArrayList){
         if (distancesArrayList == null){
             return null;
@@ -102,6 +130,20 @@ public class Strategy {
         return prev;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    //    *****          *****      *       *   *      *       ********
+    //    *    *        *     *     * *     *   *      *       *
+    //    *****         *     *     *   *   *   *      *       *
+    //    *    *        *     *     *     * *   *      *       ********
+    //    *    *        *     *     *      **   *      *              *
+    //    *****          *****      *       *   ********       ********
+    //
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * Try to use the TECH_RESEARCH BONUS
+     * @return
+     */
     public String applyTechPreCommand(){
         String resultCommand = "";
         // Apply BONUS Pre Command: Apply Tech Reasearch on the first tech on the first station
@@ -123,38 +165,33 @@ public class Strategy {
                 commandName = "TECH_RESEARCH ";
             }
             if (techREsearchBonusNum >= 0) {
-                boolean isBonusUsed=false;
                 for (int i = 0; i < myStations.length; i++) {
                     Station station = myStations[i];
-
+                   
                     if (station.getTerraformingSkill() == techREsearchBonusNum && station.isTerraformingObjectiveReached()) {
                         resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.TERRAFORMING);
                         station.terraformingSkill += 1;
-                        isBonusUsed=true;
 
                         logger.println("Station impacted: "+station.toString());
                         break;
                     } else if (station.getAlienSkill() == techREsearchBonusNum && station.isAlienObjectiveReached()) {
                         resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.ALIEN);
                         station.alienSkill += 1;
-                        isBonusUsed=true;
                         logger.println("Station impacted: "+station.toString());
                         break;
                     } else if (station.getEngineeringSkill() == techREsearchBonusNum && station.isEngineeringObjectiveReached()) {
                         resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.ENGINEERING);
                         station.engineeringSkill += 1;
-                        isBonusUsed=true;
                         logger.println("Station impacted: "+station.toString());
                         break;
                     } else if (station.getAgricultureSkill() == techREsearchBonusNum && station.isAgricultureObjectiveReached()) {
                         resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.AGRICULTURE);
                         station.agricultureSkill += 1;
-                        isBonusUsed=true;
                         logger.println("Station impacted: "+station.toString());
                         break;
                     }
                 }
-                if (!isBonusUsed) //bonus not used to fill station objective, let's fill the first available task-station
+                if ("".equals(resultCommand)) //bonus not used to fill station objective, let's fill the first available task-station
                 {
                     for (int i = 0; i < myStations.length; i++) {
                         Station station = myStations[i];
@@ -190,6 +227,12 @@ public class Strategy {
         return resultCommand;
     }
 
+    /**
+     * ENERGY BONUS AND COLONIZE (BUILT FROM OUTSIDE AND PASSED)
+     * @param myBonus
+     * @param colonizeAction
+     * @return
+     */
     public String applyEnergyAndColonize_Or_Resupply (ArrayList<Bonus> myBonus, String colonizeAction)
     {
         if(BonusType.ENERGY_CORE.isBonusAvailableInList(myBonus)){
@@ -201,13 +244,17 @@ public class Strategy {
         }
     }
 
+    /**
+     * ALIEN AND BUILD COLONIZE
+     * @param myBonus
+     * @param distanceToPlay
+     * @return
+     */
     public String applyColonizeWithAllienAttempt(ArrayList<Bonus> myBonus, Distances distanceToPlay)
     {
         String prefixAllien = "";
         if (distanceToPlay.getDisValueStationPlanet()>=2 && BonusType.ALIEN_ARTIFACT.isBonusAvailableInList(myBonus))
         {
-            int allien0;
-            int allien1;
             int bonusCounter = 2;
             int[] tasks = new int[2];
             int currentTerraValue = distanceToPlay.getValueTerraformingStationPlanet();
@@ -246,5 +293,30 @@ public class Strategy {
         
         String colonizeAction="COLONIZE " + distanceToPlay.getStation().getStationId() + " " + distanceToPlay.getPlanet().getPlanetId() + " " + distanceToPlay.getPlanet().getBestBonus(myBonus);
         return prefixAllien + colonizeAction;
+    }
+
+    public static void main(String[] args) {
+        System.out.println("-------------- TESTING ");
+
+        Station myStation = new Station(1,1);
+        myStation.setTechLevel(1,0,3,0);
+
+        Station oppStation = new Station(2,0);
+        oppStation.setTechLevel(1,1,1,1);
+
+        Planet myPlanet = new Planet(1,0,1,1,0,0,0,2,"ENERGY_CORE", "POINTS_3");
+        Distances distance = new Distances(myStation, myPlanet);
+        Distances oppDistance = new Distances(oppStation, myPlanet);
+
+        System.err.println("my distance = " + distance.getDisValueStationPlanet());
+        System.err.println("opp distance = " + oppDistance.getDisValueStationPlanet());
+
+        if (distance.isSmallerDistanceThan(oppDistance)){
+            System.err.println("my station smaller than opponant");
+        }
+        else {
+            System.err.println("opp station smaller than mine");
+        }
+        System.out.println("END -------------- TESTING ");
     }
 }
