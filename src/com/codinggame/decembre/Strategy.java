@@ -160,7 +160,10 @@ public class Strategy {
         ArrayList<Distances> optimizedForTokenDistances = new ArrayList<Distances>();
         for (Distances distances : distancesArrayList) {
             if (distances.getUsableToken() == prev.getUsableToken())
+            {
+                logger.println(distances.toString());
                 optimizedForTokenDistances.add(distances);
+            }
         }
 
         boolean usedAlienBonus = isAlienTokenElligible(myBonus, optimizedForTokenDistances.get(0));
