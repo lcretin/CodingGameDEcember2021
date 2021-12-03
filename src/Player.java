@@ -1,5 +1,5 @@
 /*
-This file has been generated Fri Dec 03 13:56:38 CET 2021
+This file has been generated Fri Dec 03 14:02:01 CET 2021
 */
 
 import java.util.List;import java.util.Scanner;import java.util.ArrayList;
@@ -718,6 +718,7 @@ class Strategy {
         }
         Distances prev = null;
         for (Distances distances : distancesArrayList) {
+            logger.println("**insidebets** "+distances.toString());
             if (prev == null) {
                 prev = distances;
             } else {
