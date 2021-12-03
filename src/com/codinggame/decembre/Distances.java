@@ -20,10 +20,13 @@ public class Distances {
     private Integer usableTokenEngineering = null;
     private Integer usableTokenAgriculture = null;
 
+    private Integer disToStationObjective = null;
+
     public Distances(Station station, Planet planet){
         this.station = station;
         this.planet = planet; 
         this.compute();
+        this.computeDisToObjective();
     }
 
     public void compute(){
@@ -96,6 +99,25 @@ public class Distances {
        this.disValueStationPlanet = result;
     }
 
+    public void computeDisToObjective()
+    {
+        Integer curDistanceToObjective = 0;
+        
+        if (this.station.myStationObj.terraLevelObj > this.station.terraformingSkill)
+            curDistanceToObjective+= this.station.myStationObj.terraLevelObj - this.station.terraformingSkill;
+        
+        if (this.station.myStationObj.alienLevelObj > this.station.alienSkill)
+            curDistanceToObjective+= this.station.myStationObj.alienLevelObj - this.station.alienSkill;  
+        
+        if (this.station.myStationObj.engineeringLevelObj > this.station.engineeringSkill)
+            curDistanceToObjective+= this.station.myStationObj.engineeringLevelObj - this.station.engineeringSkill;
+        
+        if (this.station.myStationObj.agricultureLevelObj > this.station.agricultureSkill)
+            curDistanceToObjective+= this.station.myStationObj.agricultureLevelObj - this.station.agricultureSkill;  
+
+        this.disToStationObjective = curDistanceToObjective;
+    }
+
     public boolean isSmallerDistanceThan(Distances distances){
         return distances == null || (distances.disValueStationPlanet != null && this.disValueStationPlanet < distances.disValueStationPlanet);
     }
@@ -152,6 +174,10 @@ public class Distances {
         return usableToken;
     }
 
+    public Integer getDistanceToObjective(){
+        return disToStationObjective;
+    }
+
     /**
      * @return true if we will win against the opponant
      */
@@ -184,6 +210,9 @@ public class Distances {
          }
         return false;
     }
+
+
+       
 
     @Override
     public String toString() {

@@ -28,9 +28,10 @@ public class Strategy {
         String cmd;
         Distances newDistanceToPlay = null;
 
-        ArrayList<Distances> distancesArrayList = computeAllDIstances();
+        //ArrayList<Distances> distancesArrayList = computeAllSmallestDistances();
+        ArrayList<Distances> distancesArrayList = computeAllDistances();
         Distances distanceToPlay = getBestTokenUsableFromList(distancesArrayList, myBonus);
-        logger.println("Distrance To play:" + distanceToPlay.toString());
+        logger.println("Distance To play:" + distanceToPlay.toString());
 
         //is the station to play from a distance point of view available?...
         if (distanceToPlay.getStation().isAvailable()) {
@@ -62,11 +63,11 @@ public class Strategy {
     }
 
     /**
-     * compute all needed distances and tokens
+     * compute all the smallest distances and tokens
      *
      * @return
      */
-    public ArrayList<Distances> computeAllDIstances() {
+    public ArrayList<Distances> computeAllSmallestDistances() {
         ArrayList<Distances> distancesArrayList = new ArrayList<>();
 
         Distances distance;
@@ -92,6 +93,27 @@ public class Strategy {
         }
 
         logger.println("Number of min Dist=" + distancesArrayList.size());
+
+        return distancesArrayList;
+    }
+
+
+    /**
+     * compute all the  distances and tokens
+     *
+     * @return
+     */
+    public ArrayList<Distances> computeAllDistances() {
+        ArrayList<Distances> distancesArrayList = new ArrayList<>();
+
+        Distances distance;
+
+        for (int i = 0; i < myStations.length; i++) {
+            for (Planet planet : planets) {
+                distance = new Distances(myStations[i], planet);
+                distancesArrayList.add(distance);
+            }
+        }
 
         return distancesArrayList;
     }
