@@ -144,11 +144,6 @@ public class Strategy {
             return null;
         }
 
-        for (Distances currDis : distancesArrayList) {
-            if (currDis.willCompleteColonize(false))
-                return currDis;
-        }
-
         Distances prev = null;
         for (Distances distances : distancesArrayList) {
            // logger.println("**insidebets** "+distances.toString());
@@ -314,6 +309,7 @@ public class Strategy {
                     techCommand.setBonusType(bonus.getBonus());
                     techCommands.add(techCommand);
                     logger.println("NEW TECH -> "+ techCommand);
+                    myBonus.remove(bonus);
                 }
             }
         }

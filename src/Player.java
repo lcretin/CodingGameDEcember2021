@@ -1,5 +1,5 @@
 /*
-This file has been generated Fri Dec 03 14:42:52 CET 2021
+This file has been generated Fri Dec 03 14:45:31 CET 2021
 */
 
 import java.util.List;import java.util.Scanner;import java.util.ArrayList;
@@ -744,10 +744,6 @@ class Strategy {
         if (distancesArrayList == null || distancesArrayList.size() == 0) {
             return null;
         }
-        for (Distances currDis : distancesArrayList) {
-            if (currDis.willCompleteColonize(false))
-                return currDis;
-        }
         Distances prev = null;
         for (Distances distances : distancesArrayList) {
            // logger.println("**insidebets** "+distances.toString());
@@ -894,6 +890,7 @@ class Strategy {
                     techCommand.setBonusType(bonus.getBonus());
                     techCommands.add(techCommand);
                     logger.println("NEW TECH -> "+ techCommand);
+                    myBonus.remove(bonus);
                 }
             }
         }
