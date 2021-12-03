@@ -208,7 +208,7 @@ public class Strategy {
                             System.err.println("***Best applying Tech Enum to --->" + bestForObjectiveCandidate);
                         }
                         // default on new tech only if the objective is not reached.
-                        if(defaultNewTech == null && currentDefaultNewTechTechCommand.canApplyBestObjectiveTechEnum(curTechEnum)) {
+                        if (defaultNewTech == null && currentDefaultNewTechTechCommand.canApplyBestObjectiveTechEnum(curTechEnum)) {
                             currentDefaultNewTechTechCommand.setTechApplying(curTechEnum);
                             defaultNewTech = currentDefaultNewTechTechCommand;
                             System.err.println("***NEW TEch default applying Techn Enum to --->" + defaultNewTech);
@@ -241,12 +241,10 @@ public class Strategy {
         }
 
         String command = "";
-        if (techCommands.isEmpty()) {
-            for (TechCommand techCommand : techCommands) {
-                command = techCommand.executeCommand();
-            }
-        }
 
+        for (TechCommand techCommand : techCommands) {
+            command = techCommand.executeCommand();
+        }
         logger.println("PreCommand = " + command);
         return command;
     }
@@ -334,9 +332,11 @@ public class Strategy {
         Station myStation1 = new Station(1, 1);
         myStation1.setTechLevel(2, 2, 0, 0);
         myStation1.setAvailable(1);
+        StationObjective objective = new StationObjective(4, 2, 2, 0, 1);
+        myStation1.setObjective(objective);
 
         Station myStation2 = new Station(2, 1);
-        myStation2.setTechLevel(2, 2, 0, 0);
+        myStation2.setTechLevel(2, 2, 2, 2);
         myStation2.setAvailable(1);
 
         Station oppStation = new Station(2, 0);
@@ -357,12 +357,12 @@ public class Strategy {
         planets.add(myPlanet2);
 
         ArrayList<Bonus> myBonus = new ArrayList<Bonus>();
-        myBonus.add(new Bonus("NEW_TECH"));
+        myBonus.add(new Bonus("TECH_RESEARCH_4"));
 
         Strategy strategy = new Strategy(myStations, oppStations, planets, myBonus, null);
         strategy.applyTechPreCommand();
-    }*/
-
+    }
+    */
 
 
 }
