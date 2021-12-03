@@ -73,16 +73,21 @@ public class TechCommand {
         return false;
     }
 
-    public TechCommand applyTechEnum(TechEnum techApplying) {
+    public void setTechApplying(TechEnum techApplying) {
         this.techApplying = techApplying;
-        if (TechEnum.TERRAFORMING.equals(techApplying)) {
-            station.terraformingSkill = this.newTechValue;
-        } else if (TechEnum.ALIEN.equals(techApplying)) {
-            station.alienSkill = this.newTechValue;
-        } else if (TechEnum.ENGINEERING.equals(techApplying)) {
-            station.engineeringSkill = this.newTechValue;
-        } else if (TechEnum.AGRICULTURE.equals(techApplying)) {
-            station.agricultureSkill = this.newTechValue;
+    }
+
+    public TechCommand apply() {
+        if(this.techApplying != null) {
+            if (TechEnum.TERRAFORMING.equals(techApplying)) {
+                station.terraformingSkill = this.newTechValue;
+            } else if (TechEnum.ALIEN.equals(techApplying)) {
+                station.alienSkill = this.newTechValue;
+            } else if (TechEnum.ENGINEERING.equals(techApplying)) {
+                station.engineeringSkill = this.newTechValue;
+            } else if (TechEnum.AGRICULTURE.equals(techApplying)) {
+                station.agricultureSkill = this.newTechValue;
+            }
         }
         return this;
     }

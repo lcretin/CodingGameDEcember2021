@@ -196,10 +196,14 @@ public class Strategy {
 
                     for (TechEnum curTechEnum : techEnumList) {
                         if (defaultCandidate == null && currentTechCommand.canApplyTechEnum(curTechEnum)) {
-                            defaultCandidate = currentTechCommand.applyTechEnum(curTechEnum);
+                            currentTechCommand.setTechApplying(curTechEnum);
+                            defaultCandidate = currentTechCommand;
+                            System.err.println("***Defautl applying Techn Enum to --->" + defaultCandidate);
                         }
                         if (bestForObjectiveCandidate == null && currentTechCommand.canApplyBestObjectiveTechEnum(curTechEnum)) {
-                            bestForObjectiveCandidate = currentTechCommand.applyTechEnum(curTechEnum);
+                            currentTechCommand.setTechApplying(curTechEnum);
+                            bestForObjectiveCandidate = currentTechCommand;
+                            System.err.println("***Best applying Techn Enum to --->" + bestForObjectiveCandidate);
                         }
                     }
                 }
@@ -209,11 +213,13 @@ public class Strategy {
 
                 // Now I will add either the best to fulfill
                 if (bestForObjectiveCandidate != null) {
-                    logger.println("BestObjectiveCandidate for Bonus " + bestForObjectiveCandidate.toString());
+                    bestForObjectiveCandidate.apply();
                     techCommands.add(bestForObjectiveCandidate);
+                    logger.println("      BestObjectiveCandidate for Bonus " + bestForObjectiveCandidate.toString());
                 } else if (defaultCandidate != null) {
-                    logger.println("Default Candidate for Bonus " + defaultCandidate.toString());
+                    defaultCandidate.apply();
                     techCommands.add(defaultCandidate);
+                    logger.println("      Default Candidate for Bonus " + defaultCandidate.toString());
                 } else {
                     logger.println("The Bonus is not applicable " + bonus.toString());
                 }
@@ -309,8 +315,7 @@ public class Strategy {
         return distanceToPlay.getDisValueStationPlanet() >= 2 && BonusType.ALIEN_ARTIFACT.isBonusAvailableInList(myBonus);
     }
 
-    /*
-
+/*
     public static void main(String[] args) {
         Station myStation1 = new Station(1, 1);
         myStation1.setTechLevel(2, 2, 0, 0);
@@ -342,9 +347,7 @@ public class Strategy {
 
         Strategy strategy = new Strategy(myStations, oppStations, planets, myBonus, null);
         strategy.applyTechPreCommand();
-    }
-
-    */
+    }*/
 
 
 
