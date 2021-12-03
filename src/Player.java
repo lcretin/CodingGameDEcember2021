@@ -1,5 +1,5 @@
 /*
-This file has been generated Fri Dec 03 13:19:00 CET 2021
+This file has been generated Fri Dec 03 13:21:00 CET 2021
 */
 
 import java.util.List;import java.util.Scanner;import java.util.ArrayList;
@@ -778,110 +778,113 @@ class Strategy {  // Strategy.java, 6
             }  // Strategy.java, 240
         }  // Strategy.java, 241
         String command = "";  // Strategy.java, 243
-        for (TechCommand techCommand : techCommands) {  // Strategy.java, 245
-            command = techCommand.executeCommand();  // Strategy.java, 246
-        }  // Strategy.java, 247
-        logger.println("PreCommand = " + command);  // Strategy.java, 248
-        return command;  // Strategy.java, 249
-    }  // Strategy.java, 250
-    /**  // Strategy.java, 252
-     * ENERGY BONUS AND COLONIZE (BUILT FROM OUTSIDE AND PASSED)  // Strategy.java, 253
-     *  // Strategy.java, 254
-     * @param myBonus  // Strategy.java, 255
-     * @param colonizeAction  // Strategy.java, 256
-     * @return  // Strategy.java, 257
-     */  // Strategy.java, 258
-    public String applyEnergyAndColonize_Or_Resupply(ArrayList<Bonus> myBonus, String colonizeAction) {  // Strategy.java, 259
-        if (BonusType.ENERGY_CORE.isBonusAvailableInList(myBonus)) {  // Strategy.java, 260
-            return BonusType.ENERGY_CORE + " " + colonizeAction;  // Strategy.java, 261
-        } else {  // Strategy.java, 262
-            //no choice  // Strategy.java, 263
-            return "RESUPPLY";  // Strategy.java, 264
-        }  // Strategy.java, 265
-    }  // Strategy.java, 266
-    /**  // Strategy.java, 268
-     * ALIEN AND BUILD COLONIZE  // Strategy.java, 269
-     *  // Strategy.java, 270
-     * @param myBonus  // Strategy.java, 271
-     * @param distanceToPlay  // Strategy.java, 272
-     * @return  // Strategy.java, 273
-     */  // Strategy.java, 274
-    public String applyColonizeWithAllienAttempt(ArrayList<Bonus> myBonus, Distances distanceToPlay) {  // Strategy.java, 275
-        String prefixAllien = "";  // Strategy.java, 276
-        if (isAlienTokenElligible(myBonus, distanceToPlay)) {  // Strategy.java, 277
-            int bonusCounter = 2;  // Strategy.java, 278
-            int[] tasks = new int[2];  // Strategy.java, 279
-            int currentTerraValue = 0;  // Strategy.java, 280
-            if (distanceToPlay.getValueTerraformingStationPlanet() != null)  // Strategy.java, 281
-                currentTerraValue = distanceToPlay.getValueTerraformingStationPlanet();  // Strategy.java, 282
-            int currentAllienValue = 0;  // Strategy.java, 284
-            if (distanceToPlay.getValueAlienStationPlanet() != null)  // Strategy.java, 285
-                currentAllienValue = distanceToPlay.getValueAlienStationPlanet();  // Strategy.java, 286
-            int currentEngValue = 0;  // Strategy.java, 288
-            if (distanceToPlay.getValueEngineeringStationPlanet() != null)  // Strategy.java, 289
-                currentEngValue = distanceToPlay.getValueEngineeringStationPlanet();  // Strategy.java, 290
-            int currentAgriValue = 0;  // Strategy.java, 292
-            if (distanceToPlay.getValueAgricultureStationPlanet() != null)  // Strategy.java, 293
-                currentAgriValue = distanceToPlay.getValueAgricultureStationPlanet();  // Strategy.java, 294
-            while (currentTerraValue >= 1 && bonusCounter > 0) {  // Strategy.java, 296
-                tasks[tasks.length - bonusCounter] = 0; //0 for terra  // Strategy.java, 297
-                bonusCounter--;  // Strategy.java, 298
-                currentTerraValue--;  // Strategy.java, 299
-            }  // Strategy.java, 300
-            while (currentAllienValue >= 1 && bonusCounter > 0) {  // Strategy.java, 301
-                tasks[tasks.length - bonusCounter] = 1; //0 for allien  // Strategy.java, 302
-                bonusCounter--;  // Strategy.java, 303
-                currentAllienValue--;  // Strategy.java, 304
-            }  // Strategy.java, 305
-            while (currentEngValue >= 1 && bonusCounter > 0) {  // Strategy.java, 306
-                tasks[tasks.length - bonusCounter] = 2; //0 for eng  // Strategy.java, 307
-                bonusCounter--;  // Strategy.java, 308
-                currentEngValue--;  // Strategy.java, 309
-            }  // Strategy.java, 310
-            while (currentAgriValue >= 1 && bonusCounter > 0) {  // Strategy.java, 311
-                tasks[tasks.length - bonusCounter] = 3; //0 for agri  // Strategy.java, 312
-                bonusCounter--;  // Strategy.java, 313
-                currentAgriValue--;  // Strategy.java, 314
-            }  // Strategy.java, 315
-            prefixAllien += BonusType.ALIEN_ARTIFACT + " " + tasks[0] + " " + tasks[1] + " ";  // Strategy.java, 318
-        }  // Strategy.java, 319
-        String colonizeAction = "COLONIZE " + distanceToPlay.getStation().getStationId() + " " + distanceToPlay.getPlanet().getPlanetId() + " " + distanceToPlay.getPlanet().getBestBonus(myBonus);  // Strategy.java, 321
-        return prefixAllien + colonizeAction;  // Strategy.java, 322
-    }  // Strategy.java, 323
-    //this method is called twice : applyColonizeWithAllienAttempt and execute to tune best token  // Strategy.java, 325
-    public Boolean isAlienTokenElligible(ArrayList<Bonus> myBonus, Distances distanceToPlay) {  // Strategy.java, 326
-        return distanceToPlay.getDisValueStationPlanet() >= 2 && BonusType.ALIEN_ARTIFACT.isBonusAvailableInList(myBonus);  // Strategy.java, 327
-    }  // Strategy.java, 328
-/*  // Strategy.java, 330
-    public static void main(String[] args) {  // Strategy.java, 331
-        Station myStation1 = new Station(1, 1);  // Strategy.java, 332
-        myStation1.setTechLevel(2, 2, 0, 0);  // Strategy.java, 333
-        myStation1.setAvailable(1);  // Strategy.java, 334
-        StationObjective objective = new StationObjective(4, 2, 2, 0, 1);  // Strategy.java, 335
-        myStation1.setObjective(objective);  // Strategy.java, 336
-        Station myStation2 = new Station(2, 1);  // Strategy.java, 338
-        myStation2.setTechLevel(2, 2, 2, 2);  // Strategy.java, 339
-        myStation2.setAvailable(1);  // Strategy.java, 340
-        Station oppStation = new Station(2, 0);  // Strategy.java, 342
-        oppStation.setTechLevel(1, 1, 1, 1);  // Strategy.java, 343
-        Planet myPlanet1 = new Planet(1, 3, 3, 0, 0, 1, 0, 2, "ENERGY_CORE", "POINTS_3");  // Strategy.java, 345
-        Planet myPlanet2 = new Planet(2, 3, 3, 0, 0, 0, 1, 2, "ENERGY_CORE", "POINTS_3");  // Strategy.java, 346
-        Planet myPlanet3 = new Planet(2, 3, 3, 0, 0, 0, 1, 2, "ENERGY_CORE", "POINTS_3");  // Strategy.java, 347
-        Station[] myStations = new Station[2];  // Strategy.java, 349
-        Station[] oppStations = new Station[1];  // Strategy.java, 350
-        ArrayList<Planet> planets = new ArrayList<Planet>();  // Strategy.java, 351
-        myStations[0] = myStation1;  // Strategy.java, 353
-        myStations[1] = myStation2;  // Strategy.java, 354
-        oppStations[0] = oppStation;  // Strategy.java, 355
-        planets.add(myPlanet1);  // Strategy.java, 356
-        planets.add(myPlanet2);  // Strategy.java, 357
-        ArrayList<Bonus> myBonus = new ArrayList<Bonus>();  // Strategy.java, 359
-        myBonus.add(new Bonus("TECH_RESEARCH_4"));  // Strategy.java, 360
-        Strategy strategy = new Strategy(myStations, oppStations, planets, myBonus, null);  // Strategy.java, 362
-        strategy.applyTechPreCommand();  // Strategy.java, 363
-    }  // Strategy.java, 364
-    */  // Strategy.java, 365
-}  // Strategy.java, 368
+        if(!techCommands.isEmpty()) {  // Strategy.java, 245
+            for (TechCommand techCommand : techCommands) {  // Strategy.java, 246
+                command = techCommand.executeCommand();  // Strategy.java, 247
+            }  // Strategy.java, 248
+            command += " ";  // Strategy.java, 249
+        }  // Strategy.java, 250
+        logger.println("PreCommand = " + command);  // Strategy.java, 252
+        return command;  // Strategy.java, 253
+    }  // Strategy.java, 254
+    /**  // Strategy.java, 256
+     * ENERGY BONUS AND COLONIZE (BUILT FROM OUTSIDE AND PASSED)  // Strategy.java, 257
+     *  // Strategy.java, 258
+     * @param myBonus  // Strategy.java, 259
+     * @param colonizeAction  // Strategy.java, 260
+     * @return  // Strategy.java, 261
+     */  // Strategy.java, 262
+    public String applyEnergyAndColonize_Or_Resupply(ArrayList<Bonus> myBonus, String colonizeAction) {  // Strategy.java, 263
+        if (BonusType.ENERGY_CORE.isBonusAvailableInList(myBonus)) {  // Strategy.java, 264
+            return BonusType.ENERGY_CORE + " " + colonizeAction;  // Strategy.java, 265
+        } else {  // Strategy.java, 266
+            //no choice  // Strategy.java, 267
+            return "RESUPPLY";  // Strategy.java, 268
+        }  // Strategy.java, 269
+    }  // Strategy.java, 270
+    /**  // Strategy.java, 272
+     * ALIEN AND BUILD COLONIZE  // Strategy.java, 273
+     *  // Strategy.java, 274
+     * @param myBonus  // Strategy.java, 275
+     * @param distanceToPlay  // Strategy.java, 276
+     * @return  // Strategy.java, 277
+     */  // Strategy.java, 278
+    public String applyColonizeWithAllienAttempt(ArrayList<Bonus> myBonus, Distances distanceToPlay) {  // Strategy.java, 279
+        String prefixAllien = "";  // Strategy.java, 280
+        if (isAlienTokenElligible(myBonus, distanceToPlay)) {  // Strategy.java, 281
+            int bonusCounter = 2;  // Strategy.java, 282
+            int[] tasks = new int[2];  // Strategy.java, 283
+            int currentTerraValue = 0;  // Strategy.java, 284
+            if (distanceToPlay.getValueTerraformingStationPlanet() != null)  // Strategy.java, 285
+                currentTerraValue = distanceToPlay.getValueTerraformingStationPlanet();  // Strategy.java, 286
+            int currentAllienValue = 0;  // Strategy.java, 288
+            if (distanceToPlay.getValueAlienStationPlanet() != null)  // Strategy.java, 289
+                currentAllienValue = distanceToPlay.getValueAlienStationPlanet();  // Strategy.java, 290
+            int currentEngValue = 0;  // Strategy.java, 292
+            if (distanceToPlay.getValueEngineeringStationPlanet() != null)  // Strategy.java, 293
+                currentEngValue = distanceToPlay.getValueEngineeringStationPlanet();  // Strategy.java, 294
+            int currentAgriValue = 0;  // Strategy.java, 296
+            if (distanceToPlay.getValueAgricultureStationPlanet() != null)  // Strategy.java, 297
+                currentAgriValue = distanceToPlay.getValueAgricultureStationPlanet();  // Strategy.java, 298
+            while (currentTerraValue >= 1 && bonusCounter > 0) {  // Strategy.java, 300
+                tasks[tasks.length - bonusCounter] = 0; //0 for terra  // Strategy.java, 301
+                bonusCounter--;  // Strategy.java, 302
+                currentTerraValue--;  // Strategy.java, 303
+            }  // Strategy.java, 304
+            while (currentAllienValue >= 1 && bonusCounter > 0) {  // Strategy.java, 305
+                tasks[tasks.length - bonusCounter] = 1; //0 for allien  // Strategy.java, 306
+                bonusCounter--;  // Strategy.java, 307
+                currentAllienValue--;  // Strategy.java, 308
+            }  // Strategy.java, 309
+            while (currentEngValue >= 1 && bonusCounter > 0) {  // Strategy.java, 310
+                tasks[tasks.length - bonusCounter] = 2; //0 for eng  // Strategy.java, 311
+                bonusCounter--;  // Strategy.java, 312
+                currentEngValue--;  // Strategy.java, 313
+            }  // Strategy.java, 314
+            while (currentAgriValue >= 1 && bonusCounter > 0) {  // Strategy.java, 315
+                tasks[tasks.length - bonusCounter] = 3; //0 for agri  // Strategy.java, 316
+                bonusCounter--;  // Strategy.java, 317
+                currentAgriValue--;  // Strategy.java, 318
+            }  // Strategy.java, 319
+            prefixAllien += BonusType.ALIEN_ARTIFACT + " " + tasks[0] + " " + tasks[1] + " ";  // Strategy.java, 322
+        }  // Strategy.java, 323
+        String colonizeAction = "COLONIZE " + distanceToPlay.getStation().getStationId() + " " + distanceToPlay.getPlanet().getPlanetId() + " " + distanceToPlay.getPlanet().getBestBonus(myBonus);  // Strategy.java, 325
+        return prefixAllien + colonizeAction;  // Strategy.java, 326
+    }  // Strategy.java, 327
+    //this method is called twice : applyColonizeWithAllienAttempt and execute to tune best token  // Strategy.java, 329
+    public Boolean isAlienTokenElligible(ArrayList<Bonus> myBonus, Distances distanceToPlay) {  // Strategy.java, 330
+        return distanceToPlay.getDisValueStationPlanet() >= 2 && BonusType.ALIEN_ARTIFACT.isBonusAvailableInList(myBonus);  // Strategy.java, 331
+    }  // Strategy.java, 332
+/*  // Strategy.java, 334
+    public static void main(String[] args) {  // Strategy.java, 335
+        Station myStation1 = new Station(1, 1);  // Strategy.java, 336
+        myStation1.setTechLevel(2, 2, 0, 0);  // Strategy.java, 337
+        myStation1.setAvailable(1);  // Strategy.java, 338
+        StationObjective objective = new StationObjective(4, 2, 2, 0, 1);  // Strategy.java, 339
+        myStation1.setObjective(objective);  // Strategy.java, 340
+        Station myStation2 = new Station(2, 1);  // Strategy.java, 342
+        myStation2.setTechLevel(2, 2, 2, 2);  // Strategy.java, 343
+        myStation2.setAvailable(1);  // Strategy.java, 344
+        Station oppStation = new Station(2, 0);  // Strategy.java, 346
+        oppStation.setTechLevel(1, 1, 1, 1);  // Strategy.java, 347
+        Planet myPlanet1 = new Planet(1, 3, 3, 0, 0, 1, 0, 2, "ENERGY_CORE", "POINTS_3");  // Strategy.java, 349
+        Planet myPlanet2 = new Planet(2, 3, 3, 0, 0, 0, 1, 2, "ENERGY_CORE", "POINTS_3");  // Strategy.java, 350
+        Planet myPlanet3 = new Planet(2, 3, 3, 0, 0, 0, 1, 2, "ENERGY_CORE", "POINTS_3");  // Strategy.java, 351
+        Station[] myStations = new Station[2];  // Strategy.java, 353
+        Station[] oppStations = new Station[1];  // Strategy.java, 354
+        ArrayList<Planet> planets = new ArrayList<Planet>();  // Strategy.java, 355
+        myStations[0] = myStation1;  // Strategy.java, 357
+        myStations[1] = myStation2;  // Strategy.java, 358
+        oppStations[0] = oppStation;  // Strategy.java, 359
+        planets.add(myPlanet1);  // Strategy.java, 360
+        planets.add(myPlanet2);  // Strategy.java, 361
+        ArrayList<Bonus> myBonus = new ArrayList<Bonus>();  // Strategy.java, 363
+        myBonus.add(new Bonus("TECH_RESEARCH_4"));  // Strategy.java, 364
+        Strategy strategy = new Strategy(myStations, oppStations, planets, myBonus, null);  // Strategy.java, 366
+        strategy.applyTechPreCommand();  // Strategy.java, 367
+    }  // Strategy.java, 368
+    */  // Strategy.java, 369
+}  // Strategy.java, 372
 
 enum TechEnum {  // TechEnum.java, 6
     TERRAFORMING,  // TechEnum.java, 7

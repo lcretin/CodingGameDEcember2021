@@ -242,9 +242,13 @@ public class Strategy {
 
         String command = "";
 
-        for (TechCommand techCommand : techCommands) {
-            command = techCommand.executeCommand();
+        if(!techCommands.isEmpty()) {
+            for (TechCommand techCommand : techCommands) {
+                command = techCommand.executeCommand();
+            }
+            command += " ";
         }
+
         logger.println("PreCommand = " + command);
         return command;
     }
