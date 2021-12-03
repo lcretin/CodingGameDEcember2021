@@ -189,27 +189,37 @@ public class Strategy {
 
                 TechCommand bestForObjectiveCandidate = null;
                 TechCommand defaultCandidate = null;
+                TechCommand defaultNewTech = null;
 
                 for (int i = 0; i < myStations.length; i++) {
                     Station station = myStations[i];
                     TechCommand currentTechCommand = new TechCommand(bonus.getBonus(), station);
+                    TechCommand currentDefaultNewTechTechCommand = new TechCommand(BonusType.NEW_TECH, station);
 
                     for (TechEnum curTechEnum : techEnumList) {
                         if (defaultCandidate == null && currentTechCommand.canApplyTechEnum(curTechEnum)) {
                             currentTechCommand.setTechApplying(curTechEnum);
                             defaultCandidate = currentTechCommand;
-                            System.err.println("***Defautl applying Techn Enum to --->" + defaultCandidate);
+                            System.err.println("***Default applying Techn Enum to --->" + defaultCandidate);
                         }
                         if (bestForObjectiveCandidate == null && currentTechCommand.canApplyBestObjectiveTechEnum(curTechEnum)) {
                             currentTechCommand.setTechApplying(curTechEnum);
                             bestForObjectiveCandidate = currentTechCommand;
-                            System.err.println("***Best applying Techn Enum to --->" + bestForObjectiveCandidate);
+                            System.err.println("***Best applying Tech Enum to --->" + bestForObjectiveCandidate);
                         }
+                        // default on new tech only if the objective is not reached.
+                        if(defaultNewTech == null && currentTechCommand.canApplyBestObjectiveTechEnum(curTechEnum)) {
+                            currentTechCommand.setTechApplying(curTechEnum);
+                            defaultNewTech = currentTechCommand;
+                            System.err.println("***NEW TEch default applying Techn Enum to --->" + defaultNewTech);
+                        }
+
                     }
                 }
 
                 logger.println("--->Found best " + bestForObjectiveCandidate);
                 logger.println("--->Default " + defaultCandidate);
+                logger.println("--->Default NEW TEch" + defaultNewTech);
 
                 // Now I will add either the best to fulfill
                 if (bestForObjectiveCandidate != null) {
@@ -220,6 +230,10 @@ public class Strategy {
                     defaultCandidate.apply();
                     techCommands.add(defaultCandidate);
                     logger.println("      Default Candidate for Bonus " + defaultCandidate.toString());
+                } else if (defaultNewTech != null) {
+                    defaultNewTech.apply();
+                    techCommands.add(defaultNewTech);
+                    logger.println("      Default NEW Tech for Bonus " + defaultNewTech.toString());
                 } else {
                     logger.println("The Bonus is not applicable " + bonus.toString());
                 }
