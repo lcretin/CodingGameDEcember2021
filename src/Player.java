@@ -1,5 +1,5 @@
 /*
-This file has been generated Fri Dec 03 12:40:40 CET 2021
+This file has been generated Fri Dec 03 12:45:18 CET 2021
 */
 
 import java.util.List;import java.util.Scanner;import java.util.ArrayList;
@@ -832,7 +832,7 @@ class Strategy {  // Strategy.java, 6
                 bonusCounter--;  // Strategy.java, 301
                 currentAgriValue--;  // Strategy.java, 302
             }  // Strategy.java, 303
-            prefixAllien += "ALLIEN_ARTIFACT " + tasks[0] + " " + tasks[1] + " ";  // Strategy.java, 306
+            prefixAllien += BonusType.ALIEN_ARTIFACT + " " + tasks[0] + " " + tasks[1] + " ";  // Strategy.java, 306
         }  // Strategy.java, 307
         String colonizeAction = "COLONIZE " + distanceToPlay.getStation().getStationId() + " " + distanceToPlay.getPlanet().getPlanetId() + " " + distanceToPlay.getPlanet().getBestBonus(myBonus);  // Strategy.java, 309
         return prefixAllien + colonizeAction;  // Strategy.java, 310

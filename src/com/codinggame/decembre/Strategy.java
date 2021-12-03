@@ -303,7 +303,7 @@ public class Strategy {
             }
 
 
-            prefixAllien += ALIEN_ARTIFACT" " + tasks[0] + " " + tasks[1] + " ";
+            prefixAllien += BonusType.ALIEN_ARTIFACT + " " + tasks[0] + " " + tasks[1] + " ";
         }
 
         String colonizeAction = "COLONIZE " + distanceToPlay.getStation().getStationId() + " " + distanceToPlay.getPlanet().getPlanetId() + " " + distanceToPlay.getPlanet().getBestBonus(myBonus);
