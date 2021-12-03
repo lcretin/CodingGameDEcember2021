@@ -24,10 +24,12 @@ public class TechCommand {
         } else if (BonusType.TECH_RESEARCH_3.equals(bonusType)) {
             this.newTechValue = 3;
             commandName = "TECH_RESEARCH ";
-        }
-        if (BonusType.TECH_RESEARCH_4.equals(bonusType)) {
+        }else if (BonusType.TECH_RESEARCH_4.equals(bonusType)) {
             this.newTechValue = 4;
             commandName = "TECH_RESEARCH ";
+        }else{
+            this.newTechValue = 1;
+            commandName = "NEW_TECH ";
         }
     }
 
@@ -79,7 +81,11 @@ public class TechCommand {
     }
 
     public void setBonusType(BonusType bonusType) {
-        if(BonusType.NEW_TECH.equals(this.bonusType)){
+        if(BonusType.NEW_TECH.equals(this.bonusType) ||
+                BonusType.ALIEN_ARTIFACT.equals(this.bonusType)||
+                BonusType.POINTS_1.equals(this.bonusType)||
+                BonusType.POINTS_2.equals(this.bonusType)||
+                BonusType.POINTS_3.equals(this.bonusType)){
             suffix = " " + bonusType.getBonusValue();
         }
         this.bonusType = bonusType;

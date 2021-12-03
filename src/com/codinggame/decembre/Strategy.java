@@ -274,6 +274,51 @@ public class Strategy {
             }
         }
 
+        // Try to transform Bonus into
+        ArrayList<Bonus> allienBonus = new ArrayList<Bonus>();
+        ArrayList<Bonus> point1Bonus = new ArrayList<Bonus>();
+        ArrayList<Bonus> point2Bonus = new ArrayList<Bonus>();
+        ArrayList<Bonus> point3Bonus = new ArrayList<Bonus>();
+        for (Bonus bonus : myBonus) {
+            if (BonusType.ALIEN_ARTIFACT.equals(bonus.getBonus())) {
+                allienBonus.add(bonus);
+            }else  if (BonusType.POINTS_1.equals(bonus.getBonus())) {
+                point1Bonus.add(bonus);
+            }else  if (BonusType.POINTS_2.equals(bonus.getBonus())) {
+                point2Bonus.add(bonus);
+            }else  if (BonusType.POINTS_3.equals(bonus.getBonus())) {
+                point3Bonus.add(bonus);
+            }
+        }
+
+        ArrayList<Bonus> bonusOrdered = new ArrayList<>();
+        bonusOrdered.addAll(allienBonus);
+        bonusOrdered.addAll(point1Bonus);
+        bonusOrdered.addAll(point2Bonus);
+        bonusOrdered.addAll(point3Bonus);
+
+        for (Bonus bonus : bonusOrdered) {
+            for (int i = 0; i < myStations.length; i++) {
+                Station station = myStations[i];
+
+                int tech = station.getTechToCompleteOjbective();
+                logger.println("getTechToCompleteObecjtive ->"+tech+", "+station.toString());
+                if(tech != -1){
+                    TechCommand techCommand = new TechCommand(bonus.getBonus(), station);
+                    TechEnum curTechEnum = null;
+                    if(tech == 0) { curTechEnum = TechEnum.TERRAFORMING;}
+                    else if(tech == 1) { curTechEnum = TechEnum.ALIEN;}
+                    else if(tech == 2) { curTechEnum = TechEnum.ENGINEERING;}
+                    else if(tech == 3) { curTechEnum = TechEnum.AGRICULTURE;}
+                    techCommand.setTechApplying(curTechEnum);
+                    techCommand.setBonusType(bonus.getBonus());
+                    techCommands.add(techCommand);
+                    logger.println("NEW TECH -> "+ techCommand);
+                }
+            }
+        }
+
+
         String command = "";
 
         if(!techCommands.isEmpty()) {
