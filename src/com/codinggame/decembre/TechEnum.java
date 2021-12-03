@@ -1,5 +1,8 @@
 package com.codinggame.decembre;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum TechEnum {
     TERRAFORMING,
     ALIEN,
@@ -17,5 +20,14 @@ public enum TechEnum {
         }else{
             return 3;
         }
+    }
+
+    public static List<TechEnum> getAllTechEnum(){
+        List<TechEnum> list = new ArrayList<TechEnum>();
+        list.add(TERRAFORMING);
+        list.add(ALIEN);
+        list.add(ENGINEERING);
+        list.add(AGRICULTURE);
+        return list;
     }
 }
