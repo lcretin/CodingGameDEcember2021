@@ -1,5 +1,5 @@
 /*
-This file has been generated Fri Dec 03 13:36:30 CET 2021
+This file has been generated Fri Dec 03 13:51:41 CET 2021
 */
 
 import java.util.List;import java.util.Scanner;import java.util.ArrayList;
@@ -617,6 +617,7 @@ class Strategy {
         Distances newDistanceToPlay = null;
         //ArrayList<Distances> distancesArrayList = computeAllSmallestDistances();
         ArrayList<Distances> distancesArrayList = computeAllDistances();
+        logger.println(" Distance size "+distancesArrayList.size());
         Distances distanceToPlay = getBestTokenUsableFromList(distancesArrayList, myBonus);
         logger.println("Distance To play:" + distanceToPlay.toString());
         //is the station to play from a distance point of view available?...
@@ -716,14 +717,12 @@ class Strategy {
             return null;
         }
         Distances prev = null;
-        Distances cur = null;
         for (Distances distances : distancesArrayList) {
             if (prev == null) {
                 prev = distances;
-                cur = distances;
             } else {
-                if (cur.getUsableToken() > prev.getUsableToken()) {
-                    prev = cur;
+                if (distances.getUsableToken() > prev.getUsableToken()) {
+                    prev = distances;
                 }
             }
         }
@@ -732,7 +731,10 @@ class Strategy {
         ArrayList<Distances> optimizedForTokenDistances = new ArrayList<Distances>();
         for (Distances distances : distancesArrayList) {
             if (distances.getUsableToken() == prev.getUsableToken())
+            {
+                logger.println(distances.toString());
                 optimizedForTokenDistances.add(distances);
+            }
         }
         boolean usedAlienBonus = isAlienTokenElligible(myBonus, optimizedForTokenDistances.get(0));
         //if we can be better than the opp let's do it

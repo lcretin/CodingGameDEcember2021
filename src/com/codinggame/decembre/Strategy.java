@@ -30,6 +30,7 @@ public class Strategy {
 
         //ArrayList<Distances> distancesArrayList = computeAllSmallestDistances();
         ArrayList<Distances> distancesArrayList = computeAllDistances();
+        logger.println(" Distance size "+distancesArrayList.size());
         Distances distanceToPlay = getBestTokenUsableFromList(distancesArrayList, myBonus);
         logger.println("Distance To play:" + distanceToPlay.toString());
 
@@ -143,14 +144,12 @@ public class Strategy {
             return null;
         }
         Distances prev = null;
-        Distances cur = null;
         for (Distances distances : distancesArrayList) {
             if (prev == null) {
                 prev = distances;
-                cur = distances;
             } else {
-                if (cur.getUsableToken() > prev.getUsableToken()) {
-                    prev = cur;
+                if (distances.getUsableToken() > prev.getUsableToken()) {
+                    prev = distances;
                 }
             }
         }
