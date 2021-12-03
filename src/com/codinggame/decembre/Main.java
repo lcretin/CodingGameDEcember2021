@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class Main {
 
+    Logger logger = new Logger();
     Station[] myStations = new Station[4];
     Station[] oppStations = new Station[4];
     ArrayList<Planet> planets = new ArrayList<Planet>();
@@ -87,7 +88,7 @@ public class Main {
                 int mine = in.nextInt();
                 String bonus = in.next();
                 Bonus bon = new Bonus(bonus);
-                System.err.println("mine=" + mine+ ", Bonus="+bonus);
+                logger.println("mine=" + mine+ ", Bonus="+bonus);
                 if(mine == 1){
                     myBonus.add(bon);
                 }else{
@@ -98,13 +99,13 @@ public class Main {
             int oppColonizationScore = in.nextInt();
 
             // Write an action using System.out.println()
-            // To debug: System.err.println("Debug messages...");
+            // To debug: logger.println("Debug messages...");
 
             //printMyStations(myStations);
             //printOppStations(oppStations);
             //printPlanets(planets);
             String execute =  strategy.execute();
-            System.err.println("Command = "+ execute);
+            logger.println("Command = "+ execute);
             System.out.println(execute);
         }
     }
@@ -129,8 +130,9 @@ public class Main {
     {
         for (int i=0;i<4;i++)
         {
-            System.err.println("my Station " + myStations[i].stationId + " available=" + myStations[i].isAvailable + " tech1" + myStations[i].terraformingSkill + " tech2" + myStations[i].alienSkill + " tech3" + myStations[i].engineeringSkill + " tech4" + myStations[i].agricultureSkill);
-            System.err.println("  obj score = " + myStations[i].myStationObj.scoreIfReached + " obj terra=" + myStations[i].myStationObj.terraLevelObj +   " obj alien=" + myStations[i].myStationObj.alienLevelObj);
+            logger.println(myStations[i].toString());
+            //logger.println("my Station " + myStations[i].stationId + " available=" + myStations[i].isAvailable + " tech1" + myStations[i].terraformingSkill + " tech2" + myStations[i].alienSkill + " tech3" + myStations[i].engineeringSkill + " tech4" + myStations[i].agricultureSkill);
+            //logger.println("  obj score = " + myStations[i].myStationObj.scoreIfReached + " obj terra=" + myStations[i].myStationObj.terraLevelObj +   " obj alien=" + myStations[i].myStationObj.alienLevelObj);
         }
     }
 
@@ -138,7 +140,8 @@ public class Main {
     {
         for (int i=0;i<4;i++)
         {
-            System.err.println("opp Station " + oppStations[i].stationId + " available=" + oppStations[i].isAvailable + " tech1" + oppStations[i].terraformingSkill + " tech2" + oppStations[i].alienSkill + " tech3" + oppStations[i].engineeringSkill + " tech4" + oppStations[i].agricultureSkill);
+            logger.println(oppStations[i].toString());
+            //logger.println("opp Station " + oppStations[i].stationId + " available=" + oppStations[i].isAvailable + " tech1" + oppStations[i].terraformingSkill + " tech2" + oppStations[i].alienSkill + " tech3" + oppStations[i].engineeringSkill + " tech4" + oppStations[i].agricultureSkill);
         }
     }
 
@@ -146,8 +149,9 @@ public class Main {
     {
         for (int i=0;i<5;i++)
         {
-            System.err.println("Planet "  + planets[i].planetId + " task1" + planets[i].terraformingTaskLeftValue + " task2" + planets[i].alienTaskLeftValue + " task3" + planets[i].engineeringTaskLeftValue + " task4" + planets[i].agricultureTaskLeftValue);
-            System.err.println("     myContribution=" + planets[i].myContributionTotalTaks + " oppContribution=" + planets[i].oppContributionTotalTasks + " score=" + planets[i].colonizationScore + " bonus0="+ planets[i].bonus0 + " bonus1=" + planets[i].bonus1);
+            logger.println(planets[i].toString());
+            //logger.println("Planet "  + planets[i].planetId + " task1" + planets[i].terraformingTaskLeftValue + " task2" + planets[i].alienTaskLeftValue + " task3" + planets[i].engineeringTaskLeftValue + " task4" + planets[i].agricultureTaskLeftValue);
+            //logger.println("     myContribution=" + planets[i].myContributionTotalTaks + " oppContribution=" + planets[i].oppContributionTotalTasks + " score=" + planets[i].colonizationScore + " bonus0="+ planets[i].bonus0 + " bonus1=" + planets[i].bonus1);
         }
     }
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Strategy {
 
+    private Logger logger = new Logger();
 
     private Station[] myStations = new Station[4];
 
@@ -44,14 +45,14 @@ public class Strategy {
                         distancesArrayList.add(distance);
                     }
                 }
-                //System.err.println("Distance: ["+distance.getPlanet().getPlanetId()+"] ["+distance.getStation().getStationId()+"] dist= "+ distance.getValueStationPlanet());
+                //logger.println("Distance: ["+distance.getPlanet().getPlanetId()+"] ["+distance.getStation().getStationId()+"] dist= "+ distance.getValueStationPlanet());
             }
         }
 
 
         Distances distanceToPlay = getBestTokenUsableFromList(distancesArrayList) ;
-        System.err.println("Number of min Dist="+distancesArrayList.size());
-        System.err.println("Distrance To play:"+distanceToPlay.toString());
+        logger.println("Number of min Dist="+distancesArrayList.size());
+        logger.println("Distrance To play:"+distanceToPlay.toString());
 
         if(distanceToPlay.getStation().isAvailable()) {
                 return preCommand+applyColonizeWithAllienAttempt(myBonus,distanceToPlay);
@@ -59,7 +60,7 @@ public class Strategy {
             //do we have an avaialble station with the same distance ? if yes, let's colonize with it ....
             disMinAvailable = getBestTokenUsableFromList(geAvailablesFromList(distancesArrayList));
             if(disMinAvailable != null && disMinAvailable.getDisValueStationPlanet() <= distanceToPlay.getDisValueStationPlanet()){
-                System.err.println("Distrance To play (Min Available):"+disMinAvailable.toString());
+                logger.println("Distrance To play (Min Available):"+disMinAvailable.toString());
 
                 return preCommand+applyColonizeWithAllienAttempt(myBonus,disMinAvailable) ;
             }
@@ -105,7 +106,7 @@ public class Strategy {
         String resultCommand = "";
         // Apply BONUS Pre Command: Apply Tech Reasearch on the first tech on the first station
         for(Bonus bonus: myBonus){
-            System.err.println(bonus.toString());
+            logger.println(bonus.toString());
             int techREsearchBonusNum = -1;
             String commandName = "";
             if(BonusType.NEW_TECH.equals(bonus.getBonus())) {
@@ -130,50 +131,54 @@ public class Strategy {
                         resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.TERRAFORMING);
                         station.terraformingSkill += 1;
                         isBonusUsed=true;
-                        System.err.println("Station impacted: "+station.toString());
+
+                        logger.println("Station impacted: "+station.toString());
                         break;
                     } else if (station.getAlienSkill() == techREsearchBonusNum && station.isAlienObjectiveReached()) {
                         resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.ALIEN);
                         station.alienSkill += 1;
                         isBonusUsed=true;
-                        System.err.println("Station impacted: "+station.toString());
+                        logger.println("Station impacted: "+station.toString());
                         break;
                     } else if (station.getEngineeringSkill() == techREsearchBonusNum && station.isEngineeringObjectiveReached()) {
                         resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.ENGINEERING);
                         station.engineeringSkill += 1;
                         isBonusUsed=true;
-                        System.err.println("Station impacted: "+station.toString());
+                        logger.println("Station impacted: "+station.toString());
                         break;
                     } else if (station.getAgricultureSkill() == techREsearchBonusNum && station.isAgricultureObjectiveReached()) {
                         resultCommand = commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.AGRICULTURE);
                         station.agricultureSkill += 1;
                         isBonusUsed=true;
-                        System.err.println("Station impacted: "+station.toString());
+                        logger.println("Station impacted: "+station.toString());
                         break;
                     }
                 }
                 if (!isBonusUsed) //bonus not used to fill station objective, let's fill the first available task-station
                 {
-                    if (station.getTerraformingSkill() == techREsearchBonusNum) {
-                        resultCommand += commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.TERRAFORMING);
-                        station.terraformingSkill += 1;
-                        System.err.println("Station impacted: "+station.toString());
-                        break;
-                    } else if (station.getAlienSkill() == techREsearchBonusNum) {
-                        resultCommand += commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.ALIEN);
-                        station.alienSkill += 1;
-                        System.err.println("Station impacted: "+station.toString());
-                        break;
-                    } else if (station.getEngineeringSkill() == techREsearchBonusNum) {
-                        resultCommand += commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.ENGINEERING);
-                        station.engineeringSkill += 1;
-                        System.err.println("Station impacted: "+station.toString());
-                        break;
-                    } else if (station.getAgricultureSkill() == techREsearchBonusNum) {
-                        resultCommand += commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.AGRICULTURE);
-                        station.agricultureSkill += 1;
-                        System.err.println("Station impacted: "+station.toString());
-                        break;
+                    for (int i = 0; i < myStations.length; i++) {
+                        Station station = myStations[i];
+                        if (station.getTerraformingSkill() == techREsearchBonusNum) {
+                            resultCommand += commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.TERRAFORMING);
+                            station.terraformingSkill += 1;
+                            logger.println("Station impacted: "+station.toString());
+                            break;
+                        } else if (station.getAlienSkill() == techREsearchBonusNum) {
+                            resultCommand += commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.ALIEN);
+                            station.alienSkill += 1;
+                            logger.println("Station impacted: "+station.toString());
+                            break;
+                        } else if (station.getEngineeringSkill() == techREsearchBonusNum) {
+                            resultCommand += commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.ENGINEERING);
+                            station.engineeringSkill += 1;
+                            logger.println("Station impacted: "+station.toString());
+                            break;
+                        } else if (station.getAgricultureSkill() == techREsearchBonusNum) {
+                            resultCommand += commandName + station.getStationId() + " " + TechEnum.getCode(TechEnum.AGRICULTURE);
+                            station.agricultureSkill += 1;
+                            logger.println("Station impacted: "+station.toString());
+                            break;
+                        }
                     }
                 }
             }
@@ -181,7 +186,7 @@ public class Strategy {
         if (!"".equals(resultCommand)){
             resultCommand += " ";
         }
-        System.err.println("PreCommand = "+resultCommand);
+        logger.println("PreCommand = "+resultCommand);
         return resultCommand;
     }
 
